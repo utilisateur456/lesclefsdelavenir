@@ -42,7 +42,6 @@
       background: var(--bg);
       color: var(--t100);
       overflow-x: hidden;
-      cursor: none;
     }
 
     body.intro-lock {
@@ -50,17 +49,7 @@
       height: 100vh;
     }
 
-    /* ─── CURSOR ──────────────────────────────────────────────────── */
-    #cur  { position: fixed; z-index: 9999; width: 6px; height: 6px;
-            background: var(--a200); border-radius: 50%;
-            pointer-events: none; transform: translate(-50%,-50%);
-            transition: width .25s, height .25s, background .25s; mix-blend-mode: multiply; }
-    #curf { position: fixed; z-index: 9998; width: 38px; height: 38px;
-            border: 1px solid rgba(0,104,140,0.5); border-radius: 50%;
-            pointer-events: none; transform: translate(-50%,-50%);
-            transition: transform .12s ease, width .25s, height .25s, border-color .25s; }
-
-    a:hover ~ #curf, button:hover ~ #curf { width: 56px; height: 56px; border-color: var(--a200); }
+    /* (cursor follower removed) */
 
     /* ─── GRAIN ───────────────────────────────────────────────────── */
     #grain { position: fixed; inset: 0; z-index: 9997;
@@ -145,6 +134,30 @@
       position: absolute; right: 14px; top: 50%;
       width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, var(--a100), var(--a200));
+    }
+
+    .d2-keyhole {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 18px; height: 30px;
+      z-index: 3;
+    }
+    .d2-keyhole::before {
+      content: ''; position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #050a10;
+      border: 1px solid rgba(113,196,239,0.5);
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.7);
+    }
+    .d2-keyhole::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 16px;
+      background: #050a10;
+      border: 1px solid rgba(113,196,239,0.5);
+      border-top: none;
     }
 
     .i-logo {
@@ -538,52 +551,59 @@
     }
 
     .s-arrow {
-      position: absolute; bottom: 1.8rem; right: 1.8rem;
-      width: 32px; height: 32px;
-      border: 1px solid var(--line); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; color: var(--bg3);
-      transition: all 0.4s;
-      cursor: pointer; background: var(--bg);
+      position: absolute; bottom: 1.8rem; left: 1.8rem;
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--a200); font-weight: 600;
+      background: transparent; border: none;
+      padding: 0.4rem 0;
+      cursor: pointer;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      border-bottom: 1px solid var(--a100);
+      transition: color 0.3s, border-color 0.3s;
     }
 
-    .s-cell:hover .s-arrow {
-      border-color: var(--a200); color: var(--bg);
-      background: var(--a200);
+    .s-arrow-icon {
+      display: inline-block;
+      transition: transform 0.4s ease;
+      font-size: 0.85rem;
     }
+
+    .s-arrow:hover { color: var(--t100); border-color: var(--t100); }
+    .s-arrow:hover .s-arrow-icon { transform: translateX(4px); }
 
     .s-cell.open .s-arrow {
+      color: var(--t100); border-color: var(--t100);
+    }
+
+    .s-cell.open .s-arrow-icon {
       transform: rotate(90deg);
-      border-color: var(--a200); color: var(--bg);
-      background: var(--a200);
     }
 
     .s-expand {
       max-height: 0; overflow: hidden;
-      transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      transition: max-height 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, margin-top 0.5s ease;
       opacity: 0; margin-top: 0;
     }
 
     .s-cell.open .s-expand {
-      max-height: 600px; opacity: 1; margin-top: 1.4rem;
+      max-height: 1200px; opacity: 1; margin-top: 1.4rem;
     }
 
     .s-expand-inner {
       border-top: 1px solid var(--line);
       padding-top: 1.4rem;
-      padding-bottom: 3.5rem;
+    }
+
+    .s-expand-inner p {
+      font-size: 0.84rem; line-height: 1.85; color: var(--t200);
+      font-weight: 300; margin-bottom: 1rem;
     }
 
     .s-expand-inner h4 {
       font-family: 'Instrument Serif', serif;
-      font-size: 1rem; font-style: italic; color: var(--a200);
-      margin-bottom: 0.8rem; font-weight: 400;
-    }
-
-    .s-expand-inner p {
-      font-size: 0.82rem; line-height: 1.8; color: var(--t200);
-      font-weight: 300; margin-bottom: 0.8rem;
+      font-size: 1.05rem; font-style: italic; color: var(--a200);
+      margin: 1.2rem 0 0.8rem; font-weight: 400;
     }
 
     /* ─── ABOUT MARCO ─────────────────────────────────────────────── */
@@ -1384,8 +1404,7 @@
       #payment { padding: 4rem 2rem; }
       .pay-grid { flex-direction: column; }
       .pay-sep { width: 60px; height: 1px; }
-      body { cursor: auto; }
-      #cur, #curf { display: none; }
+      /* mobile-only spacing tweaks */
     }
 
     /* ─── RESPONSIVE 600px (smartphones) ────────────────────────── */
@@ -1444,8 +1463,6 @@
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="curf"></div>
 <canvas id="grain"></canvas>
 
 <!-- INTRO -->
@@ -1527,18 +1544,8 @@
           <path d="M 327 114 L 332 118 L 327 122 Z" fill="url(#gblue)" opacity="0.8"/>
         </g>
 
-        <g id="kl" opacity="0" transform="translate(440, 110)">
-          <rect x="-48" y="-46" width="96" height="92" rx="3" fill="url(#glockb)" stroke="url(#gblue)" stroke-width="1.5"/>
-          <rect x="-35" y="32" width="70" height="1" fill="rgba(113,196,239,0.2)"/>
-          <g id="ksh">
-            <path d="M -22 -46 L -22 -72 Q -22 -90 0 -90 Q 22 -90 22 -72 L 22 -46" fill="none" stroke="url(#gblue)" stroke-width="9" stroke-linecap="square"/>
-          </g>
-          <circle cx="0" cy="-8" r="13" fill="#060e14"/>
-          <rect x="-5" y="5" width="10" height="18" fill="#060e14"/>
-          <circle cx="0" cy="-8" r="15" fill="none" stroke="rgba(113,196,239,0.2)" stroke-width="1"/>
-        </g>
-
-        <circle id="kburst" cx="440" cy="110" r="0" fill="url(#gburst2)" opacity="0"/>
+        <!-- (lock removed — key now goes directly into the door) -->
+        <circle id="kburst" cx="300" cy="110" r="0" fill="url(#gburst2)" opacity="0"/>
       </svg>
     </div>
 
@@ -1547,6 +1554,7 @@
         <div class="d2-panel" id="d2pan">
           <div class="d2-glow" id="d2glow"></div>
           <div class="d2-knob"></div>
+          <div class="d2-keyhole"></div>
         </div>
       </div>
     </div>
@@ -1741,7 +1749,7 @@
         <p>Idéale pour toute personne face à une décision importante ou une période de transition — séparation, changement professionnel, déménagement, question sentimentale, blocage inexpliqué. La voyance pure convient aussi pour un simple "état des lieux" énergétique afin de mieux vous positionner dans votre vie actuelle.</p>
         <p>Marco ne nécessite aucune information préalable : donnez simplement votre prénom et posez votre question. Cette transparence totale est la marque d'un voyant authentique qui ne s'appuie pas sur ce que vous dites pour construire sa lecture. Disponible par téléphone, WhatsApp ou par email avec réponse détaillée sous 24 heures.</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.08s">
       <span class="s-num">02</span>
@@ -1760,7 +1768,7 @@
         <p>Pour les personnes en deuil qui peinent à tourner la page, qui ont des paroles non-dites avec un être disparu, ou qui ont besoin d'un signe de présence. Aussi pour ceux qui ressentent une présence invisible et souhaitent comprendre quel message leur est adressé.</p>
         <p>Marco approche chaque séance de médiumnité avec respect, discrétion et humilité. Il ne dramatise pas — il transmet ce qui lui est donné de transmettre, avec les mots exacts qui lui viennent. Les consultants rapportent souvent des détails saisissants que seul le défunt pouvait connaître : un surnom, un objet, un souvenir secret. Consultation disponible par téléphone ou par email, partout en Suisse et en France.</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.16s">
       <span class="s-num">03</span>
@@ -1778,7 +1786,7 @@
         <p>Le tarot divinatoire est l'outil idéal pour ceux qui souhaitent une réponse structurée, avec un début et une fin. Il cartographie votre situation actuelle, les énergies passées qui l'ont façonnée, les obstacles à lever, les alliés cachés et les résultats probables selon votre chemin actuel.</p>
         <p>Marco choisit le type de tirage selon votre demande : croix celtique pour une analyse complète, tirage amour pour les questions sentimentales, tirage en éventail pour une vision temporelle sur 3 à 6 mois. Chaque lame est commentée avec précision et mise en contexte par rapport à votre vie personnelle. Un rapport écrit détaillé peut être fourni par email sous 24 heures pour CHF 15.-</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.24s">
       <span class="s-num">04</span>
@@ -1797,7 +1805,7 @@
         <p>Pour les personnes qui traversent une crise existentielle, qui reconnaissent des schémas répétitifs dans leur vie amoureuse ou professionnelle, ou qui souhaitent préparer une période majeure — retour de Saturne (29 ans), opposition de Saturne (44 ans), passage de Chiron (51 ans). L'astrologie karmique éclaire le "pourquoi" là où les autres disciplines éclairent le "quoi".</p>
         <p>L'analyse des nœuds lunaires (Rahu et Ketu) donne des clés précises sur ce que l'âme a déjà accompli et ce qu'elle est venue apprendre dans cette vie. Marco intègre aussi les astéroïdes karmiques (Chiron, Lilith, Vertex) pour une lecture à la fois précise et profondément personnelle. Rapport écrit complet disponible par email.</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.32s">
       <span class="s-num">05</span>
@@ -1822,7 +1830,7 @@
         <p>Pour toute personne qui ressent que son prénom ou sa date de naissance porte une signification profonde. Particulièrement éclairante aux carrefours de vie : choisir entre deux voies professionnelles, évaluer la compatibilité avec un partenaire (amoureux ou d'affaires), comprendre pourquoi un projet a échoué, ou identifier l'année la plus favorable pour agir.</p>
         <p>Marco établit un rapport numérologique complet incluant le chemin de vie (nombre de base), le nombre d'expression (plein potentiel de la personnalité), le nombre intime (désirs profonds de l'âme) et le nombre de réalisation (mission incarnée). Ce rapport détaillé peut être envoyé par email sous 24 heures pour CHF 15.-, ou commenté en direct lors d'un appel téléphonique.</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.4s">
       <span class="s-num">06</span>
@@ -1841,7 +1849,7 @@
         <p>Pour les personnes en quête d'une guidance douce et lumineuse, pour celles qui traversent une période difficile et ont besoin d'un réconfort spirituel profond, d'un signe de présence divine, ou simplement d'un souffle d'espoir. Aussi idéale pour les personnes en développement spirituel qui souhaitent identifier et travailler consciemment avec leurs guides personnels.</p>
         <p>Marco identifie les anges de la Kabbale qui vous protègent selon votre date de naissance, transmet les messages spécifiques qui vous sont destinés, et vous remet une intention ou prière d'activation pour maintenir le lien au quotidien. Beaucoup de consultants rapportent un soulagement immédiat, une chaleur, une paix intérieure dès la fin de la séance. Consultation par téléphone au 0901 212 212 ou par email.</p>
       </div></div>
-      <button class="s-arrow" onclick="toggleService(this)">→</button>
+      <button class="s-arrow" onclick="toggleService(this)"><span class="s-arrow-text">Lire la suite</span><span class="s-arrow-icon">→</span></button>
     </div>
   </div>
 </section>
@@ -1852,156 +1860,243 @@
     <div class="portrait-bg">
 
       <div class="key3d-wrap">
-        <svg class="key3d-inner" width="190" height="455" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg">
+        <svg class="key3d-inner" width="220" height="560" viewBox="0 0 220 560" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="gGold" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stop-color="#5a3600"/>
-              <stop offset="12%"  stop-color="#A86E08"/>
-              <stop offset="28%"  stop-color="#D4A020"/>
-              <stop offset="45%"  stop-color="#FFE060"/>
-              <stop offset="56%"  stop-color="#FFD030"/>
-              <stop offset="72%"  stop-color="#C08510"/>
-              <stop offset="88%"  stop-color="#7a5200"/>
-              <stop offset="100%" stop-color="#4a3000"/>
+            <!-- Gold cylinder gradient (lit from upper-left) -->
+            <linearGradient id="gShaft" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#2a1500"/>
+              <stop offset="8%"   stop-color="#5a3600"/>
+              <stop offset="22%"  stop-color="#a87010"/>
+              <stop offset="38%"  stop-color="#e0b830"/>
+              <stop offset="48%"  stop-color="#fff0a8"/>
+              <stop offset="56%"  stop-color="#ffd830"/>
+              <stop offset="70%"  stop-color="#bc8410"/>
+              <stop offset="86%"  stop-color="#6a4200"/>
+              <stop offset="100%" stop-color="#1f0e00"/>
             </linearGradient>
-            <linearGradient id="gBow" x1="10%" y1="10%" x2="90%" y2="90%">
-              <stop offset="0%"   stop-color="#FFE878"/>
-              <stop offset="22%"  stop-color="#D49C0C"/>
-              <stop offset="55%"  stop-color="#8B6200"/>
-              <stop offset="82%"  stop-color="#5a3a00"/>
-              <stop offset="100%" stop-color="#FFD030"/>
-            </linearGradient>
-            <radialGradient id="gJewel" cx="36%" cy="32%" r="68%">
-              <stop offset="0%"   stop-color="#FFFAE0"/>
-              <stop offset="30%"  stop-color="#FFD700"/>
-              <stop offset="65%"  stop-color="#C89010"/>
-              <stop offset="100%" stop-color="#6a4200"/>
+            <!-- Bow torus radial -->
+            <radialGradient id="gBowR" cx="32%" cy="28%" r="80%">
+              <stop offset="0%"   stop-color="#fff5c0"/>
+              <stop offset="20%"  stop-color="#ffd830"/>
+              <stop offset="50%"  stop-color="#b07810"/>
+              <stop offset="80%"  stop-color="#4a2c00"/>
+              <stop offset="100%" stop-color="#1a0a00"/>
             </radialGradient>
-            <radialGradient id="gHighlight" cx="28%" cy="22%" r="72%">
-              <stop offset="0%"   stop-color="rgba(255,255,220,0.92)"/>
-              <stop offset="100%" stop-color="rgba(255,180,0,0)"/>
-            </radialGradient>
-            <linearGradient id="gEngrave" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%"   stop-color="#4a2e00"/>
-              <stop offset="50%"  stop-color="#8a5c00"/>
-              <stop offset="100%" stop-color="#4a2e00"/>
+            <!-- Bow filigree -->
+            <linearGradient id="gFil" x1="20%" y1="10%" x2="80%" y2="90%">
+              <stop offset="0%"   stop-color="#fff0a8"/>
+              <stop offset="30%"  stop-color="#e8b830"/>
+              <stop offset="60%"  stop-color="#7a5000"/>
+              <stop offset="100%" stop-color="#3a2200"/>
             </linearGradient>
-            <filter id="fGlow" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <!-- Central jewel -->
+            <radialGradient id="gJewel" cx="35%" cy="32%" r="70%">
+              <stop offset="0%"   stop-color="#ffffff"/>
+              <stop offset="18%"  stop-color="#fff5b0"/>
+              <stop offset="50%"  stop-color="#ffd830"/>
+              <stop offset="85%"  stop-color="#a87810"/>
+              <stop offset="100%" stop-color="#1a0a00"/>
+            </radialGradient>
+            <!-- Light specular -->
+            <radialGradient id="gSpec" cx="30%" cy="25%" r="70%">
+              <stop offset="0%"   stop-color="rgba(255,255,220,0.9)"/>
+              <stop offset="100%" stop-color="rgba(255,200,80,0)"/>
+            </radialGradient>
+            <!-- Patina overlay -->
+            <linearGradient id="gPatina" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="rgba(60,30,0,0)"/>
+              <stop offset="60%"  stop-color="rgba(60,30,0,0.18)"/>
+              <stop offset="100%" stop-color="rgba(20,8,0,0.32)"/>
+            </linearGradient>
+            <!-- Strong drop shadow -->
+            <filter id="fDrop" x="-30%" y="-15%" width="160%" height="130%">
+              <feDropShadow dx="6" dy="14" stdDeviation="9" flood-color="#0a0400" flood-opacity="0.9"/>
             </filter>
-            <filter id="fShadow" x="-25%" y="-15%" width="150%" height="130%">
-              <feDropShadow dx="4" dy="8" stdDeviation="10" flood-color="#1a0a00" flood-opacity="0.85"/>
+            <!-- Inner highlight -->
+            <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3.5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- Bevel for 3D depth -->
+            <filter id="fBevel">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+              <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.7" specularExponent="20" lighting-color="#fff8d0" result="spec">
+                <feDistantLight azimuth="135" elevation="45"/>
+              </feSpecularLighting>
+              <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
+              <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="specOut"/></feMerge>
             </filter>
           </defs>
 
-          <g filter="url(#fShadow)">
-            <!-- ─── FLEUR-DE-LYS CROWN ─── -->
-            <circle cx="100" cy="6" r="5.5" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <path d="M 100 12 L 92 4 Q 100 -5 108 4 Z" fill="url(#gBow)"/>
-            <path d="M 100 12 L 82 3 Q 100 -8 118 3 Z" fill="url(#gBow)" opacity="0.68"/>
-            <circle cx="82" cy="6" r="3.5" fill="url(#gBow)" opacity="0.85"/>
-            <circle cx="118" cy="6" r="3.5" fill="url(#gBow)" opacity="0.85"/>
-            <circle cx="82" cy="6" r="1.5" fill="rgba(255,240,120,0.7)"/>
-            <circle cx="118" cy="6" r="1.5" fill="rgba(255,240,120,0.7)"/>
+          <g filter="url(#fDrop)">
 
-            <!-- ─── BOW OUTER DECORATIVE RING ─── -->
-            <circle cx="100" cy="100" r="82" fill="none" stroke="url(#gGold)" stroke-width="1.5" opacity="0.55"/>
+            <!-- ═══════ BAROQUE CROWN TOP ═══════ -->
+            <!-- Top finial ball -->
+            <circle cx="110" cy="6" r="6" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="108" cy="4" r="2" fill="rgba(255,255,220,0.85)"/>
+            <!-- Center pinnacle -->
+            <path d="M 106 12 L 110 6 L 114 12 Z" fill="url(#gFil)"/>
+            <!-- Left scroll/curl -->
+            <path d="M 110 14 Q 88 12 76 28 Q 66 44 78 54 Q 90 60 96 52 Q 92 44 84 44 Q 84 30 100 32 Q 104 24 110 22 Z"
+                  fill="url(#gFil)" stroke="#3a2200" stroke-width="0.7" filter="url(#fBevel)"/>
+            <!-- Right scroll/curl (mirror) -->
+            <path d="M 110 14 Q 132 12 144 28 Q 154 44 142 54 Q 130 60 124 52 Q 128 44 136 44 Q 136 30 120 32 Q 116 24 110 22 Z"
+                  fill="url(#gFil)" stroke="#3a2200" stroke-width="0.7" filter="url(#fBevel)"/>
+            <!-- Inner curls -->
+            <path d="M 96 36 Q 102 30 108 36 Q 102 40 96 36 Z" fill="url(#gFil)" opacity="0.85"/>
+            <path d="M 124 36 Q 118 30 112 36 Q 118 40 124 36 Z" fill="url(#gFil)" opacity="0.85"/>
 
-            <!-- ─── BOW MAIN RING (torus illusion) ─── -->
-            <circle cx="100" cy="100" r="74" fill="none" stroke="url(#gGold)" stroke-width="20"/>
-            <!-- Shadow inner edge of ring -->
-            <circle cx="100" cy="100" r="64" fill="none" stroke="rgba(40,18,0,0.75)" stroke-width="4"/>
-            <!-- Bright highlight on ring outer edge (top-left) -->
-            <path d="M 48 68 A 74 74 0 0 1 100 26" fill="none" stroke="rgba(255,238,100,0.65)" stroke-width="5" stroke-linecap="round"/>
-            <!-- Subtle reflected light (bottom-right) -->
-            <path d="M 152 132 A 74 74 0 0 1 100 174" fill="none" stroke="rgba(255,200,50,0.25)" stroke-width="3" stroke-linecap="round"/>
+            <!-- Crown to bow connector -->
+            <path d="M 84 56 L 136 56 L 130 72 L 90 72 Z" fill="url(#gShaft)"/>
+            <ellipse cx="110" cy="58" rx="26" ry="3" fill="rgba(255,240,140,0.55)"/>
+            <ellipse cx="110" cy="72" rx="20" ry="3" fill="rgba(40,20,0,0.6)"/>
 
-            <!-- ─── FILIGREE PETALS ─── -->
-            <path d="M 100 28 Q 120 60 100 84 Q 80 60 100 28 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
-            <path d="M 100 172 Q 120 140 100 116 Q 80 140 100 172 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
-            <path d="M 26 100 Q 58 80 84 100 Q 58 120 26 100 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
-            <path d="M 174 100 Q 142 80 116 100 Q 142 120 174 100 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
-            <!-- Diagonal accents -->
-            <path d="M 53 53 Q 72 72 90 90" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
-            <path d="M 147 53 Q 128 72 110 90" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
-            <path d="M 53 147 Q 72 128 90 110" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
-            <path d="M 147 147 Q 128 128 110 110" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
-            <!-- Cathedral cross -->
-            <path d="M 100 48 L 100 152 M 48 100 L 152 100" stroke="url(#gEngrave)" stroke-width="1.3" opacity="0.8"/>
-            <path d="M 67 67 L 133 133 M 133 67 L 67 133" stroke="url(#gEngrave)" stroke-width="0.8" opacity="0.45"/>
+            <!-- ═══════ BOW (CIRCULAR HEAD) ═══════ -->
+            <!-- Outer dark contour -->
+            <circle cx="110" cy="148" r="78" fill="none" stroke="#1a0a00" stroke-width="2"/>
+            <!-- Main torus ring -->
+            <circle cx="110" cy="148" r="72" fill="none" stroke="url(#gBowR)" stroke-width="22"/>
+            <!-- Inner shadow edge of torus -->
+            <circle cx="110" cy="148" r="62" fill="none" stroke="rgba(30,15,0,0.85)" stroke-width="3"/>
+            <!-- Outer bright edge -->
+            <circle cx="110" cy="148" r="83" fill="none" stroke="rgba(255,228,100,0.4)" stroke-width="1.5"/>
+            <!-- Top-left strong highlight -->
+            <path d="M 58 116 A 72 72 0 0 1 110 76" fill="none" stroke="rgba(255,250,180,0.85)" stroke-width="6" stroke-linecap="round"/>
+            <!-- Bottom-right warm reflection -->
+            <path d="M 162 180 A 72 72 0 0 1 110 220" fill="none" stroke="rgba(255,180,30,0.4)" stroke-width="4" stroke-linecap="round"/>
+            <!-- Aging spots on the ring -->
+            <circle cx="78" cy="98" r="1.4" fill="#3a1c00" opacity="0.55"/>
+            <circle cx="148" cy="190" r="1.2" fill="#3a1c00" opacity="0.55"/>
+            <circle cx="60" cy="170" r="1" fill="#3a1c00" opacity="0.45"/>
+            <circle cx="160" cy="120" r="0.9" fill="#3a1c00" opacity="0.45"/>
+            <circle cx="100" cy="80" r="0.7" fill="#3a1c00" opacity="0.45"/>
 
-            <!-- ─── CENTER JEWEL ─── -->
-            <circle cx="100" cy="100" r="22" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="100" cy="100" r="15" fill="#2e1500" opacity="0.9"/>
-            <circle cx="100" cy="100" r="10" fill="url(#gJewel)"/>
-            <circle cx="96" cy="96" r="3.5" fill="rgba(255,255,210,0.9)"/>
-            <circle cx="94" cy="94" r="1.5" fill="rgba(255,255,255,0.8)"/>
+            <!-- ─── FLORAL FILIGREE INSIDE BOW ─── -->
+            <!-- 4 main petals (cross shape) -->
+            <path d="M 110 84 Q 132 116 110 146 Q 88 116 110 84 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
+            <path d="M 110 212 Q 132 180 110 150 Q 88 180 110 212 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
+            <path d="M 46 148 Q 78 126 108 148 Q 78 170 46 148 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
+            <path d="M 174 148 Q 142 126 112 148 Q 142 170 174 148 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
+            <!-- Petal highlights -->
+            <path d="M 110 90 Q 124 116 110 142" fill="none" stroke="rgba(255,250,180,0.7)" stroke-width="1.4"/>
+            <path d="M 52 148 Q 78 132 106 148" fill="none" stroke="rgba(255,250,180,0.6)" stroke-width="1.2"/>
+            <!-- Diagonal connector lines -->
+            <path d="M 76 114 Q 92 130 106 144" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M 144 114 Q 128 130 114 144" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M 76 182 Q 92 166 106 152" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M 144 182 Q 128 166 114 152" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
 
-            <!-- ─── COLLAR bow→shaft ─── -->
-            <rect x="87" y="170" width="26" height="18" rx="2.5" fill="url(#gGold)"/>
-            <rect x="83" y="174" width="4" height="12" rx="1.5" fill="url(#gBow)"/>
-            <rect x="113" y="174" width="4" height="12" rx="1.5" fill="url(#gBow)"/>
-            <rect x="87" y="171" width="26" height="2.5" fill="rgba(255,230,80,0.45)"/>
+            <!-- ─── CENTER ROSETTE ─── -->
+            <circle cx="110" cy="148" r="20" fill="#0a0400"/>
+            <circle cx="110" cy="148" r="17" fill="url(#gFil)" filter="url(#fGlow)"/>
+            <circle cx="110" cy="148" r="11" fill="#1a0a00"/>
+            <circle cx="110" cy="148" r="8" fill="url(#gJewel)"/>
+            <circle cx="106" cy="144" r="3" fill="rgba(255,255,220,0.92)"/>
+            <circle cx="105" cy="143" r="1.2" fill="rgba(255,255,255,1)"/>
 
-            <!-- ─── SHAFT ─── -->
-            <rect x="87" y="188" width="26" height="200" fill="url(#gGold)"/>
+            <!-- ═══════ BALUSTER (TURNED COLLAR) ═══════ -->
+            <!-- Top wide flat -->
+            <rect x="84" y="222" width="52" height="6" rx="1" fill="url(#gShaft)"/>
+            <rect x="86" y="222" width="48" height="2" fill="rgba(255,250,180,0.65)"/>
+            <rect x="86" y="226" width="48" height="2" fill="rgba(40,20,0,0.5)"/>
+            <!-- Baluster bulb (turned 3D feel) -->
+            <ellipse cx="110" cy="240" rx="26" ry="13" fill="url(#gShaft)"/>
+            <ellipse cx="104" cy="234" rx="17" ry="6" fill="rgba(255,250,180,0.65)"/>
+            <ellipse cx="110" cy="247" rx="20" ry="4" fill="rgba(30,12,0,0.55)"/>
+            <!-- Bulb under-lip -->
+            <rect x="86" y="251" width="48" height="6" rx="1" fill="url(#gShaft)"/>
+            <rect x="88" y="252" width="44" height="2" fill="rgba(255,250,180,0.55)"/>
+            <!-- Lower narrow band -->
+            <rect x="92" y="257" width="36" height="5" rx="1" fill="url(#gShaft)"/>
+            <rect x="94" y="257" width="32" height="1.5" fill="rgba(255,250,180,0.55)"/>
+
+            <!-- ═══════ SHAFT ═══════ -->
+            <!-- Body (slight taper) -->
+            <path d="M 99 262 L 121 262 L 122 470 L 98 470 Z" fill="url(#gShaft)"/>
+            <!-- Right edge dark band -->
+            <rect x="116" y="262" width="6" height="208" fill="rgba(30,12,0,0.42)"/>
             <!-- Central highlight stripe (cylinder) -->
-            <rect x="91" y="188" width="6" height="200" fill="rgba(255,235,100,0.38)"/>
-            <!-- Dark right edge -->
-            <rect x="108" y="188" width="4" height="200" fill="rgba(40,18,0,0.42)"/>
+            <rect x="103" y="262" width="6" height="208" fill="rgba(255,250,180,0.5)"/>
+            <rect x="105" y="262" width="2" height="208" fill="rgba(255,255,220,0.7)"/>
 
-            <!-- Engraved bands with jewel dots -->
-            <rect x="83" y="230" width="34" height="7" fill="url(#gBow)"/>
-            <rect x="87" y="232" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
-            <circle cx="100" cy="254" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="100" cy="254" r="2" fill="rgba(255,255,200,0.8)"/>
+            <!-- Engraved bands with jewel inserts -->
+            <!-- Band 1 -->
+            <rect x="92" y="296" width="36" height="10" rx="1" fill="url(#gShaft)"/>
+            <rect x="92" y="296" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
+            <rect x="92" y="304" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
+            <circle cx="110" cy="320" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="109" cy="319" r="1.2" fill="rgba(255,255,220,0.95)"/>
+            <!-- Band 2 -->
+            <rect x="92" y="342" width="36" height="10" rx="1" fill="url(#gShaft)"/>
+            <rect x="92" y="342" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
+            <rect x="92" y="350" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
+            <circle cx="110" cy="366" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="109" cy="365" r="1.2" fill="rgba(255,255,220,0.95)"/>
+            <!-- Band 3 -->
+            <rect x="92" y="388" width="36" height="10" rx="1" fill="url(#gShaft)"/>
+            <rect x="92" y="388" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
+            <rect x="92" y="396" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
+            <circle cx="110" cy="412" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="109" cy="411" r="1.2" fill="rgba(255,255,220,0.95)"/>
+            <!-- Band 4 -->
+            <rect x="92" y="434" width="36" height="10" rx="1" fill="url(#gShaft)"/>
+            <rect x="92" y="434" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
+            <rect x="92" y="442" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
 
-            <rect x="83" y="276" width="34" height="7" fill="url(#gBow)"/>
-            <rect x="87" y="278" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
-            <circle cx="100" cy="300" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="100" cy="300" r="2" fill="rgba(255,255,200,0.8)"/>
+            <!-- Aging marks on shaft -->
+            <circle cx="116" cy="278" r="1.2" fill="#3a1c00" opacity="0.5"/>
+            <circle cx="103" cy="328" r="0.9" fill="#3a1c00" opacity="0.4"/>
+            <circle cx="118" cy="376" r="1" fill="#3a1c00" opacity="0.45"/>
+            <circle cx="102" cy="420" r="0.8" fill="#3a1c00" opacity="0.4"/>
+            <line x1="100" y1="290" x2="106" y2="296" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
+            <line x1="118" y1="358" x2="113" y2="364" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
 
-            <rect x="83" y="322" width="34" height="7" fill="url(#gBow)"/>
-            <rect x="87" y="324" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
-            <circle cx="100" cy="348" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="100" cy="348" r="2" fill="rgba(255,255,200,0.8)"/>
+            <!-- ═══════ LOWER COLLAR (BEFORE BIT) ═══════ -->
+            <rect x="92" y="468" width="36" height="6" rx="1" fill="url(#gShaft)"/>
+            <ellipse cx="110" cy="482" rx="22" ry="9" fill="url(#gShaft)"/>
+            <ellipse cx="105" cy="478" rx="14" ry="4" fill="rgba(255,250,180,0.55)"/>
+            <ellipse cx="110" cy="488" rx="17" ry="2.5" fill="rgba(30,12,0,0.5)"/>
+            <rect x="94" y="490" width="32" height="5" rx="1" fill="url(#gShaft)"/>
+            <rect x="96" y="491" width="28" height="1.5" fill="rgba(255,250,180,0.55)"/>
 
-            <rect x="83" y="368" width="34" height="7" fill="url(#gBow)"/>
-            <rect x="87" y="370" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
+            <!-- ═══════ BIT (BLADE/TEETH) ═══════ -->
+            <!-- Main bit body going right -->
+            <path d="M 99 495 L 175 495 L 175 528 L 99 528 Z" fill="url(#gShaft)"/>
+            <!-- Bit top highlight -->
+            <rect x="99" y="495" width="76" height="3" fill="rgba(255,250,180,0.65)"/>
+            <!-- Bit bottom shadow -->
+            <rect x="99" y="525" width="76" height="3" fill="rgba(30,12,0,0.55)"/>
+            <!-- Bit edge bevels -->
+            <rect x="173" y="495" width="2" height="33" fill="rgba(30,12,0,0.45)"/>
 
-            <!-- ─── PRE-TEETH COLLAR ─── -->
-            <rect x="82" y="382" width="36" height="20" rx="3" fill="url(#gGold)"/>
-            <rect x="77" y="386" width="5" height="13" rx="2" fill="url(#gBow)"/>
-            <rect x="118" y="386" width="5" height="13" rx="2" fill="url(#gBow)"/>
-            <rect x="82" y="383" width="36" height="3" fill="rgba(255,228,80,0.48)"/>
+            <!-- Warding cuts -->
+            <rect x="118" y="500" width="6" height="14" fill="#0a0400"/>
+            <rect x="118" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
+            <rect x="138" y="500" width="6" height="14" fill="#0a0400"/>
+            <rect x="138" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
+            <rect x="158" y="500" width="6" height="14" fill="#0a0400"/>
+            <rect x="158" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
 
-            <!-- ─── TEETH (warding, going right) ─── -->
-            <!-- Tooth 1 -->
-            <rect x="113" y="402" width="48" height="15" rx="2" fill="url(#gGold)"/>
-            <rect x="116" y="407" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
-            <rect x="132" y="407" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
-            <rect x="113" y="403" width="48" height="2.5" fill="rgba(255,228,80,0.38)"/>
+            <!-- Bit terminal step -->
+            <path d="M 99 528 L 148 528 L 152 547 L 99 547 Z" fill="url(#gShaft)"/>
+            <rect x="99" y="528" width="50" height="2" fill="rgba(255,250,180,0.55)"/>
+            <rect x="99" y="544" width="50" height="2" fill="rgba(30,12,0,0.55)"/>
+            <!-- Tip warding on lower step -->
+            <rect x="118" y="532" width="5" height="11" fill="#0a0400"/>
+            <rect x="138" y="532" width="5" height="11" fill="#0a0400"/>
 
-            <!-- Tooth 2 (tallest) -->
-            <rect x="113" y="420" width="66" height="18" rx="2" fill="url(#gGold)"/>
-            <rect x="116" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
-            <rect x="134" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
-            <rect x="154" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
-            <rect x="113" y="421" width="66" height="2.5" fill="rgba(255,228,80,0.38)"/>
-
-            <!-- Tooth 3 -->
-            <rect x="113" y="441" width="36" height="15" rx="2" fill="url(#gGold)"/>
-            <rect x="116" y="446" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
-            <rect x="130" y="446" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
-            <rect x="113" y="442" width="36" height="2.5" fill="rgba(255,228,80,0.38)"/>
-
-            <!-- Tip finial -->
-            <path d="M 149 456 L 165 447 L 179 456 Z" fill="url(#gBow)" opacity="0.82"/>
+            <!-- Patina overlay across whole key -->
+            <rect x="0" y="0" width="220" height="560" fill="url(#gPatina)" opacity="0.22"/>
           </g>
 
-          <!-- Specular highlight overlay (moving light reflection) -->
-          <ellipse cx="86" cy="56" rx="17" ry="26" fill="url(#gHighlight)" opacity="0.68" transform="rotate(-14,86,56)"/>
+          <!-- Specular highlight blob (animated light reflection) -->
+          <ellipse cx="80" cy="100" rx="22" ry="32" fill="url(#gSpec)" opacity="0.65" transform="rotate(-12,80,100)"/>
+          <ellipse cx="105" cy="280" rx="6" ry="40" fill="url(#gSpec)" opacity="0.45"/>
+
+          <!-- Aged scratches -->
+          <line x1="68" y1="180" x2="76" y2="190" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
+          <line x1="148" y1="92" x2="156" y2="100" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
+          <line x1="160" y1="510" x2="172" y2="518" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
         </svg>
       </div>
 
@@ -2380,17 +2475,6 @@ document.body.classList.add('intro-lock');
 window.scrollTo(0, 0);
 window.addEventListener('load', () => window.scrollTo(0, 0));
 
-// CURSOR
-const c = document.getElementById('cur'), cf = document.getElementById('curf');
-let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove', e => {
-  mx=e.clientX; my=e.clientY;
-  c.style.left=mx+'px'; c.style.top=my+'px';
-});
-(function loop(){ fx+=(mx-fx)*.12; fy+=(my-fy)*.12;
-  cf.style.left=fx+'px'; cf.style.top=fy+'px';
-  requestAnimationFrame(loop); })();
-
 // GRAIN
 const gv=document.getElementById('grain');
 gv.style.cssText='position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;';
@@ -2427,37 +2511,26 @@ function dp(){
 }
 dp();
 
-// INTRO ANIMATION
-// Lock keyhole center in SVG world coords ≈ (440, 102)
-// Key bow center in SVG coords = (80, 110)
-// To align bow with keyhole: translate (360, -8)
-// Then rotate +90° clockwise around bow center "80px 110px" so shaft points DOWN into keyhole slot
-// Then rotate -180° to "turn" the key inside the lock
+// INTRO ANIMATION — key flies directly into the door's keyhole
 const tl2 = gsap.timeline({ delay: 0.3 });
 
 tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
+  // Key materializes large in center
   .to('#kk', { opacity: 1, scale: 1, duration: 1.1, ease: 'power3.out', transformOrigin: 'center' }, 0.7)
-  .to('#kl', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 1.6)
-  // Gentle hover to signal "alive"
-  .to('#kk', { y: -8, duration: 0.6, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.8)
-  // Slide bow center to keyhole circle center (440,102): dx=360, dy=-8
-  .to('#kk', { x: 360, y: -8, duration: 1.5, ease: 'power2.inOut' }, 2.8)
-  // Rotate 90° clockwise around bow center → shaft points DOWN into keyhole slot
-  .to('#kk', { rotation: 90, transformOrigin: '80px 110px', duration: 0.55, ease: 'back.out(2)' }, 4.2)
-  // Slight scale down to "insert" key into lock (depth illusion)
-  .to('#kk', { scale: 0.92, transformOrigin: '80px 110px', duration: 0.3, ease: 'power2.inOut' }, 4.65)
-  // Turn key inside lock (-90° more = opening movement)
-  .to('#kk', { rotation: -45, transformOrigin: '80px 110px', duration: 0.55, ease: 'power2.inOut' }, 4.8)
-  // Shackle lifts as lock opens
-  .to('#ksh', { y: -30, duration: 0.5, ease: 'power2.out' }, 5.1)
-  // Burst
-  .to('#kburst', { r: 200, opacity: 0.75, duration: 0.5, ease: 'power3.out' }, 5.1)
-  .to('#kburst', { opacity: 0, duration: 0.45, ease: 'power2.in' }, 5.5)
-  .to(['#ksvg-wrap', '#i-label'], { opacity: 0, duration: 0.4 }, 5.3)
-  .to('#door2', { opacity: 1, duration: 0.1 }, 5.7)
-  .to('#d2pan', { rotationY: -80, transformOrigin: 'left center', duration: 1.4, ease: 'power2.inOut' }, 5.8)
-  .to('#d2glow', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 6.4)
-  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.6)
+  // Door appears behind/below the key area
+  .to('#door2', { opacity: 0.9, duration: 1, ease: 'power2.out' }, 1.6)
+  // Gentle hover
+  .to('#kk', { y: -10, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.9)
+  // Key rotates 90° vertical so shaft points DOWN (toward door keyhole below)
+  .to('#kk', { rotation: 90, transformOrigin: '80px 110px', duration: 0.7, ease: 'power2.inOut' }, 3.3)
+  // Key flies INTO the door keyhole: shrinks, slides down, fades
+  .to('#ksvg-wrap', { scale: 0.18, y: 110, opacity: 0, duration: 1.0, ease: 'power2.in' }, 4.0)
+  .to('#i-label', { opacity: 0, duration: 0.5 }, 4.3)
+  // Door interior glows (key turning the lock)
+  .to('#d2glow', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 4.9)
+  // Door swings open
+  .to('#d2pan', { rotationY: -80, transformOrigin: 'left center', duration: 1.4, ease: 'power2.inOut' }, 5.4)
+  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.2)
   .to('#intro', {
     opacity: 0, duration: 0.9, ease: 'power2.in',
     onComplete: () => {
@@ -2472,8 +2545,14 @@ tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
 function toggleService(btn) {
   const cell = btn.closest('.s-cell');
   const isOpen = cell.classList.contains('open');
-  document.querySelectorAll('.s-cell.open').forEach(c => c.classList.remove('open'));
-  if (!isOpen) cell.classList.add('open');
+  document.querySelectorAll('.s-cell.open').forEach(c => {
+    c.classList.remove('open');
+    const t = c.querySelector('.s-arrow-text'); if (t) t.textContent = 'Lire la suite';
+  });
+  if (!isOpen) {
+    cell.classList.add('open');
+    const t = btn.querySelector('.s-arrow-text'); if (t) t.textContent = 'Réduire';
+  }
 }
 
 // NAV
