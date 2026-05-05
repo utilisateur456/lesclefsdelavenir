@@ -544,11 +544,46 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 0.8rem; color: var(--bg3);
       transition: all 0.4s;
+      cursor: pointer; background: var(--bg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     .s-cell:hover .s-arrow {
       border-color: var(--a200); color: var(--bg);
       background: var(--a200);
+    }
+
+    .s-cell.open .s-arrow {
+      transform: rotate(90deg);
+      border-color: var(--a200); color: var(--bg);
+      background: var(--a200);
+    }
+
+    .s-expand {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity: 0; margin-top: 0;
+    }
+
+    .s-cell.open .s-expand {
+      max-height: 600px; opacity: 1; margin-top: 1.4rem;
+    }
+
+    .s-expand-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 1.4rem;
+      padding-bottom: 3.5rem;
+    }
+
+    .s-expand-inner h4 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1rem; font-style: italic; color: var(--a200);
+      margin-bottom: 0.8rem; font-weight: 400;
+    }
+
+    .s-expand-inner p {
+      font-size: 0.82rem; line-height: 1.8; color: var(--t200);
+      font-weight: 300; margin-bottom: 0.8rem;
     }
 
     /* ─── ABOUT MARCO ─────────────────────────────────────────────── */
@@ -567,84 +602,80 @@
       margin: 0 auto;
     }
 
-    /* Stylized SVG portrait with abstract overlay */
+    /* 3D Golden Key portrait */
     .portrait-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(160deg, var(--a200) 0%, #0d2535 100%);
+      background: radial-gradient(ellipse at 50% 45%, #1a3042 0%, #0a1820 55%, #060d14 100%);
       overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .portrait-bg::before {
+      content: '';
+      position: absolute;
+      width: 340px; height: 340px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(218,165,32,0.13) 0%, rgba(180,130,0,0.06) 40%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -52%);
+      animation: key-glow-pulse 4s ease-in-out infinite;
     }
 
     .portrait-bg::after {
       content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 30%, rgba(113,196,239,0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, rgba(0,104,140,0.4) 0%, transparent 60%);
+      position: absolute; bottom: 0; left: 0; right: 0; height: 30%;
+      background: linear-gradient(to top, rgba(6,13,20,0.7) 0%, transparent 100%);
     }
 
-    .portrait-rings {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+    @keyframes key-glow-pulse {
+      0%,100% { opacity: 0.7; transform: translate(-50%,-52%) scale(1); }
+      50%      { opacity: 1;   transform: translate(-50%,-52%) scale(1.18); }
     }
 
-    .pr-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(113,196,239,0.18);
+    .key3d-wrap {
+      position: relative; z-index: 2;
+      perspective: 1400px;
     }
 
-    .pr-r1 { width: 320px; height: 320px; animation: pr-rot 50s linear infinite; }
-    .pr-r2 { width: 240px; height: 240px; animation: pr-rot 35s linear infinite reverse; border-color: rgba(113,196,239,0.25); }
-    .pr-r3 { width: 160px; height: 160px; animation: pr-rot 25s linear infinite; border-color: rgba(212,234,247,0.4); }
-
-    @keyframes pr-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    .pr-ring::before {
-      content: '';
-      position: absolute; top: -3px; left: 50%;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--a100);
-      transform: translateX(-50%);
-      box-shadow: 0 0 8px var(--a100);
+    .key3d-inner {
+      animation: key3d-float 5.5s ease-in-out infinite;
+      filter:
+        drop-shadow(0 40px 55px rgba(0,0,0,0.9))
+        drop-shadow(0 0 70px rgba(218,165,32,0.22));
     }
 
-    .portrait-mono {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Instrument Serif', serif;
-      font-size: 5rem; font-style: italic;
-      color: rgba(212,234,247,0.92);
-      letter-spacing: 0.02em;
+    @keyframes key3d-float {
+      0%,100% { transform: rotateX(14deg) rotateY(-22deg) rotateZ(-10deg) translateY(0); }
+      50%      { transform: rotateX(14deg) rotateY(-22deg) rotateZ(-10deg) translateY(-20px); }
     }
 
     .portrait-name-tag {
       position: absolute; bottom: 1.5rem; left: 1.5rem;
-      background: var(--bg);
+      background: rgba(6,13,20,0.85);
       padding: 1rem 1.5rem;
-      border-left: 2px solid var(--a200);
+      border-left: 2px solid rgba(218,165,32,0.7);
+      backdrop-filter: blur(8px);
     }
 
     .pnt-label {
       font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--bg3); margin-bottom: 0.3rem; font-weight: 500;
+      color: rgba(218,165,32,0.6); margin-bottom: 0.3rem; font-weight: 500;
     }
 
     .pnt-name {
       font-family: 'Instrument Serif', serif;
-      font-size: 1.4rem; color: var(--t100);
+      font-size: 1.4rem; color: rgba(255,230,120,0.92);
       letter-spacing: 0.02em;
     }
 
-    .pnt-name em { font-style: italic; color: var(--a200); }
+    .pnt-name em { font-style: italic; color: #FFD700; }
 
     .portrait-deco {
       position: absolute; top: 1.5rem; right: 1.5rem;
       font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(212,234,247,0.5); font-weight: 400;
+      color: rgba(218,165,32,0.4); font-weight: 400;
       display: flex; align-items: center; gap: 0.6rem;
     }
 
-    .portrait-deco::before { content: ''; width: 12px; height: 1px; background: rgba(212,234,247,0.4); }
+    .portrait-deco::before { content: ''; width: 12px; height: 1px; background: rgba(218,165,32,0.35); }
 
     .a-text {}
 
@@ -1322,7 +1353,7 @@
 
     [data-r].on { opacity: 1; transform: translate(0); }
 
-    /* ─── RESPONSIVE ─────────────────────────────────────────────── */
+    /* ─── RESPONSIVE 960px ───────────────────────────────────────── */
     @media (max-width: 960px) {
       .hero-vert { display: none; }
       #hero { grid-template-columns: 1fr; }
@@ -1332,7 +1363,7 @@
       .s-header { grid-template-columns: 1fr; gap: 2rem; }
       .s-grid { grid-template-columns: 1fr 1fr; }
       #about { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3rem; }
-      .a-portrait { max-width: 320px; }
+      .a-portrait { max-width: 340px; }
       #stats { padding: 4rem 2rem; }
       .stats-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .proc-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -1355,6 +1386,59 @@
       .pay-sep { width: 60px; height: 1px; }
       body { cursor: auto; }
       #cur, #curf { display: none; }
+    }
+
+    /* ─── RESPONSIVE 600px (smartphones) ────────────────────────── */
+    @media (max-width: 600px) {
+      /* Phone bar */
+      #pbar { padding: 0.5rem 1.2rem; gap: 0.6rem; font-size: 0.75rem; flex-wrap: wrap; justify-content: center; }
+      /* Nav */
+      #nav2 { padding: 0.9rem 1.2rem; }
+      .n2-logo { font-size: 1rem; }
+      .n2-cta { padding: 0.6rem 1rem; font-size: 0.6rem; }
+      /* Hero */
+      .h-left { padding: 2.5rem 1.5rem 3rem; }
+      .h-tag { font-size: 0.55rem; }
+      .h-h1 { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+      .h-desc { font-size: 0.85rem; }
+      .h-trust { flex-wrap: wrap; gap: 0.8rem; }
+      .h-right { height: 42vh; }
+      /* Marquee */
+      .marquee-strip { padding: 0.9rem 0; }
+      /* Services */
+      .s-grid { grid-template-columns: 1fr; }
+      .s-cell { padding: 2rem 1.5rem 5rem; }
+      /* About */
+      #about { padding: 4rem 1.5rem; }
+      .a-portrait { max-width: 280px; }
+      .key3d-inner { width: 140px; height: 340px; }
+      .a-text h2 { font-size: 2rem; }
+      /* Stats */
+      .stats-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 0; }
+      .stat-num { font-size: 2.4rem; }
+      /* Process */
+      .proc-step { padding: 1.5rem; }
+      /* Testimonials */
+      .t-card { padding: 1.8rem; }
+      /* CTA */
+      .cta-left { padding: 3.5rem 1.5rem; }
+      .cta-h2 { font-size: 2rem; }
+      .cta-right { padding: 3rem 1.5rem; }
+      .pc-num, .pc-price { font-size: 2rem; }
+      .hours-block { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+      /* Consult modes */
+      #consult-modes { padding: 4rem 1.5rem; }
+      .cm-card { padding: 2rem 1.5rem; }
+      /* Contact form */
+      #contact { padding: 4rem 1.5rem; }
+      .cf-btn { width: 100%; justify-content: center; }
+      /* Payment */
+      #payment { padding: 3.5rem 1.5rem; }
+      .pay-card { min-width: 0; width: 100%; }
+      /* Footer */
+      .f2-top { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer#f2 { padding: 3.5rem 1.5rem 2rem; }
+      .f2-bot { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
 </head>
@@ -1652,7 +1736,12 @@
       <p>La voyance pure est le don le plus direct : la perception immédiate des énergies qui entourent votre vie — votre passé, votre présent, et les lignes de futur qui se dessinent. Aucun support, aucune carte, aucun outil intermédiaire — uniquement le ressenti vibratoire et la lecture intuitive de votre champ énergétique.</p>
       <p>Marco Médium pratique cette voyance depuis plus de vingt ans à travers toute la Suisse romande — Genève, Lausanne, Fribourg, Neuchâtel, Sion — et alémanique, en consultation par téléphone surtaxé au 0901 212 212. Vous repartez avec des réponses précises sur l'amour, le travail, la famille ou un événement à venir.</p>
       <div class="s-tags"><span class="s-tag">voyance</span><span class="s-tag">voyance suisse</span><span class="s-tag">voyance par téléphone</span><span class="s-tag">voyant sérieux</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette consultation ?</h4>
+        <p>Idéale pour toute personne face à une décision importante ou une période de transition — séparation, changement professionnel, déménagement, question sentimentale, blocage inexpliqué. La voyance pure convient aussi pour un simple "état des lieux" énergétique afin de mieux vous positionner dans votre vie actuelle.</p>
+        <p>Marco ne nécessite aucune information préalable : donnez simplement votre prénom et posez votre question. Cette transparence totale est la marque d'un voyant authentique qui ne s'appuie pas sur ce que vous dites pour construire sa lecture. Disponible par téléphone, WhatsApp ou par email avec réponse détaillée sous 24 heures.</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.08s">
       <span class="s-num">02</span>
@@ -1666,7 +1755,12 @@
       <p>La médiumnité est un art délicat qui ouvre un pont vibratoire entre vous et les âmes de ceux qui sont partis. En séance, Marco entre en contact respectueux avec vos proches disparus afin de transmettre des messages d'amour, de pardon, de réconciliation — souvent porteurs de détails impossibles à deviner, qui authentifient le contact.</p>
       <p>Cette pratique de médium spirite est encadrée par une éthique stricte : pas de spectacle, pas de promesses, uniquement ce qui se présente. Idéal pour les personnes en deuil cherchant apaisement, ou pour comprendre des liens karmiques restés en suspens. Consultation médium par téléphone, WhatsApp ou email.</p>
       <div class="s-tags"><span class="s-tag">médium</span><span class="s-tag">médiumnité</span><span class="s-tag">contact défunts</span><span class="s-tag">deuil</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette séance ?</h4>
+        <p>Pour les personnes en deuil qui peinent à tourner la page, qui ont des paroles non-dites avec un être disparu, ou qui ont besoin d'un signe de présence. Aussi pour ceux qui ressentent une présence invisible et souhaitent comprendre quel message leur est adressé.</p>
+        <p>Marco approche chaque séance de médiumnité avec respect, discrétion et humilité. Il ne dramatise pas — il transmet ce qui lui est donné de transmettre, avec les mots exacts qui lui viennent. Les consultants rapportent souvent des détails saisissants que seul le défunt pouvait connaître : un surnom, un objet, un souvenir secret. Consultation disponible par téléphone ou par email, partout en Suisse et en France.</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.16s">
       <span class="s-num">03</span>
@@ -1679,7 +1773,12 @@
       <p>Le Tarot de Marseille est un langage symbolique millénaire. Chaque tirage met en lumière les forces invisibles qui agissent dans votre vie, les choix qui s'offrent à vous, les obstacles à dépasser et les ouvertures à saisir. Marco lit les 22 arcanes majeurs et les 56 mineurs avec la précision d'un voyant qui a passé deux décennies à dialoguer avec ces images sacrées.</p>
       <p>Tirage en croix, tirage en éventail, oracle de Belline ou tarot persan : Marco choisit la méthode adaptée à votre question — sentimentale, professionnelle, financière ou spirituelle. Une lecture de tarot par téléphone idéale pour une décision importante, un croisement de chemins, ou simplement clarifier une intuition.</p>
       <div class="s-tags"><span class="s-tag">tarot</span><span class="s-tag">tarot de marseille</span><span class="s-tag">tirage de cartes</span><span class="s-tag">cartomancie</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette lecture ?</h4>
+        <p>Le tarot divinatoire est l'outil idéal pour ceux qui souhaitent une réponse structurée, avec un début et une fin. Il cartographie votre situation actuelle, les énergies passées qui l'ont façonnée, les obstacles à lever, les alliés cachés et les résultats probables selon votre chemin actuel.</p>
+        <p>Marco choisit le type de tirage selon votre demande : croix celtique pour une analyse complète, tirage amour pour les questions sentimentales, tirage en éventail pour une vision temporelle sur 3 à 6 mois. Chaque lame est commentée avec précision et mise en contexte par rapport à votre vie personnelle. Un rapport écrit détaillé peut être fourni par email sous 24 heures pour CHF 15.-</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.24s">
       <span class="s-num">04</span>
@@ -1693,7 +1792,12 @@
       <p>L'astrologie karmique va bien au-delà de l'horoscope du jour. À partir de votre date, heure et lieu de naissance, Marco lit votre thème astral natal — la carte précise du ciel à l'instant de votre venue au monde — pour comprendre votre mission d'incarnation, vos blocages hérités, et les leçons d'âme qui se présentent à vous.</p>
       <p>Cette analyse intègre les nœuds lunaires (axe karmique nord/sud), les transits de Saturne, les retours de Jupiter et les grands cycles de vie. Une consultation indispensable lors d'un cap symbolique : 29-30 ans, 42 ans, 56 ans, ou face à un sentiment de répétition. Disponible par téléphone et email pour toute la Suisse.</p>
       <div class="s-tags"><span class="s-tag">astrologie</span><span class="s-tag">thème astral</span><span class="s-tag">horoscope personnalisé</span><span class="s-tag">karma</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette consultation ?</h4>
+        <p>Pour les personnes qui traversent une crise existentielle, qui reconnaissent des schémas répétitifs dans leur vie amoureuse ou professionnelle, ou qui souhaitent préparer une période majeure — retour de Saturne (29 ans), opposition de Saturne (44 ans), passage de Chiron (51 ans). L'astrologie karmique éclaire le "pourquoi" là où les autres disciplines éclairent le "quoi".</p>
+        <p>L'analyse des nœuds lunaires (Rahu et Ketu) donne des clés précises sur ce que l'âme a déjà accompli et ce qu'elle est venue apprendre dans cette vie. Marco intègre aussi les astéroïdes karmiques (Chiron, Lilith, Vertex) pour une lecture à la fois précise et profondément personnelle. Rapport écrit complet disponible par email.</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.32s">
       <span class="s-num">05</span>
@@ -1713,7 +1817,12 @@
       <p>La numérologie sacrée — héritière de Pythagore et des traditions hébraïques — révèle dans les nombres de votre date de naissance et des lettres de votre nom les vibrations qui structurent votre destinée. Marco calcule votre chemin de vie, votre nombre d'expression, votre nombre intime et votre année personnelle pour cartographier les cycles qui rythment vos moments-clefs.</p>
       <p>Une étude numérologique permet de comprendre pourquoi certaines périodes sont propices à un changement professionnel, à une rencontre amoureuse, ou au contraire à l'introspection. Idéal aussi pour étudier la compatibilité numérologique d'un couple ou choisir le prénom d'un enfant. Consultation par téléphone ou rapport écrit complet par email en 24 heures.</p>
       <div class="s-tags"><span class="s-tag">numérologie</span><span class="s-tag">chemin de vie</span><span class="s-tag">année personnelle</span><span class="s-tag">compatibilité</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette étude ?</h4>
+        <p>Pour toute personne qui ressent que son prénom ou sa date de naissance porte une signification profonde. Particulièrement éclairante aux carrefours de vie : choisir entre deux voies professionnelles, évaluer la compatibilité avec un partenaire (amoureux ou d'affaires), comprendre pourquoi un projet a échoué, ou identifier l'année la plus favorable pour agir.</p>
+        <p>Marco établit un rapport numérologique complet incluant le chemin de vie (nombre de base), le nombre d'expression (plein potentiel de la personnalité), le nombre intime (désirs profonds de l'âme) et le nombre de réalisation (mission incarnée). Ce rapport détaillé peut être envoyé par email sous 24 heures pour CHF 15.-, ou commenté en direct lors d'un appel téléphonique.</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
     <div class="s-cell" data-r="up" style="transition-delay:.4s">
       <span class="s-num">06</span>
@@ -1727,7 +1836,12 @@
       <p>La guidance angélique est l'art d'écouter les murmures de vos anges gardiens et de vos guides spirituels — ces présences bienveillantes qui veillent sur votre chemin. Marco utilise les 72 anges de la Kabbale, les oracles angéliques de Doreen Virtue et l'écoute médiumnique pour transmettre les messages personnels qui vous sont destinés.</p>
       <p>Cette consultation apporte douceur et réconfort lors d'un passage difficile, d'un deuil, d'une perte de sens ou d'une décision importante. Vous recevez le nom de vos anges protecteurs, leur domaine d'action, et la prière ou intention spécifique qui ouvrira le canal de leur soutien dans votre quotidien.</p>
       <div class="s-tags"><span class="s-tag">anges gardiens</span><span class="s-tag">guidance spirituelle</span><span class="s-tag">guides</span><span class="s-tag">spiritualité</span></div>
-      <div class="s-arrow">→</div>
+      <div class="s-expand"><div class="s-expand-inner">
+        <h4>Pour qui est cette consultation ?</h4>
+        <p>Pour les personnes en quête d'une guidance douce et lumineuse, pour celles qui traversent une période difficile et ont besoin d'un réconfort spirituel profond, d'un signe de présence divine, ou simplement d'un souffle d'espoir. Aussi idéale pour les personnes en développement spirituel qui souhaitent identifier et travailler consciemment avec leurs guides personnels.</p>
+        <p>Marco identifie les anges de la Kabbale qui vous protègent selon votre date de naissance, transmet les messages spécifiques qui vous sont destinés, et vous remet une intention ou prière d'activation pour maintenir le lien au quotidien. Beaucoup de consultants rapportent un soulagement immédiat, une chaleur, une paix intérieure dès la fin de la séance. Consultation par téléphone au 0901 212 212 ou par email.</p>
+      </div></div>
+      <button class="s-arrow" onclick="toggleService(this)">→</button>
     </div>
   </div>
 </section>
@@ -1736,12 +1850,161 @@
 <section id="about">
   <div class="a-portrait" data-r="left">
     <div class="portrait-bg">
-      <div class="portrait-rings">
-        <div class="pr-ring pr-r1"></div>
-        <div class="pr-ring pr-r2"></div>
-        <div class="pr-ring pr-r3"></div>
+
+      <div class="key3d-wrap">
+        <svg class="key3d-inner" width="190" height="455" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gGold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#5a3600"/>
+              <stop offset="12%"  stop-color="#A86E08"/>
+              <stop offset="28%"  stop-color="#D4A020"/>
+              <stop offset="45%"  stop-color="#FFE060"/>
+              <stop offset="56%"  stop-color="#FFD030"/>
+              <stop offset="72%"  stop-color="#C08510"/>
+              <stop offset="88%"  stop-color="#7a5200"/>
+              <stop offset="100%" stop-color="#4a3000"/>
+            </linearGradient>
+            <linearGradient id="gBow" x1="10%" y1="10%" x2="90%" y2="90%">
+              <stop offset="0%"   stop-color="#FFE878"/>
+              <stop offset="22%"  stop-color="#D49C0C"/>
+              <stop offset="55%"  stop-color="#8B6200"/>
+              <stop offset="82%"  stop-color="#5a3a00"/>
+              <stop offset="100%" stop-color="#FFD030"/>
+            </linearGradient>
+            <radialGradient id="gJewel" cx="36%" cy="32%" r="68%">
+              <stop offset="0%"   stop-color="#FFFAE0"/>
+              <stop offset="30%"  stop-color="#FFD700"/>
+              <stop offset="65%"  stop-color="#C89010"/>
+              <stop offset="100%" stop-color="#6a4200"/>
+            </radialGradient>
+            <radialGradient id="gHighlight" cx="28%" cy="22%" r="72%">
+              <stop offset="0%"   stop-color="rgba(255,255,220,0.92)"/>
+              <stop offset="100%" stop-color="rgba(255,180,0,0)"/>
+            </radialGradient>
+            <linearGradient id="gEngrave" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#4a2e00"/>
+              <stop offset="50%"  stop-color="#8a5c00"/>
+              <stop offset="100%" stop-color="#4a2e00"/>
+            </linearGradient>
+            <filter id="fGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="fShadow" x="-25%" y="-15%" width="150%" height="130%">
+              <feDropShadow dx="4" dy="8" stdDeviation="10" flood-color="#1a0a00" flood-opacity="0.85"/>
+            </filter>
+          </defs>
+
+          <g filter="url(#fShadow)">
+            <!-- ─── FLEUR-DE-LYS CROWN ─── -->
+            <circle cx="100" cy="6" r="5.5" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <path d="M 100 12 L 92 4 Q 100 -5 108 4 Z" fill="url(#gBow)"/>
+            <path d="M 100 12 L 82 3 Q 100 -8 118 3 Z" fill="url(#gBow)" opacity="0.68"/>
+            <circle cx="82" cy="6" r="3.5" fill="url(#gBow)" opacity="0.85"/>
+            <circle cx="118" cy="6" r="3.5" fill="url(#gBow)" opacity="0.85"/>
+            <circle cx="82" cy="6" r="1.5" fill="rgba(255,240,120,0.7)"/>
+            <circle cx="118" cy="6" r="1.5" fill="rgba(255,240,120,0.7)"/>
+
+            <!-- ─── BOW OUTER DECORATIVE RING ─── -->
+            <circle cx="100" cy="100" r="82" fill="none" stroke="url(#gGold)" stroke-width="1.5" opacity="0.55"/>
+
+            <!-- ─── BOW MAIN RING (torus illusion) ─── -->
+            <circle cx="100" cy="100" r="74" fill="none" stroke="url(#gGold)" stroke-width="20"/>
+            <!-- Shadow inner edge of ring -->
+            <circle cx="100" cy="100" r="64" fill="none" stroke="rgba(40,18,0,0.75)" stroke-width="4"/>
+            <!-- Bright highlight on ring outer edge (top-left) -->
+            <path d="M 48 68 A 74 74 0 0 1 100 26" fill="none" stroke="rgba(255,238,100,0.65)" stroke-width="5" stroke-linecap="round"/>
+            <!-- Subtle reflected light (bottom-right) -->
+            <path d="M 152 132 A 74 74 0 0 1 100 174" fill="none" stroke="rgba(255,200,50,0.25)" stroke-width="3" stroke-linecap="round"/>
+
+            <!-- ─── FILIGREE PETALS ─── -->
+            <path d="M 100 28 Q 120 60 100 84 Q 80 60 100 28 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
+            <path d="M 100 172 Q 120 140 100 116 Q 80 140 100 172 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
+            <path d="M 26 100 Q 58 80 84 100 Q 58 120 26 100 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
+            <path d="M 174 100 Q 142 80 116 100 Q 142 120 174 100 Z" fill="none" stroke="url(#gBow)" stroke-width="1.8"/>
+            <!-- Diagonal accents -->
+            <path d="M 53 53 Q 72 72 90 90" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
+            <path d="M 147 53 Q 128 72 110 90" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
+            <path d="M 53 147 Q 72 128 90 110" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
+            <path d="M 147 147 Q 128 128 110 110" fill="none" stroke="url(#gBow)" stroke-width="1" opacity="0.55"/>
+            <!-- Cathedral cross -->
+            <path d="M 100 48 L 100 152 M 48 100 L 152 100" stroke="url(#gEngrave)" stroke-width="1.3" opacity="0.8"/>
+            <path d="M 67 67 L 133 133 M 133 67 L 67 133" stroke="url(#gEngrave)" stroke-width="0.8" opacity="0.45"/>
+
+            <!-- ─── CENTER JEWEL ─── -->
+            <circle cx="100" cy="100" r="22" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="100" cy="100" r="15" fill="#2e1500" opacity="0.9"/>
+            <circle cx="100" cy="100" r="10" fill="url(#gJewel)"/>
+            <circle cx="96" cy="96" r="3.5" fill="rgba(255,255,210,0.9)"/>
+            <circle cx="94" cy="94" r="1.5" fill="rgba(255,255,255,0.8)"/>
+
+            <!-- ─── COLLAR bow→shaft ─── -->
+            <rect x="87" y="170" width="26" height="18" rx="2.5" fill="url(#gGold)"/>
+            <rect x="83" y="174" width="4" height="12" rx="1.5" fill="url(#gBow)"/>
+            <rect x="113" y="174" width="4" height="12" rx="1.5" fill="url(#gBow)"/>
+            <rect x="87" y="171" width="26" height="2.5" fill="rgba(255,230,80,0.45)"/>
+
+            <!-- ─── SHAFT ─── -->
+            <rect x="87" y="188" width="26" height="200" fill="url(#gGold)"/>
+            <!-- Central highlight stripe (cylinder) -->
+            <rect x="91" y="188" width="6" height="200" fill="rgba(255,235,100,0.38)"/>
+            <!-- Dark right edge -->
+            <rect x="108" y="188" width="4" height="200" fill="rgba(40,18,0,0.42)"/>
+
+            <!-- Engraved bands with jewel dots -->
+            <rect x="83" y="230" width="34" height="7" fill="url(#gBow)"/>
+            <rect x="87" y="232" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
+            <circle cx="100" cy="254" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="100" cy="254" r="2" fill="rgba(255,255,200,0.8)"/>
+
+            <rect x="83" y="276" width="34" height="7" fill="url(#gBow)"/>
+            <rect x="87" y="278" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
+            <circle cx="100" cy="300" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="100" cy="300" r="2" fill="rgba(255,255,200,0.8)"/>
+
+            <rect x="83" y="322" width="34" height="7" fill="url(#gBow)"/>
+            <rect x="87" y="324" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
+            <circle cx="100" cy="348" r="4" fill="url(#gJewel)" filter="url(#fGlow)"/>
+            <circle cx="100" cy="348" r="2" fill="rgba(255,255,200,0.8)"/>
+
+            <rect x="83" y="368" width="34" height="7" fill="url(#gBow)"/>
+            <rect x="87" y="370" width="26" height="3" fill="rgba(255,228,80,0.48)"/>
+
+            <!-- ─── PRE-TEETH COLLAR ─── -->
+            <rect x="82" y="382" width="36" height="20" rx="3" fill="url(#gGold)"/>
+            <rect x="77" y="386" width="5" height="13" rx="2" fill="url(#gBow)"/>
+            <rect x="118" y="386" width="5" height="13" rx="2" fill="url(#gBow)"/>
+            <rect x="82" y="383" width="36" height="3" fill="rgba(255,228,80,0.48)"/>
+
+            <!-- ─── TEETH (warding, going right) ─── -->
+            <!-- Tooth 1 -->
+            <rect x="113" y="402" width="48" height="15" rx="2" fill="url(#gGold)"/>
+            <rect x="116" y="407" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
+            <rect x="132" y="407" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
+            <rect x="113" y="403" width="48" height="2.5" fill="rgba(255,228,80,0.38)"/>
+
+            <!-- Tooth 2 (tallest) -->
+            <rect x="113" y="420" width="66" height="18" rx="2" fill="url(#gGold)"/>
+            <rect x="116" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
+            <rect x="134" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
+            <rect x="154" y="426" width="7" height="8" fill="rgba(40,18,0,0.72)"/>
+            <rect x="113" y="421" width="66" height="2.5" fill="rgba(255,228,80,0.38)"/>
+
+            <!-- Tooth 3 -->
+            <rect x="113" y="441" width="36" height="15" rx="2" fill="url(#gGold)"/>
+            <rect x="116" y="446" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
+            <rect x="130" y="446" width="6" height="6" fill="rgba(40,18,0,0.72)"/>
+            <rect x="113" y="442" width="36" height="2.5" fill="rgba(255,228,80,0.38)"/>
+
+            <!-- Tip finial -->
+            <path d="M 149 456 L 165 447 L 179 456 Z" fill="url(#gBow)" opacity="0.82"/>
+          </g>
+
+          <!-- Specular highlight overlay (moving light reflection) -->
+          <ellipse cx="86" cy="56" rx="17" ry="26" fill="url(#gHighlight)" opacity="0.68" transform="rotate(-14,86,56)"/>
+        </svg>
       </div>
-      <div class="portrait-mono">M</div>
+
       <div class="portrait-deco">Médium · Suisse</div>
       <div class="portrait-name-tag">
         <div class="pnt-label">Voyant & Médium</div>
@@ -2165,22 +2428,36 @@ function dp(){
 dp();
 
 // INTRO ANIMATION
+// Lock keyhole center in SVG world coords ≈ (440, 102)
+// Key bow center in SVG coords = (80, 110)
+// To align bow with keyhole: translate (360, -8)
+// Then rotate +90° clockwise around bow center "80px 110px" so shaft points DOWN into keyhole slot
+// Then rotate -180° to "turn" the key inside the lock
 const tl2 = gsap.timeline({ delay: 0.3 });
 
 tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
   .to('#kk', { opacity: 1, scale: 1, duration: 1.1, ease: 'power3.out', transformOrigin: 'center' }, 0.7)
   .to('#kl', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 1.6)
-  .to('#kk', { y: -10, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.8)
-  .to('#kk', { x: 205, duration: 1.4, ease: 'power2.inOut' }, 2.8)
-  .to('#kk', { rotation: -90, transformOrigin: '325px 110px', duration: 0.5, ease: 'back.out(2)' }, 4.1)
-  .to('#ksh', { y: -26, duration: 0.45, ease: 'power2.out' }, 4.5)
-  .to('#kburst', { r: 200, opacity: 0.7, duration: 0.5, ease: 'power3.out' }, 4.5)
-  .to('#kburst', { opacity: 0, duration: 0.45, ease: 'power2.in' }, 4.9)
-  .to(['#ksvg-wrap', '#i-label'], { opacity: 0, duration: 0.4 }, 4.7)
-  .to('#door2', { opacity: 1, duration: 0.1 }, 5.1)
-  .to('#d2pan', { rotationY: -80, transformOrigin: 'left center', duration: 1.4, ease: 'power2.inOut' }, 5.2)
-  .to('#d2glow', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 5.8)
-  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.0)
+  // Gentle hover to signal "alive"
+  .to('#kk', { y: -8, duration: 0.6, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.8)
+  // Slide bow center to keyhole circle center (440,102): dx=360, dy=-8
+  .to('#kk', { x: 360, y: -8, duration: 1.5, ease: 'power2.inOut' }, 2.8)
+  // Rotate 90° clockwise around bow center → shaft points DOWN into keyhole slot
+  .to('#kk', { rotation: 90, transformOrigin: '80px 110px', duration: 0.55, ease: 'back.out(2)' }, 4.2)
+  // Slight scale down to "insert" key into lock (depth illusion)
+  .to('#kk', { scale: 0.92, transformOrigin: '80px 110px', duration: 0.3, ease: 'power2.inOut' }, 4.65)
+  // Turn key inside lock (-90° more = opening movement)
+  .to('#kk', { rotation: -45, transformOrigin: '80px 110px', duration: 0.55, ease: 'power2.inOut' }, 4.8)
+  // Shackle lifts as lock opens
+  .to('#ksh', { y: -30, duration: 0.5, ease: 'power2.out' }, 5.1)
+  // Burst
+  .to('#kburst', { r: 200, opacity: 0.75, duration: 0.5, ease: 'power3.out' }, 5.1)
+  .to('#kburst', { opacity: 0, duration: 0.45, ease: 'power2.in' }, 5.5)
+  .to(['#ksvg-wrap', '#i-label'], { opacity: 0, duration: 0.4 }, 5.3)
+  .to('#door2', { opacity: 1, duration: 0.1 }, 5.7)
+  .to('#d2pan', { rotationY: -80, transformOrigin: 'left center', duration: 1.4, ease: 'power2.inOut' }, 5.8)
+  .to('#d2glow', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 6.4)
+  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.6)
   .to('#intro', {
     opacity: 0, duration: 0.9, ease: 'power2.in',
     onComplete: () => {
@@ -2190,6 +2467,14 @@ tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }, 7.2);
+
+// SERVICE EXPAND
+function toggleService(btn) {
+  const cell = btn.closest('.s-cell');
+  const isOpen = cell.classList.contains('open');
+  document.querySelectorAll('.s-cell.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) cell.classList.add('open');
+}
 
 // NAV
 window.addEventListener('scroll', () => {
