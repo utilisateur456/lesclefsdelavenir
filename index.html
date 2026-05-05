@@ -2420,26 +2420,34 @@ function dp(){
 }
 dp();
 
-// INTRO ANIMATION — key flies directly into the door's keyhole
+// INTRO ANIMATION — key heads toward the door, enters keyhole, door opens
 const tl2 = gsap.timeline({ delay: 0.3 });
 
-tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
-  // Key materializes large in center
-  .to('#kk', { opacity: 1, scale: 1, duration: 1.1, ease: 'power3.out', transformOrigin: 'center' }, 0.7)
-  // Door appears behind/below the key area
-  .to('#door2', { opacity: 0.9, duration: 1, ease: 'power2.out' }, 1.6)
-  // Gentle hover
-  .to('#kk', { y: -10, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.9)
-  // Key rotates 90° vertical so shaft points DOWN (toward door keyhole below)
-  .to('#kk', { rotation: 90, transformOrigin: '80px 110px', duration: 0.7, ease: 'power2.inOut' }, 3.3)
-  // Key flies INTO the door keyhole: shrinks, slides down, fades
-  .to('#ksvg-wrap', { scale: 0.18, y: 110, opacity: 0, duration: 1.0, ease: 'power2.in' }, 4.0)
-  .to('#i-label', { opacity: 0, duration: 0.5 }, 4.3)
-  // Door interior glows (key turning the lock)
-  .to('#d2glow', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 4.9)
+// Key appears at upper-left, tilted, large
+gsap.set('#ksvg-wrap', { x: -260, y: -190, scale: 1.25, rotation: -28, opacity: 0 });
+// Make sure inner key starts visible
+gsap.set('#kk', { opacity: 1, scale: 1 });
+
+tl2.to('#i-label', { opacity: 0.55, duration: 0.8, ease: 'power2.out' }, 0.4)
+  // Door appears at center
+  .to('#door2', { opacity: 0.95, duration: 1.1, ease: 'power2.out' }, 0.5)
+  // Key fades in at offset upper-left position
+  .to('#ksvg-wrap', { opacity: 1, duration: 1, ease: 'power3.out' }, 1.2)
+  // Gentle hover/float
+  .to('#ksvg-wrap', { y: -210, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 2.3)
+  // Tilt + start moving toward door (halfway)
+  .to('#ksvg-wrap', { rotation: 35, x: -110, y: -60, duration: 0.85, ease: 'power2.inOut' }, 3.5)
+  // Fly into keyhole — translate to door center, shrink small, rotate vertical, fade
+  .to('#ksvg-wrap', {
+    x: 0, y: 0, scale: 0.15, rotation: 90, opacity: 0,
+    duration: 1.0, ease: 'power2.in'
+  }, 4.4)
+  .to('#i-label', { opacity: 0, duration: 0.4 }, 4.9)
+  // Door interior glows (the key has turned the lock)
+  .to('#d2glow', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 5.3)
   // Door swings open
-  .to('#d2pan', { rotationY: -80, transformOrigin: 'left center', duration: 1.4, ease: 'power2.inOut' }, 5.4)
-  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.2)
+  .to('#d2pan', { rotationY: -85, transformOrigin: 'left center', duration: 1.5, ease: 'power2.inOut' }, 5.6)
+  .to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out' }, 6.6)
   .to('#intro', {
     opacity: 0, duration: 0.9, ease: 'power2.in',
     onComplete: () => {
@@ -2448,7 +2456,7 @@ tl2.to('#i-label', { opacity: 0.6, duration: 0.8, ease: 'power2.out' }, 0.4)
       document.body.classList.remove('intro-lock');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
-  }, 7.2);
+  }, 7.6);
 
 // SERVICE EXPAND
 function toggleService(btn) {
