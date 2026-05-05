@@ -1860,68 +1860,52 @@
     <div class="portrait-bg">
 
       <div class="key3d-wrap">
-        <svg class="key3d-inner" width="220" height="560" viewBox="0 0 220 560" xmlns="http://www.w3.org/2000/svg">
+        <svg class="key3d-inner" width="240" height="600" viewBox="0 0 240 620" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- Gold cylinder gradient (lit from upper-left) -->
             <linearGradient id="gShaft" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%"   stop-color="#2a1500"/>
-              <stop offset="8%"   stop-color="#5a3600"/>
-              <stop offset="22%"  stop-color="#a87010"/>
-              <stop offset="38%"  stop-color="#e0b830"/>
-              <stop offset="48%"  stop-color="#fff0a8"/>
-              <stop offset="56%"  stop-color="#ffd830"/>
-              <stop offset="70%"  stop-color="#bc8410"/>
-              <stop offset="86%"  stop-color="#6a4200"/>
-              <stop offset="100%" stop-color="#1f0e00"/>
-            </linearGradient>
-            <!-- Bow torus radial -->
-            <radialGradient id="gBowR" cx="32%" cy="28%" r="80%">
-              <stop offset="0%"   stop-color="#fff5c0"/>
-              <stop offset="20%"  stop-color="#ffd830"/>
-              <stop offset="50%"  stop-color="#b07810"/>
-              <stop offset="80%"  stop-color="#4a2c00"/>
+              <stop offset="10%"  stop-color="#6a4200"/>
+              <stop offset="28%"  stop-color="#b8830c"/>
+              <stop offset="45%"  stop-color="#f0c840"/>
+              <stop offset="52%"  stop-color="#fff0a8"/>
+              <stop offset="60%"  stop-color="#ffd420"/>
+              <stop offset="75%"  stop-color="#a87010"/>
+              <stop offset="90%"  stop-color="#5a3600"/>
               <stop offset="100%" stop-color="#1a0a00"/>
-            </radialGradient>
-            <!-- Bow filigree -->
+            </linearGradient>
             <linearGradient id="gFil" x1="20%" y1="10%" x2="80%" y2="90%">
-              <stop offset="0%"   stop-color="#fff0a8"/>
-              <stop offset="30%"  stop-color="#e8b830"/>
-              <stop offset="60%"  stop-color="#7a5000"/>
-              <stop offset="100%" stop-color="#3a2200"/>
+              <stop offset="0%"   stop-color="#fff5b8"/>
+              <stop offset="22%"  stop-color="#ffd420"/>
+              <stop offset="48%"  stop-color="#c08510"/>
+              <stop offset="75%"  stop-color="#5a3600"/>
+              <stop offset="100%" stop-color="#2a1500"/>
             </linearGradient>
-            <!-- Central jewel -->
             <radialGradient id="gJewel" cx="35%" cy="32%" r="70%">
-              <stop offset="0%"   stop-color="#ffffff"/>
-              <stop offset="18%"  stop-color="#fff5b0"/>
-              <stop offset="50%"  stop-color="#ffd830"/>
-              <stop offset="85%"  stop-color="#a87810"/>
-              <stop offset="100%" stop-color="#1a0a00"/>
+              <stop offset="0%"   stop-color="#fff8d8"/>
+              <stop offset="30%"  stop-color="#ffd420"/>
+              <stop offset="65%"  stop-color="#a87010"/>
+              <stop offset="100%" stop-color="#3a1c00"/>
             </radialGradient>
-            <!-- Light specular -->
             <radialGradient id="gSpec" cx="30%" cy="25%" r="70%">
-              <stop offset="0%"   stop-color="rgba(255,255,220,0.9)"/>
+              <stop offset="0%"   stop-color="rgba(255,255,220,0.85)"/>
               <stop offset="100%" stop-color="rgba(255,200,80,0)"/>
             </radialGradient>
-            <!-- Patina overlay -->
             <linearGradient id="gPatina" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stop-color="rgba(60,30,0,0)"/>
-              <stop offset="60%"  stop-color="rgba(60,30,0,0.18)"/>
+              <stop offset="0%"   stop-color="rgba(50,25,0,0)"/>
+              <stop offset="60%"  stop-color="rgba(50,25,0,0.18)"/>
               <stop offset="100%" stop-color="rgba(20,8,0,0.32)"/>
             </linearGradient>
-            <!-- Strong drop shadow -->
             <filter id="fDrop" x="-30%" y="-15%" width="160%" height="130%">
               <feDropShadow dx="6" dy="14" stdDeviation="9" flood-color="#0a0400" flood-opacity="0.9"/>
             </filter>
-            <!-- Inner highlight -->
             <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3.5" result="b"/>
+              <feGaussianBlur stdDeviation="3" result="b"/>
               <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
-            <!-- Bevel for 3D depth -->
             <filter id="fBevel">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
-              <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.7" specularExponent="20" lighting-color="#fff8d0" result="spec">
-                <feDistantLight azimuth="135" elevation="45"/>
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+              <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.85" specularExponent="22" lighting-color="#fff5c0" result="spec">
+                <feDistantLight azimuth="135" elevation="48"/>
               </feSpecularLighting>
               <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
               <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="specOut"/></feMerge>
@@ -1929,174 +1913,99 @@
           </defs>
 
           <g filter="url(#fDrop)">
+            <!-- Top finial loop -->
+            <ellipse cx="120" cy="14" rx="9" ry="7" fill="none" stroke="url(#gFil)" stroke-width="3.5"/>
+            <ellipse cx="120" cy="14" rx="4" ry="3" fill="#0a0400"/>
+            <path d="M 113 22 L 127 22 L 124 32 L 116 32 Z" fill="url(#gShaft)"/>
+            <rect x="113" y="32" width="14" height="3" fill="url(#gFil)"/>
 
-            <!-- ═══════ BAROQUE CROWN TOP ═══════ -->
-            <!-- Top finial ball -->
-            <circle cx="110" cy="6" r="6" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="108" cy="4" r="2" fill="rgba(255,255,220,0.85)"/>
-            <!-- Center pinnacle -->
-            <path d="M 106 12 L 110 6 L 114 12 Z" fill="url(#gFil)"/>
-            <!-- Left scroll/curl -->
-            <path d="M 110 14 Q 88 12 76 28 Q 66 44 78 54 Q 90 60 96 52 Q 92 44 84 44 Q 84 30 100 32 Q 104 24 110 22 Z"
-                  fill="url(#gFil)" stroke="#3a2200" stroke-width="0.7" filter="url(#fBevel)"/>
-            <!-- Right scroll/curl (mirror) -->
-            <path d="M 110 14 Q 132 12 144 28 Q 154 44 142 54 Q 130 60 124 52 Q 128 44 136 44 Q 136 30 120 32 Q 116 24 110 22 Z"
-                  fill="url(#gFil)" stroke="#3a2200" stroke-width="0.7" filter="url(#fBevel)"/>
-            <!-- Inner curls -->
-            <path d="M 96 36 Q 102 30 108 36 Q 102 40 96 36 Z" fill="url(#gFil)" opacity="0.85"/>
-            <path d="M 124 36 Q 118 30 112 36 Q 118 40 124 36 Z" fill="url(#gFil)" opacity="0.85"/>
+            <!-- Baroque heart crown silhouette -->
+            <path d="M 120 38 Q 92 32 72 50 Q 50 72 56 100 Q 44 122 60 148 Q 76 176 100 196 Q 110 205 120 218 Q 130 205 140 196 Q 164 176 180 148 Q 196 122 184 100 Q 190 72 168 50 Q 148 32 120 38 Z" fill="url(#gFil)" stroke="#2a1500" stroke-width="1.2" filter="url(#fBevel)"/>
 
-            <!-- Crown to bow connector -->
-            <path d="M 84 56 L 136 56 L 130 72 L 90 72 Z" fill="url(#gShaft)"/>
-            <ellipse cx="110" cy="58" rx="26" ry="3" fill="rgba(255,240,140,0.55)"/>
-            <ellipse cx="110" cy="72" rx="20" ry="3" fill="rgba(40,20,0,0.6)"/>
+            <!-- Inner voids -->
+            <path d="M 120 50 Q 108 50 102 64 Q 105 76 116 76 Q 120 70 120 60 Q 120 70 124 76 Q 135 76 138 64 Q 132 50 120 50 Z" fill="#08130c" opacity="0.92"/>
+            <ellipse cx="80" cy="78" rx="9" ry="13" fill="#08130c" opacity="0.92" transform="rotate(-22,80,78)"/>
+            <ellipse cx="160" cy="78" rx="9" ry="13" fill="#08130c" opacity="0.92" transform="rotate(22,160,78)"/>
+            <ellipse cx="78" cy="128" rx="10" ry="14" fill="#08130c" opacity="0.92" transform="rotate(28,78,128)"/>
+            <ellipse cx="162" cy="128" rx="10" ry="14" fill="#08130c" opacity="0.92" transform="rotate(-28,162,128)"/>
+            <path d="M 120 90 Q 102 92 96 114 Q 102 138 120 162 Q 138 138 144 114 Q 138 92 120 90 Z" fill="#08130c" opacity="0.92"/>
 
-            <!-- ═══════ BOW (CIRCULAR HEAD) ═══════ -->
-            <!-- Outer dark contour -->
-            <circle cx="110" cy="148" r="78" fill="none" stroke="#1a0a00" stroke-width="2"/>
-            <!-- Main torus ring -->
-            <circle cx="110" cy="148" r="72" fill="none" stroke="url(#gBowR)" stroke-width="22"/>
-            <!-- Inner shadow edge of torus -->
-            <circle cx="110" cy="148" r="62" fill="none" stroke="rgba(30,15,0,0.85)" stroke-width="3"/>
-            <!-- Outer bright edge -->
-            <circle cx="110" cy="148" r="83" fill="none" stroke="rgba(255,228,100,0.4)" stroke-width="1.5"/>
-            <!-- Top-left strong highlight -->
-            <path d="M 58 116 A 72 72 0 0 1 110 76" fill="none" stroke="rgba(255,250,180,0.85)" stroke-width="6" stroke-linecap="round"/>
-            <!-- Bottom-right warm reflection -->
-            <path d="M 162 180 A 72 72 0 0 1 110 220" fill="none" stroke="rgba(255,180,30,0.4)" stroke-width="4" stroke-linecap="round"/>
-            <!-- Aging spots on the ring -->
-            <circle cx="78" cy="98" r="1.4" fill="#3a1c00" opacity="0.55"/>
-            <circle cx="148" cy="190" r="1.2" fill="#3a1c00" opacity="0.55"/>
-            <circle cx="60" cy="170" r="1" fill="#3a1c00" opacity="0.45"/>
-            <circle cx="160" cy="120" r="0.9" fill="#3a1c00" opacity="0.45"/>
-            <circle cx="100" cy="80" r="0.7" fill="#3a1c00" opacity="0.45"/>
+            <!-- Decorative inner curls (raised metal) -->
+            <path d="M 102 68 Q 98 78 106 84 Q 116 80 113 70 Q 108 64 102 68 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
+            <path d="M 138 68 Q 142 78 134 84 Q 124 80 127 70 Q 132 64 138 68 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
+            <path d="M 100 130 Q 95 140 105 146 Q 116 142 114 132 Q 108 126 100 130 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
+            <path d="M 140 130 Q 145 140 135 146 Q 124 142 126 132 Q 132 126 140 130 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
 
-            <!-- ─── FLORAL FILIGREE INSIDE BOW ─── -->
-            <!-- 4 main petals (cross shape) -->
-            <path d="M 110 84 Q 132 116 110 146 Q 88 116 110 84 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
-            <path d="M 110 212 Q 132 180 110 150 Q 88 180 110 212 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
-            <path d="M 46 148 Q 78 126 108 148 Q 78 170 46 148 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
-            <path d="M 174 148 Q 142 126 112 148 Q 142 170 174 148 Z" fill="url(#gFil)" stroke="#3a2200" stroke-width="0.6" filter="url(#fBevel)"/>
-            <!-- Petal highlights -->
-            <path d="M 110 90 Q 124 116 110 142" fill="none" stroke="rgba(255,250,180,0.7)" stroke-width="1.4"/>
-            <path d="M 52 148 Q 78 132 106 148" fill="none" stroke="rgba(255,250,180,0.6)" stroke-width="1.2"/>
-            <!-- Diagonal connector lines -->
-            <path d="M 76 114 Q 92 130 106 144" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
-            <path d="M 144 114 Q 128 130 114 144" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
-            <path d="M 76 182 Q 92 166 106 152" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
-            <path d="M 144 182 Q 128 166 114 152" stroke="url(#gFil)" stroke-width="1" fill="none" opacity="0.6"/>
+            <!-- Highlights on outer scrolls -->
+            <path d="M 70 56 Q 58 76 64 96" fill="none" stroke="rgba(255,250,180,0.75)" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M 170 56 Q 182 76 176 96" fill="none" stroke="rgba(255,250,180,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 60 110 Q 50 130 64 150" fill="none" stroke="rgba(255,250,180,0.55)" stroke-width="2.2" stroke-linecap="round"/>
 
-            <!-- ─── CENTER ROSETTE ─── -->
-            <circle cx="110" cy="148" r="20" fill="#0a0400"/>
-            <circle cx="110" cy="148" r="17" fill="url(#gFil)" filter="url(#fGlow)"/>
-            <circle cx="110" cy="148" r="11" fill="#1a0a00"/>
-            <circle cx="110" cy="148" r="8" fill="url(#gJewel)"/>
-            <circle cx="106" cy="144" r="3" fill="rgba(255,255,220,0.92)"/>
-            <circle cx="105" cy="143" r="1.2" fill="rgba(255,255,255,1)"/>
+            <!-- Aging spots -->
+            <circle cx="92" cy="56" r="1.2" fill="#2a1500" opacity="0.55"/>
+            <circle cx="156" cy="178" r="1.1" fill="#2a1500" opacity="0.5"/>
+            <circle cx="56" cy="106" r="0.8" fill="#2a1500" opacity="0.5"/>
+            <circle cx="184" cy="120" r="0.9" fill="#2a1500" opacity="0.45"/>
 
-            <!-- ═══════ BALUSTER (TURNED COLLAR) ═══════ -->
-            <!-- Top wide flat -->
-            <rect x="84" y="222" width="52" height="6" rx="1" fill="url(#gShaft)"/>
-            <rect x="86" y="222" width="48" height="2" fill="rgba(255,250,180,0.65)"/>
-            <rect x="86" y="226" width="48" height="2" fill="rgba(40,20,0,0.5)"/>
-            <!-- Baluster bulb (turned 3D feel) -->
-            <ellipse cx="110" cy="240" rx="26" ry="13" fill="url(#gShaft)"/>
-            <ellipse cx="104" cy="234" rx="17" ry="6" fill="rgba(255,250,180,0.65)"/>
-            <ellipse cx="110" cy="247" rx="20" ry="4" fill="rgba(30,12,0,0.55)"/>
-            <!-- Bulb under-lip -->
-            <rect x="86" y="251" width="48" height="6" rx="1" fill="url(#gShaft)"/>
-            <rect x="88" y="252" width="44" height="2" fill="rgba(255,250,180,0.55)"/>
-            <!-- Lower narrow band -->
-            <rect x="92" y="257" width="36" height="5" rx="1" fill="url(#gShaft)"/>
-            <rect x="94" y="257" width="32" height="1.5" fill="rgba(255,250,180,0.55)"/>
+            <!-- Crown bottom V-tip -->
+            <path d="M 100 198 Q 110 215 120 222 Q 130 215 140 198 L 132 218 L 108 218 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
 
-            <!-- ═══════ SHAFT ═══════ -->
-            <!-- Body (slight taper) -->
-            <path d="M 99 262 L 121 262 L 122 470 L 98 470 Z" fill="url(#gShaft)"/>
-            <!-- Right edge dark band -->
-            <rect x="116" y="262" width="6" height="208" fill="rgba(30,12,0,0.42)"/>
-            <!-- Central highlight stripe (cylinder) -->
-            <rect x="103" y="262" width="6" height="208" fill="rgba(255,250,180,0.5)"/>
-            <rect x="105" y="262" width="2" height="208" fill="rgba(255,255,220,0.7)"/>
+            <!-- Baluster collar -->
+            <rect x="98" y="220" width="44" height="6" rx="1" fill="url(#gShaft)"/>
+            <rect x="100" y="220" width="40" height="2" fill="rgba(255,250,180,0.65)"/>
+            <ellipse cx="120" cy="238" rx="22" ry="11" fill="url(#gShaft)"/>
+            <ellipse cx="115" cy="233" rx="14" ry="5" fill="rgba(255,250,180,0.6)"/>
+            <ellipse cx="120" cy="244" rx="17" ry="3" fill="rgba(30,12,0,0.55)"/>
+            <rect x="100" y="248" width="40" height="6" rx="1" fill="url(#gShaft)"/>
+            <rect x="102" y="249" width="36" height="2" fill="rgba(255,250,180,0.55)"/>
+            <rect x="106" y="254" width="28" height="4" fill="url(#gShaft)"/>
 
-            <!-- Engraved bands with jewel inserts -->
-            <!-- Band 1 -->
-            <rect x="92" y="296" width="36" height="10" rx="1" fill="url(#gShaft)"/>
-            <rect x="92" y="296" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
-            <rect x="92" y="304" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
-            <circle cx="110" cy="320" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="109" cy="319" r="1.2" fill="rgba(255,255,220,0.95)"/>
-            <!-- Band 2 -->
-            <rect x="92" y="342" width="36" height="10" rx="1" fill="url(#gShaft)"/>
-            <rect x="92" y="342" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
-            <rect x="92" y="350" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
-            <circle cx="110" cy="366" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="109" cy="365" r="1.2" fill="rgba(255,255,220,0.95)"/>
-            <!-- Band 3 -->
-            <rect x="92" y="388" width="36" height="10" rx="1" fill="url(#gShaft)"/>
-            <rect x="92" y="388" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
-            <rect x="92" y="396" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
-            <circle cx="110" cy="412" r="3" fill="url(#gJewel)" filter="url(#fGlow)"/>
-            <circle cx="109" cy="411" r="1.2" fill="rgba(255,255,220,0.95)"/>
-            <!-- Band 4 -->
-            <rect x="92" y="434" width="36" height="10" rx="1" fill="url(#gShaft)"/>
-            <rect x="92" y="434" width="36" height="2" fill="rgba(255,250,180,0.65)"/>
-            <rect x="92" y="442" width="36" height="2" fill="rgba(30,12,0,0.55)"/>
+            <!-- Shaft (smooth, slight taper) -->
+            <path d="M 110 258 L 130 258 L 131 470 L 109 470 Z" fill="url(#gShaft)"/>
+            <rect x="125" y="258" width="6" height="212" fill="rgba(30,12,0,0.4)"/>
+            <rect x="113" y="258" width="6" height="212" fill="rgba(255,250,180,0.5)"/>
+            <rect x="115" y="258" width="2" height="212" fill="rgba(255,255,220,0.7)"/>
 
-            <!-- Aging marks on shaft -->
-            <circle cx="116" cy="278" r="1.2" fill="#3a1c00" opacity="0.5"/>
-            <circle cx="103" cy="328" r="0.9" fill="#3a1c00" opacity="0.4"/>
-            <circle cx="118" cy="376" r="1" fill="#3a1c00" opacity="0.45"/>
-            <circle cx="102" cy="420" r="0.8" fill="#3a1c00" opacity="0.4"/>
-            <line x1="100" y1="290" x2="106" y2="296" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
-            <line x1="118" y1="358" x2="113" y2="364" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
+            <!-- Aging on shaft -->
+            <circle cx="124" cy="290" r="1.1" fill="#2a1500" opacity="0.45"/>
+            <circle cx="113" cy="340" r="0.8" fill="#2a1500" opacity="0.4"/>
+            <circle cx="126" cy="395" r="1" fill="#2a1500" opacity="0.4"/>
+            <line x1="111" y1="310" x2="116" y2="316" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
 
-            <!-- ═══════ LOWER COLLAR (BEFORE BIT) ═══════ -->
-            <rect x="92" y="468" width="36" height="6" rx="1" fill="url(#gShaft)"/>
-            <ellipse cx="110" cy="482" rx="22" ry="9" fill="url(#gShaft)"/>
-            <ellipse cx="105" cy="478" rx="14" ry="4" fill="rgba(255,250,180,0.55)"/>
-            <ellipse cx="110" cy="488" rx="17" ry="2.5" fill="rgba(30,12,0,0.5)"/>
-            <rect x="94" y="490" width="32" height="5" rx="1" fill="url(#gShaft)"/>
-            <rect x="96" y="491" width="28" height="1.5" fill="rgba(255,250,180,0.55)"/>
+            <!-- Lower collar before bit -->
+            <rect x="100" y="468" width="40" height="6" rx="1" fill="url(#gShaft)"/>
+            <ellipse cx="120" cy="482" rx="24" ry="10" fill="url(#gShaft)"/>
+            <ellipse cx="114" cy="478" rx="16" ry="4" fill="rgba(255,250,180,0.6)"/>
+            <ellipse cx="120" cy="488" rx="18" ry="2.5" fill="rgba(30,12,0,0.55)"/>
+            <rect x="102" y="490" width="36" height="6" rx="1" fill="url(#gShaft)"/>
+            <rect x="104" y="491" width="32" height="2" fill="rgba(255,250,180,0.55)"/>
 
-            <!-- ═══════ BIT (BLADE/TEETH) ═══════ -->
-            <!-- Main bit body going right -->
-            <path d="M 99 495 L 175 495 L 175 528 L 99 528 Z" fill="url(#gShaft)"/>
-            <!-- Bit top highlight -->
-            <rect x="99" y="495" width="76" height="3" fill="rgba(255,250,180,0.65)"/>
-            <!-- Bit bottom shadow -->
-            <rect x="99" y="525" width="76" height="3" fill="rgba(30,12,0,0.55)"/>
-            <!-- Bit edge bevels -->
-            <rect x="173" y="495" width="2" height="33" fill="rgba(30,12,0,0.45)"/>
+            <!-- Bit (blade) with rectangular warding cuts -->
+            <path d="M 109 496 L 200 496 L 200 540 L 109 540 Z" fill="url(#gShaft)"/>
+            <rect x="109" y="496" width="91" height="3" fill="rgba(255,250,180,0.65)"/>
+            <rect x="109" y="537" width="91" height="3" fill="rgba(30,12,0,0.6)"/>
+            <rect x="198" y="496" width="2" height="44" fill="rgba(30,12,0,0.5)"/>
+            <rect x="135" y="504" width="8" height="20" fill="#0a0400"/>
+            <rect x="135" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
+            <rect x="158" y="504" width="8" height="20" fill="#0a0400"/>
+            <rect x="158" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
+            <rect x="181" y="504" width="8" height="20" fill="#0a0400"/>
+            <rect x="181" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
 
-            <!-- Warding cuts -->
-            <rect x="118" y="500" width="6" height="14" fill="#0a0400"/>
-            <rect x="118" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
-            <rect x="138" y="500" width="6" height="14" fill="#0a0400"/>
-            <rect x="138" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
-            <rect x="158" y="500" width="6" height="14" fill="#0a0400"/>
-            <rect x="158" y="500" width="6" height="2" fill="rgba(40,20,0,0.55)"/>
+            <!-- Bit tip step -->
+            <path d="M 109 540 L 170 540 L 172 562 L 109 562 Z" fill="url(#gShaft)"/>
+            <rect x="109" y="540" width="62" height="2" fill="rgba(255,250,180,0.55)"/>
+            <rect x="109" y="558" width="62" height="2" fill="rgba(30,12,0,0.55)"/>
+            <rect x="135" y="544" width="6" height="13" fill="#0a0400"/>
+            <rect x="155" y="544" width="6" height="13" fill="#0a0400"/>
 
-            <!-- Bit terminal step -->
-            <path d="M 99 528 L 148 528 L 152 547 L 99 547 Z" fill="url(#gShaft)"/>
-            <rect x="99" y="528" width="50" height="2" fill="rgba(255,250,180,0.55)"/>
-            <rect x="99" y="544" width="50" height="2" fill="rgba(30,12,0,0.55)"/>
-            <!-- Tip warding on lower step -->
-            <rect x="118" y="532" width="5" height="11" fill="#0a0400"/>
-            <rect x="138" y="532" width="5" height="11" fill="#0a0400"/>
-
-            <!-- Patina overlay across whole key -->
-            <rect x="0" y="0" width="220" height="560" fill="url(#gPatina)" opacity="0.22"/>
+            <!-- Patina overlay -->
+            <rect x="0" y="0" width="240" height="620" fill="url(#gPatina)" opacity="0.22"/>
           </g>
 
-          <!-- Specular highlight blob (animated light reflection) -->
-          <ellipse cx="80" cy="100" rx="22" ry="32" fill="url(#gSpec)" opacity="0.65" transform="rotate(-12,80,100)"/>
-          <ellipse cx="105" cy="280" rx="6" ry="40" fill="url(#gSpec)" opacity="0.45"/>
-
-          <!-- Aged scratches -->
-          <line x1="68" y1="180" x2="76" y2="190" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
-          <line x1="148" y1="92" x2="156" y2="100" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
-          <line x1="160" y1="510" x2="172" y2="518" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
+          <!-- Specular highlights -->
+          <ellipse cx="80" cy="80" rx="22" ry="32" fill="url(#gSpec)" opacity="0.6" transform="rotate(-14,80,80)"/>
+          <ellipse cx="115" cy="320" rx="6" ry="50" fill="url(#gSpec)" opacity="0.45"/>
         </svg>
       </div>
 
