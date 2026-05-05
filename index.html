@@ -1,1 +1,80 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Les Clefs de l'Avenir — Prévisualisations</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Raleway',sans-serif;background:#0A001E;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}.container{max-width:900px;width:100%;text-align:center}h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);color:#fff;margin-bottom:.5rem;font-style:italic}p{color:rgba(255,255,255,.5);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:3rem}.cards{display:grid;grid-template-columns:1fr 1fr;gap:2rem}@media(max-width:600px){.cards{grid-template-columns:1fr}}.card{border-radius:16px;padding:2.5rem 2rem;text-decoration:none;transition:transform .3s,box-shadow .3s;display:block}.card:hover{transform:translateY(-8px)}.card-1{background:linear-gradient(160deg,#4A1272,#1A0036);border:1px solid rgba(212,175,55,.3)}.card-2{background:linear-gradient(160deg,#064E3B,#022C22);border:1px solid rgba(201,168,76,.3)}.card-icon{font-size:3rem;margin-bottom:1rem;display:block}.card h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem;font-style:italic}.card-1 h2{color:#F0D060}.card-2 h2{color:#E8C96A}.card p{color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.7;text-transform:none;letter-spacing:0;margin-bottom:1.5rem}.btn{display:inline-block;padding:.7rem 1.8rem;border-radius:50px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}.card-1 .btn{background:#6B21A8;color:#fff}.card-2 .btn{background:#064E3B;color:#fff}</style></head><body><div class="container"><h1>Les Clefs de l'Avenir</h1><p>Choisissez une proposition à prévisualiser</p><div class="cards"><a href="proposition-1-amethyste.html" class="card card-1"><span class="card-icon">🔮</span><h2>Proposition 1<br>L'Améthyste Céleste</h2><p>Tons lavande & violet · Boule de cristal · Typographie élégante Playfair · Animations dorées</p><span class="btn">Voir la proposition</span></a><a href="proposition-2-emeraude.html" class="card card-2"><span class="card-icon">🗝</span><h2>Proposition 2<br>L'Émeraude Mystique</h2><p>Tons sauge & émeraude · Œil mystique · Typographie Cormorant · Bandeau défilant or</p><span class="btn">Voir la proposition</span></a></div></div></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Les Clefs de l'Avenir — Prévisualisations</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:#fffefb;color:#1d1c1c;min-height:100vh;padding:3rem 2rem}
+  .wrap{max-width:1100px;margin:0 auto}
+  .head{text-align:center;margin-bottom:4rem}
+  h1{font-family:'Instrument Serif',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;font-style:italic;margin-bottom:.5rem}
+  h1 em{color:#00668c}
+  .sub{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#3b3c3d;font-weight:400}
+  .featured{margin-bottom:3rem;border:2px solid #00668c;padding:0;background:#fff;position:relative;overflow:hidden}
+  .featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#00668c,#71c4ef)}
+  .featured-tag{position:absolute;top:1rem;right:1rem;background:#00668c;color:#fff;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.4rem .9rem;font-weight:500}
+  .featured-inner{padding:3rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+  .featured h2{font-family:'Instrument Serif',serif;font-size:2.2rem;font-weight:400;margin-bottom:1rem}
+  .featured h2 em{color:#00668c;font-style:italic}
+  .featured p{color:#313d44;font-size:.92rem;line-height:1.8;font-weight:300;margin-bottom:1.8rem}
+  .btn{display:inline-block;background:#00668c;color:#fff;padding:.9rem 2rem;text-decoration:none;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:background .3s}
+  .btn:hover{background:#1d1c1c}
+  .preview{aspect-ratio:16/10;background:linear-gradient(160deg,#d4eaf7 0%,#fffefb 100%);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:1.5rem;font-style:italic;color:#00668c}
+  .others{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
+  .card{background:#f5f4f1;padding:2rem;text-decoration:none;color:inherit;transition:transform .3s,background .3s;border:1px solid #e8e7e4}
+  .card:hover{transform:translateY(-4px);background:#d4eaf7}
+  .card h3{font-family:'Instrument Serif',serif;font-size:1.2rem;font-weight:400;font-style:italic;margin-bottom:.5rem}
+  .card p{font-size:.78rem;color:#313d44;line-height:1.6;font-weight:300}
+  .card-tag{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:#00668c;font-weight:500;margin-bottom:.8rem}
+  .others-title{font-family:'Instrument Serif',serif;font-size:1.4rem;font-style:italic;margin-bottom:1.5rem;color:#3b3c3d}
+  @media(max-width:768px){.featured-inner{grid-template-columns:1fr}.others{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>Les Clefs de <em>l'Avenir</em></h1>
+    <div class="sub">Prévisualisations · par Marco Médium</div>
+  </div>
+
+  <div class="featured">
+    <span class="featured-tag">★ Version actuelle</span>
+    <div class="featured-inner">
+      <div>
+        <h2>v3 — Marco <em>Médium</em></h2>
+        <p>Version finale en cours. Palette bleue moderne, typographie Instrument Serif, layout éditorial premium, portrait stylisé, déroulé de consultation, horaires Lun–Dim 09h–22h.</p>
+        <a href="v3-marco.html" class="btn">Ouvrir la version v3 →</a>
+      </div>
+      <div class="preview">v3 · Marco Médium</div>
+    </div>
+  </div>
+
+  <h3 class="others-title">Versions précédentes</h3>
+  <div class="others">
+    <a href="v2-proposition-2.html" class="card">
+      <div class="card-tag">v2 · Bleu contemporain</div>
+      <h3>Proposition 2 (v2)</h3>
+      <p>Version bleue contemporaine sans Marco — palette identique mais site générique.</p>
+    </a>
+    <a href="v2-proposition-1.html" class="card">
+      <div class="card-tag">v2 · Rose Quartz</div>
+      <h3>Proposition 1 (v2)</h3>
+      <p>Version rose / prune / or, style éditorial luxe.</p>
+    </a>
+    <a href="proposition-1-amethyste.html" class="card">
+      <div class="card-tag">v1 · Améthyste</div>
+      <h3>Première version 1</h3>
+      <p>Première itération — violet & or.</p>
+    </a>
+    <a href="proposition-2-emeraude.html" class="card">
+      <div class="card-tag">v1 · Émeraude</div>
+      <h3>Première version 2</h3>
+      <p>Première itération — vert & or.</p>
+    </a>
+  </div>
+</div>
+</body>
+</html>
