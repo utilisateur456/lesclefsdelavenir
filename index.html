@@ -55,62 +55,31 @@
     #grain { position: fixed; inset: 0; z-index: 9997;
              pointer-events: none; opacity: 0.02; }
 
-    /* ─── INTRO ───────────────────────────────────────────────────── */
+    /* ─── INTRO PLEIN ÉCRAN ──────────────────────────────────────── */
     #intro {
       position: fixed; inset: 0; z-index: 5000;
-      background: #08161e;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-
-    #ic { position: absolute; inset: 0; pointer-events: none; }
-
-    /* Animated ambient gradient in intro */
-    .intro-ambient {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 30%, rgba(113,196,239,0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 70%, rgba(0,104,140,0.12) 0%, transparent 50%);
-      animation: ambientShift 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      from { transform: scale(1) rotate(0deg); }
-      to   { transform: scale(1.1) rotate(5deg); }
-    }
-
-    .intro-wrap {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 2.5rem;
-    }
-
-    .i-label {
-      font-size: 0.58rem; letter-spacing: 0.55em; text-transform: uppercase;
-      color: rgba(113,196,239,0.45); font-weight: 300; opacity: 0;
+      background: #000;
+      cursor: pointer;
     }
 
     #ivideo {
-      width: min(880px, 92vw);
-      max-height: 70vh;
-      object-fit: contain;
-      opacity: 0;
-      filter: drop-shadow(0 30px 80px rgba(113,196,239,0.15));
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .i-logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic;
-      color: rgba(255,255,255,0.92); letter-spacing: 0.04em;
-      text-align: center; opacity: 0; line-height: 1.2;
+    #iskip {
+      position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 2;
+      padding: 0.6rem 1.2rem;
+      background: rgba(0,0,0,0.55);
+      color: #fff; border: 1px solid rgba(255,255,255,0.4);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: pointer; backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s;
     }
-
-    .i-logo span { color: var(--a100); font-style: normal; }
-
-    .i-sublogo {
-      font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: rgba(113,196,239,0.5); margin-top: 0.5rem; font-weight: 300;
-    }
+    #iskip:hover { background: rgba(0,0,0,0.8); border-color: #fff; }
 
     /* ─── PHONE BAR ───────────────────────────────────────────────── */
     #pbar {
@@ -1440,22 +1409,12 @@
 
 <canvas id="grain"></canvas>
 
-<!-- INTRO -->
+<!-- INTRO PLEIN ÉCRAN -->
 <div id="intro">
-  <div class="intro-ambient"></div>
-  <canvas id="ic"></canvas>
-  <div class="intro-wrap">
-    <div class="i-label" id="i-label">Marco Médium — Voyance & Médiumnité — Suisse</div>
-
-    <video id="ivideo" autoplay muted playsinline preload="auto" poster="cle-or.png">
-      <source src="cle01.mp4" type="video/mp4">
-    </video>
-
-    <div class="i-logo" id="ilogo">
-      Les Clefs de <span>l'Avenir</span>
-      <div class="i-sublogo">par Marco Médium</div>
-    </div>
-  </div>
+  <video id="ivideo" autoplay muted playsinline preload="auto" poster="cle-or.png">
+    <source src="porte.mp4" type="video/mp4">
+  </video>
+  <button id="iskip" type="button" aria-label="Passer l'intro">Passer →</button>
 </div>
 
 <!-- PHONE BAR -->
@@ -2142,69 +2101,30 @@ const gd=gx.createImageData(gv.width,gv.height);
 for(let i=0;i<gd.data.length;i+=4){const v=Math.random()*255;gd.data[i]=gd.data[i+1]=gd.data[i+2]=v;gd.data[i+3]=255;}
 gx.putImageData(gd,0,0);
 
-// INTRO PARTICLES
-const ic=document.getElementById('ic');
-ic.width=window.innerWidth; ic.height=window.innerHeight;
-const ix=ic.getContext('2d');
-const ps=[];
-for(let i=0;i<70;i++) ps.push({
-  x:Math.random()*ic.width, y:Math.random()*ic.height,
-  r:Math.random()*1.2+0.3, s:Math.random()*0.3+0.08,
-  o:Math.random()*0.4+0.1,
-  c:Math.random()>.5?'#71c4ef':'#00668c',
-  dx:(Math.random()-.5)*.25
-});
-
-let ir=true;
-function dp(){
-  ix.clearRect(0,0,ic.width,ic.height);
-  ps.forEach(p=>{
-    ix.beginPath(); ix.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ix.fillStyle=p.c; ix.globalAlpha=p.o; ix.fill();
-    p.y-=p.s; p.x+=p.dx;
-    if(p.y<-5){p.y=ic.height+5; p.x=Math.random()*ic.width;}
-  });
-  ix.globalAlpha=1;
-  if(ir) requestAnimationFrame(dp);
-}
-dp();
-
-// INTRO — video-driven sequence (cle01.mp4 plays, then logo, then fade out)
+// INTRO PLEIN ÉCRAN — porte.mp4 plays once, then fades out to reveal site
 const ivid = document.getElementById('ivideo');
+const intro = document.getElementById('intro');
 let introClosed = false;
 
 function closeIntro() {
   if (introClosed) return;
   introClosed = true;
   gsap.to('#intro', {
-    opacity: 0, duration: 0.9, ease: 'power2.in',
+    opacity: 0, duration: 0.7, ease: 'power2.in',
     onComplete: () => {
-      document.getElementById('intro').style.display = 'none';
-      ir = false;
+      intro.style.display = 'none';
       document.body.classList.remove('intro-lock');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   });
 }
 
-// Fade in label and video
-gsap.to('#i-label', { opacity: 0.55, duration: 0.8, ease: 'power2.out', delay: 0.3 });
-gsap.to('#ivideo', { opacity: 1, duration: 1.0, ease: 'power2.out', delay: 0.5 });
-
-// On video end, reveal logo briefly then close intro
-ivid.addEventListener('ended', () => {
-  gsap.to('#i-label', { opacity: 0, duration: 0.4 });
-  gsap.to('#ivideo', { opacity: 0, duration: 0.6, ease: 'power2.in' });
-  gsap.to('#ilogo', { opacity: 1, y: -6, duration: 1, ease: 'power2.out', delay: 0.3 });
-  setTimeout(closeIntro, 1700);
-});
-
-// Click anywhere or press Escape to skip
-document.getElementById('intro').addEventListener('click', closeIntro);
+ivid.addEventListener('ended', closeIntro);
+intro.addEventListener('click', closeIntro);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeIntro(); });
 
-// Safety: if autoplay is blocked or the video can't load, close after 12 s
-setTimeout(closeIntro, 12000);
+// Safety: close after 20 s in case autoplay is blocked or video fails
+setTimeout(closeIntro, 20000);
 
 // SERVICE EXPAND
 function toggleService(btn) {
