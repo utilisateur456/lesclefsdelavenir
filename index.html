@@ -44,36 +44,27 @@
       overflow-x: hidden;
     }
 
-    body.intro-lock {
-      overflow: hidden !important;
-      height: 100vh;
-    }
-
-    /* (cursor follower removed) */
+    body.intro-lock { overflow: hidden !important; height: 100vh; }
 
     /* ─── GRAIN ───────────────────────────────────────────────────── */
     #grain { position: fixed; inset: 0; z-index: 9997;
              pointer-events: none; opacity: 0.02; }
 
-    /* ─── INTRO PLEIN ÉCRAN ──────────────────────────────────────── */
+    /* ─── INTRO PLEIN ÉCRAN (serrure.mp4) ──────────────────────────── */
     #intro {
       position: fixed; inset: 0; z-index: 5000;
-      background: #000;
-      cursor: pointer;
+      background: #000; cursor: pointer;
     }
-
     #ivideo {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
+      object-fit: cover; display: block;
     }
-
     #iskip {
       position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 2;
       padding: 0.6rem 1.2rem;
-      background: rgba(0,0,0,0.55);
-      color: #fff; border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.55); color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
       cursor: pointer; backdrop-filter: blur(6px);
@@ -329,14 +320,20 @@
     /* Hero right (illustration) — masquée, texte centré en haut */
     .h-right { display: none; }
 
-    /* Hero video sous le bloc titre/CTA */
-    .hero-video {
-      display: block; width: 100%;
-      max-width: 720px; aspect-ratio: 16 / 9;
-      margin: 2.5rem auto 0;
-      object-fit: cover; border-radius: 12px;
-      box-shadow: 0 30px 80px -30px rgba(8,22,30,0.45),
-                  0 8px 24px -10px rgba(8,22,30,0.25);
+    /* Hero video plein écran derrière le texte */
+    .hero-bg-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-tint {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg,
+        rgba(255,254,251,0.55) 0%,
+        rgba(255,254,251,0.7) 50%,
+        rgba(255,254,251,0.85) 100%);
+      pointer-events: none;
     }
 
     .h-illus {
@@ -1412,7 +1409,7 @@
 <!-- INTRO PLEIN ÉCRAN -->
 <div id="intro">
   <video id="ivideo" autoplay muted playsinline preload="auto" poster="cle-or.png">
-    <source src="porte.mp4" type="video/mp4">
+    <source src="serrure.mp4" type="video/mp4">
   </video>
   <button id="iskip" type="button" aria-label="Passer l'intro">Passer →</button>
 </div>
@@ -1444,7 +1441,11 @@
 
 <!-- HERO -->
 <section id="hero">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="cle-or.png">
+    <source src="cle01.mp4" type="video/mp4">
+  </video>
   <div class="hero-bg"></div>
+  <div class="hero-tint"></div>
 
   <div class="hero-vert">
     Voyance &amp; Médiumnité <span class="hero-vert-num">·</span> 20+ années <span class="hero-vert-num">·</span> Suisse
@@ -1487,10 +1488,6 @@
       <div class="trust-divider"></div>
       <div class="trust-text">Confidentialité absolue</div>
     </div>
-
-    <video class="hero-video" data-r="up" autoplay muted loop playsinline preload="auto" poster="cle-or.png">
-      <source src="cle01.mp4" type="video/mp4">
-    </video>
   </div>
 
   <div class="h-right">
@@ -2086,11 +2083,34 @@
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// SCROLL LOCK + RESET (intro must start at top)
+// SCROLL LOCK while intro plays
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 document.body.classList.add('intro-lock');
 window.scrollTo(0, 0);
-window.addEventListener('load', () => window.scrollTo(0, 0));
+
+// INTRO — serrure.mp4 plays once, then fades out to reveal site
+(function () {
+  const ivid = document.getElementById('ivideo');
+  const intro = document.getElementById('intro');
+  let closed = false;
+  function closeIntro() {
+    if (closed) return;
+    closed = true;
+    gsap.to('#intro', {
+      opacity: 0, duration: 0.7, ease: 'power2.in',
+      onComplete: () => {
+        intro.style.display = 'none';
+        document.body.classList.remove('intro-lock');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    });
+  }
+  ivid.addEventListener('ended', closeIntro);
+  intro.addEventListener('click', closeIntro);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeIntro(); });
+  // Safety: 25 s max in case autoplay is blocked or video fails
+  setTimeout(closeIntro, 25000);
+})();
 
 // GRAIN
 const gv=document.getElementById('grain');
@@ -2100,31 +2120,6 @@ const gx=gv.getContext('2d');
 const gd=gx.createImageData(gv.width,gv.height);
 for(let i=0;i<gd.data.length;i+=4){const v=Math.random()*255;gd.data[i]=gd.data[i+1]=gd.data[i+2]=v;gd.data[i+3]=255;}
 gx.putImageData(gd,0,0);
-
-// INTRO PLEIN ÉCRAN — porte.mp4 plays once, then fades out to reveal site
-const ivid = document.getElementById('ivideo');
-const intro = document.getElementById('intro');
-let introClosed = false;
-
-function closeIntro() {
-  if (introClosed) return;
-  introClosed = true;
-  gsap.to('#intro', {
-    opacity: 0, duration: 0.7, ease: 'power2.in',
-    onComplete: () => {
-      intro.style.display = 'none';
-      document.body.classList.remove('intro-lock');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  });
-}
-
-ivid.addEventListener('ended', closeIntro);
-intro.addEventListener('click', closeIntro);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeIntro(); });
-
-// Safety: close after 20 s in case autoplay is blocked or video fails
-setTimeout(closeIntro, 20000);
 
 // SERVICE EXPAND
 function toggleService(btn) {
