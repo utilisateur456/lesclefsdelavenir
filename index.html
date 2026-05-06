@@ -2190,7 +2190,16 @@
       </div>
     </div>
 
-    <form class="cf-form" data-r="up" onsubmit="return false;">
+    <form class="cf-form" data-r="up"
+          action="https://formsubmit.co/VOTRE_EMAIL_OU_HASH"
+          method="POST"
+          target="_blank">
+      <!-- Hidden FormSubmit options -->
+      <input type="hidden" name="_subject" value="Nouvelle demande - Les Clefs de l'Avenir">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://lesclefsdelavenir.ch/#contact">
+      <input type="hidden" name="_captcha" value="false">
+
       <div class="cf-row">
         <div class="cf-field">
           <label for="cf-nom">Nom</label>
