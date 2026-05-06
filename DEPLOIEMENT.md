@@ -5,80 +5,64 @@ Site statique monofichier (`index.html`) prêt à être mis en ligne. Aucun serv
 ## Contenu du dépôt
 
 - `index.html` — site complet (HTML + CSS + JS + SVG inline)
+- `CNAME` — domaine personnalisé GitHub Pages (`www.lesclefsdelavenir.ch`)
 - `DEPLOIEMENT.md` — ce fichier
 
 Tout est embarqué : pas de build step, pas de dépendances locales (GSAP est chargé depuis le CDN cdnjs).
 
 ---
 
-## Option A — OVH Hébergement Web (la plus simple si vous avez déjà un hébergement)
+## Configuration actuelle — GitHub Pages + Hostpoint DNS
 
-Si votre nom de domaine `lesclefsdelavenir.ch` est chez OVH (ou Infomaniak, Hostpoint, etc.) avec un hébergement mutualisé :
+### État DNS Hostpoint (configuré le 06.05.2026)
 
-1. Connectez-vous au FTP/SFTP de votre hébergeur (FileZilla, Cyberduck…)
-2. Allez dans le dossier racine public (souvent `www/`, `public_html/` ou `htdocs/`)
+| Sous-domaine | Type | Valeur |
+|---|---|---|
+| `www.lesclefsdelavenir.ch` | CNAME | `utilisateur456.github.io` |
+| `lesclefsdelavenir.ch` | — | *(géré par Hostpoint — voir note)* |
+
+### Ce qui fonctionne
+
+- **`https://www.lesclefsdelavenir.ch`** → votre site GitHub Pages ✓
+- Le fichier `CNAME` dans ce dépôt indique à GitHub Pages de servir `www.lesclefsdelavenir.ch`
+
+### Note sur l'apex (sans www)
+
+L'adresse `lesclefsdelavenir.ch` (sans `www`) ne pointera **pas** vers GitHub Pages tant qu'il n'y a pas d'enregistrements A. Pour activer l'apex :
+
+**Option 1 — Ajouter les enregistrements A** (si Hostpoint n'a pas de conflit) :
+```
+A @ → 185.199.108.153
+A @ → 185.199.109.153
+A @ → 185.199.110.153
+A @ → 185.199.111.153
+```
+Puis dans GitHub → Settings → Pages → vérifier le domaine → cocher **Enforce HTTPS**.
+
+**Option 2 — Redirection apex→www via Hostpoint** :
+Dans votre panneau Hostpoint, activez une redirection permanente (301) de `lesclefsdelavenir.ch` vers `https://www.lesclefsdelavenir.ch`.
+
+---
+
+## Option A — Hostpoint FTP (alternative simple)
+
+Si vous préférez utiliser l'hébergement Hostpoint inclus dans votre forfait :
+
+1. Connectez-vous au FTP/SFTP (FileZilla, Cyberduck…)
+2. Allez dans le dossier racine public (`www/` ou `htdocs/`)
 3. Uploadez `index.html` à la racine
-4. Le site est en ligne sur `https://lesclefsdelavenir.ch` après quelques minutes
+4. Dans Hostpoint DNS, supprimez le CNAME `www → utilisateur456.github.io` et laissez Hostpoint gérer les A records
 
-**Coût** : compris dans votre forfait OVH/Infomaniak existant (CHF 5–10/mois).
-
----
-
-## Option B — Cloudflare Pages (gratuit, recommandé)
-
-Hébergement gratuit, rapide, certificat SSL automatique.
-
-1. Créez un compte gratuit sur https://pages.cloudflare.com
-2. **Create a project** → **Connect to Git** → choisissez `utilisateur456/lesclefsdelavenir`
-3. Branch de production : `claude/fortune-telling-site-design-D6YjY` (ou `main` si vous le renommez)
-4. Build command : *(laisser vide)*
-5. Build output directory : `/`
-6. Cliquez **Save and Deploy**
-
-Le site est déployé sur `https://lesclefsdelavenir.pages.dev`.
-
-### Brancher le domaine `lesclefsdelavenir.ch`
-
-7. Onglet **Custom domains** → **Set up a custom domain** → entrez `lesclefsdelavenir.ch` puis `www.lesclefsdelavenir.ch`
-8. Cloudflare vous donne 2 enregistrements DNS à créer chez votre registrar (ex: GoDaddy, Hostpoint, Switch) :
-   - `CNAME @ → <votre-projet>.pages.dev`
-   - `CNAME www → <votre-projet>.pages.dev`
-9. Connectez-vous chez votre registrar du domaine `.ch`, modifiez les DNS, ajoutez ces deux entrées
-10. Patientez 1 à 24h pour la propagation DNS — le SSL s'active automatiquement
-
-**Coût** : gratuit. Trafic illimité.
+**Coût** : compris dans votre forfait Hostpoint existant.
 
 ---
 
-## Option C — Netlify (alternative à Cloudflare, aussi gratuit)
+## Étapes GitHub Pages (rappel)
 
-1. Compte sur https://netlify.com → **Add new site** → **Import from Git** → GitHub
-2. Sélectionnez le repo, branche `claude/fortune-telling-site-design-D6YjY`
-3. Build command : *(vide)*  /  Publish directory : `/`
-4. **Deploy site**
-5. Onglet **Domain settings** → **Add custom domain** → `lesclefsdelavenir.ch`
-6. Ajoutez les enregistrements DNS donnés par Netlify chez votre registrar
-
----
-
-## Option D — GitHub Pages (déjà actif sur ce repo)
-
-La branche `gh-pages` de ce dépôt est déjà servie sur :
-`https://utilisateur456.github.io/lesclefsdelavenir/`
-
-Pour utiliser le domaine `lesclefsdelavenir.ch` :
-
-1. Créez un fichier `CNAME` à la racine de la branche `gh-pages` contenant simplement :
-   ```
-   lesclefsdelavenir.ch
-   ```
-2. Chez votre registrar du `.ch`, créez les enregistrements :
-   - `A @ → 185.199.108.153`
-   - `A @ → 185.199.109.153`
-   - `A @ → 185.199.110.153`
-   - `A @ → 185.199.111.153`
-   - `CNAME www → utilisateur456.github.io`
-3. Dans GitHub → repo Settings → Pages → vérifiez que le domaine est bien pris en compte → cochez **Enforce HTTPS**
+1. GitHub → repo → **Settings** → **Pages**
+2. Source : **Deploy from a branch** → branche `claude/github-pages-dns-config-IHZMN` (ou `main`)
+3. Custom domain : `www.lesclefsdelavenir.ch`
+4. Cocher **Enforce HTTPS** (disponible après vérification DNS)
 
 ---
 
@@ -88,7 +72,7 @@ Pour utiliser le domaine `lesclefsdelavenir.ch` :
 - [ ] Vérifier les 3 liens de paiement (Twint, PayPal, cartes)
 - [ ] Tester le numéro `tel:0901212212` sur mobile
 - [ ] Tester le lien WhatsApp `wa.me/41782535452`
-- [ ] Configurer un service de réception de formulaire (le `<form>` actuel fait `onsubmit="return false"` — il faut le brancher à Formspree, FormKeep, ou un endpoint personnalisé pour recevoir les demandes)
+- [ ] Configurer un service de réception de formulaire (Formspree, FormKeep…)
 
 ## Brancher le formulaire de contact
 
@@ -105,12 +89,9 @@ Solution la plus rapide : **Formspree** (gratuit jusqu'à 50 messages/mois)
    <form class="cf-form" data-r="up" action="https://formspree.io/f/abcdwxyz" method="POST">
    ```
 
-Les demandes arriveront dans votre boîte mail.
-
 ---
 
 ## Mises à jour ultérieures
 
 Toute modification du site se fait directement dans `index.html`.
-- Pour Cloudflare Pages / Netlify / GitHub Pages : pousser un commit sur la branche connectée déclenche un redéploiement automatique
-- Pour OVH/FTP : ré-uploader le fichier `index.html`
+Pousser un commit sur la branche connectée déclenche un redéploiement automatique.
