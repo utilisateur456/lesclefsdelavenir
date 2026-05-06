@@ -653,13 +653,20 @@
     .key3d-wrap {
       position: relative; z-index: 2;
       perspective: 1400px;
+      background: radial-gradient(ellipse 58% 62% at 50% 44%,
+        rgba(255,248,220,0.92) 0%,
+        rgba(240,205,100,0.38) 52%,
+        transparent 78%);
+      border-radius: 50%;
+      padding: 10px;
     }
 
     .key3d-inner {
+      width: 200px; height: auto;
       animation: key3d-float 5.5s ease-in-out infinite;
       filter:
-        drop-shadow(0 40px 55px rgba(0,0,0,0.9))
-        drop-shadow(0 0 70px rgba(218,165,32,0.22));
+        drop-shadow(0 30px 40px rgba(0,0,0,0.75))
+        drop-shadow(0 0 60px rgba(218,165,32,0.30));
     }
 
     @keyframes key3d-float {
@@ -1430,7 +1437,7 @@
       /* About */
       #about { padding: 4rem 1.5rem; }
       .a-portrait { max-width: 280px; }
-      .key3d-inner { width: 140px; height: 340px; }
+      .key3d-inner { width: 130px; height: auto; }
       .a-text h2 { font-size: 2rem; }
       /* Stats */
       .stats-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 0; }
@@ -1860,153 +1867,7 @@
     <div class="portrait-bg">
 
       <div class="key3d-wrap">
-        <svg class="key3d-inner" width="240" height="600" viewBox="0 0 240 620" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="gShaft" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stop-color="#2a1500"/>
-              <stop offset="10%"  stop-color="#6a4200"/>
-              <stop offset="28%"  stop-color="#b8830c"/>
-              <stop offset="45%"  stop-color="#f0c840"/>
-              <stop offset="52%"  stop-color="#fff0a8"/>
-              <stop offset="60%"  stop-color="#ffd420"/>
-              <stop offset="75%"  stop-color="#a87010"/>
-              <stop offset="90%"  stop-color="#5a3600"/>
-              <stop offset="100%" stop-color="#1a0a00"/>
-            </linearGradient>
-            <linearGradient id="gFil" x1="20%" y1="10%" x2="80%" y2="90%">
-              <stop offset="0%"   stop-color="#fff5b8"/>
-              <stop offset="22%"  stop-color="#ffd420"/>
-              <stop offset="48%"  stop-color="#c08510"/>
-              <stop offset="75%"  stop-color="#5a3600"/>
-              <stop offset="100%" stop-color="#2a1500"/>
-            </linearGradient>
-            <radialGradient id="gJewel" cx="35%" cy="32%" r="70%">
-              <stop offset="0%"   stop-color="#fff8d8"/>
-              <stop offset="30%"  stop-color="#ffd420"/>
-              <stop offset="65%"  stop-color="#a87010"/>
-              <stop offset="100%" stop-color="#3a1c00"/>
-            </radialGradient>
-            <radialGradient id="gSpec" cx="30%" cy="25%" r="70%">
-              <stop offset="0%"   stop-color="rgba(255,255,220,0.85)"/>
-              <stop offset="100%" stop-color="rgba(255,200,80,0)"/>
-            </radialGradient>
-            <linearGradient id="gPatina" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stop-color="rgba(50,25,0,0)"/>
-              <stop offset="60%"  stop-color="rgba(50,25,0,0.18)"/>
-              <stop offset="100%" stop-color="rgba(20,8,0,0.32)"/>
-            </linearGradient>
-            <filter id="fDrop" x="-30%" y="-15%" width="160%" height="130%">
-              <feDropShadow dx="6" dy="14" stdDeviation="9" flood-color="#0a0400" flood-opacity="0.9"/>
-            </filter>
-            <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="fBevel">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
-              <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.85" specularExponent="22" lighting-color="#fff5c0" result="spec">
-                <feDistantLight azimuth="135" elevation="48"/>
-              </feSpecularLighting>
-              <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
-              <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="specOut"/></feMerge>
-            </filter>
-          </defs>
-
-          <g filter="url(#fDrop)">
-            <!-- Top finial loop -->
-            <ellipse cx="120" cy="14" rx="9" ry="7" fill="none" stroke="url(#gFil)" stroke-width="3.5"/>
-            <ellipse cx="120" cy="14" rx="4" ry="3" fill="#0a0400"/>
-            <path d="M 113 22 L 127 22 L 124 32 L 116 32 Z" fill="url(#gShaft)"/>
-            <rect x="113" y="32" width="14" height="3" fill="url(#gFil)"/>
-
-            <!-- Baroque heart crown silhouette -->
-            <path d="M 120 38 Q 92 32 72 50 Q 50 72 56 100 Q 44 122 60 148 Q 76 176 100 196 Q 110 205 120 218 Q 130 205 140 196 Q 164 176 180 148 Q 196 122 184 100 Q 190 72 168 50 Q 148 32 120 38 Z" fill="url(#gFil)" stroke="#2a1500" stroke-width="1.2" filter="url(#fBevel)"/>
-
-            <!-- Inner voids -->
-            <path d="M 120 50 Q 108 50 102 64 Q 105 76 116 76 Q 120 70 120 60 Q 120 70 124 76 Q 135 76 138 64 Q 132 50 120 50 Z" fill="#08130c" opacity="0.92"/>
-            <ellipse cx="80" cy="78" rx="9" ry="13" fill="#08130c" opacity="0.92" transform="rotate(-22,80,78)"/>
-            <ellipse cx="160" cy="78" rx="9" ry="13" fill="#08130c" opacity="0.92" transform="rotate(22,160,78)"/>
-            <ellipse cx="78" cy="128" rx="10" ry="14" fill="#08130c" opacity="0.92" transform="rotate(28,78,128)"/>
-            <ellipse cx="162" cy="128" rx="10" ry="14" fill="#08130c" opacity="0.92" transform="rotate(-28,162,128)"/>
-            <path d="M 120 90 Q 102 92 96 114 Q 102 138 120 162 Q 138 138 144 114 Q 138 92 120 90 Z" fill="#08130c" opacity="0.92"/>
-
-            <!-- Decorative inner curls (raised metal) -->
-            <path d="M 102 68 Q 98 78 106 84 Q 116 80 113 70 Q 108 64 102 68 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
-            <path d="M 138 68 Q 142 78 134 84 Q 124 80 127 70 Q 132 64 138 68 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
-            <path d="M 100 130 Q 95 140 105 146 Q 116 142 114 132 Q 108 126 100 130 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
-            <path d="M 140 130 Q 145 140 135 146 Q 124 142 126 132 Q 132 126 140 130 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
-
-            <!-- Highlights on outer scrolls -->
-            <path d="M 70 56 Q 58 76 64 96" fill="none" stroke="rgba(255,250,180,0.75)" stroke-width="2.8" stroke-linecap="round"/>
-            <path d="M 170 56 Q 182 76 176 96" fill="none" stroke="rgba(255,250,180,0.65)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M 60 110 Q 50 130 64 150" fill="none" stroke="rgba(255,250,180,0.55)" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Aging spots -->
-            <circle cx="92" cy="56" r="1.2" fill="#2a1500" opacity="0.55"/>
-            <circle cx="156" cy="178" r="1.1" fill="#2a1500" opacity="0.5"/>
-            <circle cx="56" cy="106" r="0.8" fill="#2a1500" opacity="0.5"/>
-            <circle cx="184" cy="120" r="0.9" fill="#2a1500" opacity="0.45"/>
-
-            <!-- Crown bottom V-tip -->
-            <path d="M 100 198 Q 110 215 120 222 Q 130 215 140 198 L 132 218 L 108 218 Z" fill="url(#gFil)" filter="url(#fBevel)"/>
-
-            <!-- Baluster collar -->
-            <rect x="98" y="220" width="44" height="6" rx="1" fill="url(#gShaft)"/>
-            <rect x="100" y="220" width="40" height="2" fill="rgba(255,250,180,0.65)"/>
-            <ellipse cx="120" cy="238" rx="22" ry="11" fill="url(#gShaft)"/>
-            <ellipse cx="115" cy="233" rx="14" ry="5" fill="rgba(255,250,180,0.6)"/>
-            <ellipse cx="120" cy="244" rx="17" ry="3" fill="rgba(30,12,0,0.55)"/>
-            <rect x="100" y="248" width="40" height="6" rx="1" fill="url(#gShaft)"/>
-            <rect x="102" y="249" width="36" height="2" fill="rgba(255,250,180,0.55)"/>
-            <rect x="106" y="254" width="28" height="4" fill="url(#gShaft)"/>
-
-            <!-- Shaft (smooth, slight taper) -->
-            <path d="M 110 258 L 130 258 L 131 470 L 109 470 Z" fill="url(#gShaft)"/>
-            <rect x="125" y="258" width="6" height="212" fill="rgba(30,12,0,0.4)"/>
-            <rect x="113" y="258" width="6" height="212" fill="rgba(255,250,180,0.5)"/>
-            <rect x="115" y="258" width="2" height="212" fill="rgba(255,255,220,0.7)"/>
-
-            <!-- Aging on shaft -->
-            <circle cx="124" cy="290" r="1.1" fill="#2a1500" opacity="0.45"/>
-            <circle cx="113" cy="340" r="0.8" fill="#2a1500" opacity="0.4"/>
-            <circle cx="126" cy="395" r="1" fill="#2a1500" opacity="0.4"/>
-            <line x1="111" y1="310" x2="116" y2="316" stroke="rgba(40,20,0,0.4)" stroke-width="0.4"/>
-
-            <!-- Lower collar before bit -->
-            <rect x="100" y="468" width="40" height="6" rx="1" fill="url(#gShaft)"/>
-            <ellipse cx="120" cy="482" rx="24" ry="10" fill="url(#gShaft)"/>
-            <ellipse cx="114" cy="478" rx="16" ry="4" fill="rgba(255,250,180,0.6)"/>
-            <ellipse cx="120" cy="488" rx="18" ry="2.5" fill="rgba(30,12,0,0.55)"/>
-            <rect x="102" y="490" width="36" height="6" rx="1" fill="url(#gShaft)"/>
-            <rect x="104" y="491" width="32" height="2" fill="rgba(255,250,180,0.55)"/>
-
-            <!-- Bit (blade) with rectangular warding cuts -->
-            <path d="M 109 496 L 200 496 L 200 540 L 109 540 Z" fill="url(#gShaft)"/>
-            <rect x="109" y="496" width="91" height="3" fill="rgba(255,250,180,0.65)"/>
-            <rect x="109" y="537" width="91" height="3" fill="rgba(30,12,0,0.6)"/>
-            <rect x="198" y="496" width="2" height="44" fill="rgba(30,12,0,0.5)"/>
-            <rect x="135" y="504" width="8" height="20" fill="#0a0400"/>
-            <rect x="135" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
-            <rect x="158" y="504" width="8" height="20" fill="#0a0400"/>
-            <rect x="158" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
-            <rect x="181" y="504" width="8" height="20" fill="#0a0400"/>
-            <rect x="181" y="504" width="8" height="2" fill="rgba(40,20,0,0.55)"/>
-
-            <!-- Bit tip step -->
-            <path d="M 109 540 L 170 540 L 172 562 L 109 562 Z" fill="url(#gShaft)"/>
-            <rect x="109" y="540" width="62" height="2" fill="rgba(255,250,180,0.55)"/>
-            <rect x="109" y="558" width="62" height="2" fill="rgba(30,12,0,0.55)"/>
-            <rect x="135" y="544" width="6" height="13" fill="#0a0400"/>
-            <rect x="155" y="544" width="6" height="13" fill="#0a0400"/>
-
-            <!-- Patina overlay -->
-            <rect x="0" y="0" width="240" height="620" fill="url(#gPatina)" opacity="0.22"/>
-          </g>
-
-          <!-- Specular highlights -->
-          <ellipse cx="80" cy="80" rx="22" ry="32" fill="url(#gSpec)" opacity="0.6" transform="rotate(-14,80,80)"/>
-          <ellipse cx="115" cy="320" rx="6" ry="50" fill="url(#gSpec)" opacity="0.45"/>
-        </svg>
+        <img src="cle-or.png" alt="Clé baroque dorée" class="key3d-inner">
       </div>
 
       <div class="portrait-deco">Médium · Suisse</div>
