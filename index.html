@@ -407,6 +407,13 @@
       animation: illusFloat 8s ease-in-out infinite;
     }
 
+    video.h-illus {
+      max-width: 520px; aspect-ratio: 1 / 1;
+      object-fit: cover; border-radius: 12px;
+      box-shadow: 0 30px 80px -30px rgba(8,22,30,0.45),
+                  0 8px 24px -10px rgba(8,22,30,0.25);
+    }
+
     @keyframes illusFloat {
       0%,100% { transform: translateY(0); }
       50%      { transform: translateY(-14px); }
@@ -1639,58 +1646,9 @@
       <span class="h-deco-label">Voyance Suisse</span>
     </span>
 
-    <svg class="h-illus" data-r="right" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Mandala outer -->
-      <circle cx="240" cy="240" r="220" stroke="#d4eaf7" stroke-width="1"/>
-      <circle cx="240" cy="240" r="180" stroke="#b6ccd8" stroke-width="1" stroke-dasharray="2 6"/>
-      <circle cx="240" cy="240" r="140" stroke="#71c4ef" stroke-width="1" opacity="0.5"/>
-      <circle cx="240" cy="240" r="100" stroke="#00668c" stroke-width="1" opacity="0.4"/>
-      <circle cx="240" cy="240" r="60" stroke="#00668c" stroke-width="1" opacity="0.6"/>
-
-      <!-- Cardinal lines -->
-      <line x1="20" y1="240" x2="460" y2="240" stroke="#d4eaf7" stroke-width="1"/>
-      <line x1="240" y1="20" x2="240" y2="460" stroke="#d4eaf7" stroke-width="1"/>
-      <line x1="84" y1="84" x2="396" y2="396" stroke="#d4eaf7" stroke-width="0.5" opacity="0.4"/>
-      <line x1="396" y1="84" x2="84" y2="396" stroke="#d4eaf7" stroke-width="0.5" opacity="0.4"/>
-
-      <!-- Cardinal points -->
-      <circle cx="240" cy="20" r="4" fill="#00668c"/>
-      <circle cx="460" cy="240" r="4" fill="#00668c"/>
-      <circle cx="240" cy="460" r="4" fill="#00668c"/>
-      <circle cx="20" cy="240" r="4" fill="#00668c"/>
-
-      <!-- Diagonal points -->
-      <circle cx="84" cy="84" r="3" fill="#71c4ef"/>
-      <circle cx="396" cy="84" r="3" fill="#71c4ef"/>
-      <circle cx="396" cy="396" r="3" fill="#71c4ef"/>
-      <circle cx="84" cy="396" r="3" fill="#71c4ef"/>
-
-      <!-- Central key symbol -->
-      <g>
-        <circle cx="240" cy="218" r="32" stroke="#00668c" stroke-width="2" fill="#fffefb"/>
-        <circle cx="240" cy="218" r="20" stroke="#71c4ef" stroke-width="1" opacity="0.5"/>
-        <polygon points="240,202 252,218 240,234 228,218" fill="none" stroke="#00668c" stroke-width="1" opacity="0.6"/>
-        <circle cx="240" cy="218" r="6" fill="#00668c"/>
-        <rect x="236" y="250" width="8" height="55" rx="2" fill="#00668c"/>
-        <rect x="236" y="280" width="14" height="6" rx="1" fill="#00668c"/>
-        <rect x="236" y="294" width="11" height="5" rx="1" fill="#00668c"/>
-      </g>
-
-      <!-- Constellation dots -->
-      <circle cx="150" cy="160" r="2" fill="#b6ccd8"/>
-      <circle cx="330" cy="150" r="2" fill="#b6ccd8"/>
-      <circle cx="350" cy="320" r="2" fill="#b6ccd8"/>
-      <circle cx="140" cy="310" r="2" fill="#b6ccd8"/>
-      <circle cx="200" cy="130" r="1.5" fill="#71c4ef" opacity="0.6"/>
-      <circle cx="310" cy="350" r="1.5" fill="#71c4ef" opacity="0.6"/>
-      <circle cx="120" cy="220" r="1.5" fill="#71c4ef" opacity="0.5"/>
-      <circle cx="370" cy="220" r="1.5" fill="#71c4ef" opacity="0.5"/>
-
-      <line x1="150" y1="160" x2="330" y2="150" stroke="#b6ccd8" stroke-width="0.4" opacity="0.4"/>
-      <line x1="330" y1="150" x2="350" y2="320" stroke="#b6ccd8" stroke-width="0.4" opacity="0.4"/>
-      <line x1="350" y1="320" x2="140" y2="310" stroke="#b6ccd8" stroke-width="0.4" opacity="0.4"/>
-      <line x1="140" y1="310" x2="150" y2="160" stroke="#b6ccd8" stroke-width="0.4" opacity="0.4"/>
-    </svg>
+    <video class="h-illus" data-r="right" autoplay muted loop playsinline preload="auto" poster="cle-or.png">
+      <source src="cle01.mp4" type="video/mp4">
+    </video>
 
     <span class="h-deco h-deco-2">
       <span class="h-deco-num">20+</span>
