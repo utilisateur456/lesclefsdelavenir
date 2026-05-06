@@ -178,26 +178,50 @@
     #pbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 400;
       background: var(--a200);
-      padding: 0.5rem 3rem;
+      padding: 0.6rem 3rem;
       display: flex; align-items: center; justify-content: center; gap: 2.5rem;
       flex-wrap: wrap;
     }
 
     .pb-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
-                color: rgba(255,255,255,0.4); font-weight: 300; }
-    .pb-sep   { width: 1px; height: 12px; background: rgba(255,255,255,0.15); }
+                color: rgba(255,255,255,0.55); font-weight: 400; }
+    .pb-sep   { width: 1px; height: 16px; background: rgba(255,255,255,0.25); }
 
     .pb-num {
       font-family: 'Instrument Serif', serif;
-      font-size: 1.2rem; color: #d4eaf7; letter-spacing: 0.12em;
-      text-decoration: none; font-style: italic;
+      font-size: 1.55rem; color: #ffffff; letter-spacing: 0.12em;
+      text-decoration: none; font-style: italic; font-weight: 400;
     }
 
     .pb-price {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.2rem; color: rgba(212,234,247,0.6);
-      letter-spacing: 0.06em;
+      font-size: 0.75rem; color: rgba(255,255,255,0.75);
+      letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+      background: rgba(0,0,0,0.15); padding: 0.2rem 0.6rem; border-radius: 2px;
     }
+
+    /* ─── HERO PHONE ─────────────────────────────────────────────── */
+    .h-phone { margin: 1.8rem 0 1.6rem; }
+
+    .h-phone-num {
+      display: block;
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+      color: var(--a200); text-decoration: none;
+      letter-spacing: 0.06em; font-style: italic; font-weight: 400;
+      line-height: 1; transition: color 0.2s;
+    }
+    .h-phone-num:hover { color: var(--t100); }
+
+    .h-phone-tag {
+      display: flex; gap: 0.9rem; align-items: center; margin-top: 0.5rem;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--t200); font-weight: 400;
+    }
+    .h-phone-price {
+      color: var(--a200); font-weight: 600;
+      background: rgba(0,102,140,0.1); padding: 0.2rem 0.5rem;
+    }
+    .h-phone-sep { opacity: 0.3; }
 
     /* ─── NAV ──────────────────────────────────────────────────────── */
     #nav2 {
@@ -1615,9 +1639,20 @@
       Voyance, médiumnité, guidance — <strong>Marco Médium</strong> vous accompagne sur le chemin de votre vérité. Plus de vingt ans d'expérience au service de votre lumière intérieure.
     </p>
 
+    <div class="h-phone" data-r="up">
+      <a href="tel:0901212212" class="h-phone-num">0901 212 212</a>
+      <div class="h-phone-tag">
+        <span class="h-phone-price">CHF 2.- / min.</span>
+        <span class="h-phone-sep">·</span>
+        <span>Lun – Dim &nbsp;9h – 22h</span>
+        <span class="h-phone-sep">·</span>
+        <span>Sans rendez-vous</span>
+      </div>
+    </div>
+
     <div class="h-actions" data-r="up">
       <a href="tel:0901212212" class="btn-solid">
-        <span>Appeler</span><span>0901 212 212</span>
+        <span>Appeler maintenant</span>
       </a>
       <a href="#services" class="btn-line">Découvrir les arts</a>
     </div>
