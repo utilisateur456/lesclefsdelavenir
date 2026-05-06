@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1300,6 +1301,19 @@
       font-size: 0.62rem; color: var(--bg3); line-height: 1.5; font-weight: 300;
     }
 
+    .cf-status {
+      display: none;
+      margin-top: 0.4rem;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.72rem; line-height: 1.5;
+      border: 1px solid;
+      letter-spacing: 0.02em;
+    }
+    .cf-status.show { display: block; }
+    .cf-status.ok  { color: #1f6b3d; border-color: #1f6b3d; background: rgba(31,107,61,0.06); }
+    .cf-status.err { color: #a4313b; border-color: #a4313b; background: rgba(164,49,59,0.06); }
+    .cf-btn[disabled] { opacity: 0.55; cursor: not-allowed; transform: none; }
+
     /* ─── PAYMENT ────────────────────────────────────────────────────── */
     #payment {
       padding: 5rem 5rem;
@@ -2232,7 +2246,7 @@
       </div>
     </div>
 
-    <form class="cf-form" data-r="up" onsubmit="return false;">
+    <form id="cf-form" class="cf-form" data-r="up" novalidate>
       <div class="cf-row">
         <div class="cf-field">
           <label for="cf-nom">Nom</label>
@@ -2272,6 +2286,7 @@
         </button>
       </div>
       <p class="cf-legal">Vos données sont confidentielles et ne seront jamais partagées. À titre de divertissement. Adultes uniquement.</p>
+      <div id="cf-status" class="cf-status" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -2485,6 +2500,76 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+
+// EMAILJS — CONTACT FORM
+(function () {
+  if (typeof emailjs === 'undefined') return;
+
+  const SERVICE_ID  = 'service_8pt08ad';
+  const TEMPLATE_ID = 'template_qe0x9k7';
+  const PUBLIC_KEY  = 'liRFAyxBo1908cbzF';
+
+  emailjs.init({ publicKey: PUBLIC_KEY });
+
+  const form   = document.getElementById('cf-form');
+  if (!form) return;
+  const status = document.getElementById('cf-status');
+  const btn    = form.querySelector('.cf-btn');
+  const btnHTML = btn ? btn.innerHTML : '';
+
+  const formatDate = (iso) => {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-');
+    return (y && m && d) ? `${d}.${m}.${y}` : iso;
+  };
+
+  const setStatus = (kind, msg) => {
+    status.className = 'cf-status' + (kind ? ' ' + kind + ' show' : '');
+    status.textContent = msg || '';
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const prenom    = form.prenom.value.trim();
+    const nom       = form.nom.value.trim();
+    const email     = form.email.value.trim();
+    const telephone = form.telephone.value.trim();
+    const date_rdv  = formatDate(form.date_naissance.value);
+    const question  = form.question.value.trim();
+
+    if (!prenom || !email || !question) {
+      setStatus('err', 'Merci de renseigner au moins votre prénom, votre email et votre question.');
+      return;
+    }
+
+    const params = {
+      name: (prenom + ' ' + nom).trim(),
+      prenom,
+      email,
+      telephone,
+      date_rdv,
+      heure: '',
+      type_consultation: question
+    };
+
+    btn.disabled = true;
+    btn.innerHTML = '<span style="letter-spacing:0.22em">Envoi en cours…</span>';
+    setStatus('', '');
+
+    try {
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, params);
+      setStatus('ok', 'Merci, votre demande a bien été envoyée. Marco vous répondra sous 24 heures.');
+      form.reset();
+    } catch (err) {
+      setStatus('err', "L'envoi a échoué. Merci de réessayer ou de nous contacter par WhatsApp au 078 253 54 52.");
+      console.error('EmailJS error:', err);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = btnHTML;
+    }
+  });
+})();
 </script>
 </body>
 </html>
