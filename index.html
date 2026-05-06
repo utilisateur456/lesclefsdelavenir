@@ -1263,6 +1263,18 @@
       font-size: 0.62rem; color: var(--bg3); line-height: 1.5; font-weight: 300;
     }
 
+    .cf-success {
+      display: none;
+      align-items: flex-start; gap: 0.8rem;
+      margin-top: 1.4rem; padding: 1rem 1.2rem;
+      background: rgba(0,104,140,0.08);
+      border: 1px solid rgba(0,104,140,0.35);
+      color: var(--a200);
+      font-size: 0.85rem; line-height: 1.5;
+    }
+    .cf-success.on { display: flex; }
+    .cf-success svg { flex-shrink: 0; margin-top: 2px; }
+
     /* ─── PAYMENT ────────────────────────────────────────────────────── */
     #payment {
       padding: 5rem 5rem;
@@ -1999,6 +2011,11 @@
         </button>
       </div>
       <p class="cf-legal">Vos données sont confidentielles et ne seront jamais partagées. À titre de divertissement. Adultes uniquement.</p>
+
+      <div class="cf-success" id="cf-success" role="status" aria-live="polite">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Votre demande a bien été envoyée. Marco vous répondra personnellement par email sous 24 heures.</span>
+      </div>
     </form>
   </div>
 </section>
@@ -2170,6 +2187,24 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+
+// CONTACT FORM — clear fields and show success banner after submit
+(function () {
+  const form = document.querySelector('.cf-form');
+  const success = document.getElementById('cf-success');
+  if (!form || !success) return;
+  form.addEventListener('submit', () => {
+    // Browser validation will block invalid submits before this fires.
+    // The form posts to FormSubmit in a new tab (target="_blank"), so we
+    // clear the fields and show the confirmation in the original tab.
+    setTimeout(() => {
+      form.reset();
+      success.classList.add('on');
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => success.classList.remove('on'), 12000);
+    }, 80);
+  });
+})();
 </script>
 </body>
 </html>
