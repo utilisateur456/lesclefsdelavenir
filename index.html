@@ -1275,6 +1275,18 @@
     .cf-success.on { display: flex; }
     .cf-success svg { flex-shrink: 0; margin-top: 2px; }
 
+    .cf-error {
+      display: none;
+      margin-top: 1rem; padding: 0.9rem 1.2rem;
+      background: rgba(176,40,40,0.08);
+      border: 1px solid rgba(176,40,40,0.35);
+      color: #b02828;
+      font-size: 0.85rem; line-height: 1.5;
+    }
+    .cf-error.on { display: block; }
+
+    .cf-btn[disabled] { opacity: 0.55; cursor: wait; }
+
     /* ─── PAYMENT ────────────────────────────────────────────────────── */
     #payment {
       padding: 5rem 5rem;
@@ -1966,7 +1978,8 @@
     <form class="cf-form" data-r="up"
           action="https://formsubmit.co/marcomedium.com@gmail.com"
           method="POST"
-          target="_blank">
+          target="_blank"
+          data-ajax-endpoint="https://formsubmit.co/ajax/marcomedium.com@gmail.com">
       <input type="hidden" name="_subject" value="Nouvelle demande de consultation — Les Clefs de l'Avenir">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
@@ -2015,6 +2028,9 @@
       <div class="cf-success" id="cf-success" role="status" aria-live="polite">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         <span>Votre demande a bien été envoyée. Marco vous répondra personnellement par email sous 24 heures.</span>
+      </div>
+      <div class="cf-error" id="cf-error" role="alert">
+        Une erreur est survenue lors de l'envoi. Réessayez ou appelez le 0901 212 212.
       </div>
     </form>
   </div>
@@ -2188,21 +2204,40 @@ const io = new IntersectionObserver(entries => {
 
 document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
 
-// CONTACT FORM — clear fields and show success banner after submit
+// CONTACT FORM — AJAX submit so the page stays put, fields clear, banner shows
 (function () {
   const form = document.querySelector('.cf-form');
   const success = document.getElementById('cf-success');
-  if (!form || !success) return;
-  form.addEventListener('submit', () => {
-    // Browser validation will block invalid submits before this fires.
-    // The form posts to FormSubmit in a new tab (target="_blank"), so we
-    // clear the fields and show the confirmation in the original tab.
-    setTimeout(() => {
+  const errorBox = document.getElementById('cf-error');
+  if (!form || !success || !errorBox) return;
+  const endpoint = form.dataset.ajaxEndpoint;
+  if (!endpoint) return; // fallback to native submit (target=_blank)
+  const btn = form.querySelector('button[type="submit"]');
+  const btnOriginal = btn ? btn.innerHTML : '';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.classList.remove('on');
+    success.classList.remove('on');
+    if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       form.reset();
       success.classList.add('on');
       success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => success.classList.remove('on'), 12000);
-    }, 80);
+      setTimeout(() => success.classList.remove('on'), 15000);
+    } catch (err) {
+      errorBox.classList.add('on');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } finally {
+      if (btn) { btn.disabled = false; btn.innerHTML = btnOriginal; }
+    }
   });
 })();
 </script>
