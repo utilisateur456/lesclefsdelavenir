@@ -2080,15 +2080,22 @@
       </div>
     </div>
 
-    <form class="cf-form" data-r="up" onsubmit="return false;">
+    <form class="cf-form" data-r="up"
+          action="https://formsubmit.co/marcomedium@gmail.com"
+          method="POST">
+      <input type="hidden" name="_subject" value="Nouvelle demande de consultation — Les Clefs de l'Avenir">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://lesclefsdelavenir.ch/?envoi=ok">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <div class="cf-field">
           <label for="cf-nom">Nom</label>
-          <input type="text" id="cf-nom" name="nom" placeholder="Votre nom" autocomplete="family-name">
+          <input type="text" id="cf-nom" name="nom" placeholder="Votre nom" autocomplete="family-name" required>
         </div>
         <div class="cf-field">
           <label for="cf-prenom">Prénom</label>
-          <input type="text" id="cf-prenom" name="prenom" placeholder="Votre prénom" autocomplete="given-name">
+          <input type="text" id="cf-prenom" name="prenom" placeholder="Votre prénom" autocomplete="given-name" required>
         </div>
       </div>
 
@@ -2105,12 +2112,12 @@
 
       <div class="cf-field">
         <label for="cf-email">Email</label>
-        <input type="email" id="cf-email" name="email" placeholder="votre@email.com" autocomplete="email">
+        <input type="email" id="cf-email" name="email" placeholder="votre@email.com" autocomplete="email" required>
       </div>
 
       <div class="cf-field">
         <label for="cf-question">Votre question</label>
-        <textarea id="cf-question" name="question" placeholder="Décrivez votre situation et posez votre question avec le plus de précision possible…"></textarea>
+        <textarea id="cf-question" name="question" placeholder="Décrivez votre situation et posez votre question avec le plus de précision possible…" required></textarea>
       </div>
 
       <div class="cf-submit">
