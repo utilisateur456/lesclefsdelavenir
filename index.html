@@ -50,6 +50,24 @@
     #grain { position: fixed; inset: 0; z-index: 9997;
              pointer-events: none; opacity: 0.02; }
 
+    /* ─── BACK TO TOP ─────────────────────────────────────────────── */
+    #to-top {
+      position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 380;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--a200); color: #fff;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px -8px rgba(0,104,140,0.45),
+                  0 2px 8px -2px rgba(8,22,30,0.25);
+      opacity: 0; transform: translateY(8px); pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    }
+    #to-top.on { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    #to-top:hover { background: var(--t200); }
+    @media (max-width: 600px) {
+      #to-top { right: 1rem; bottom: 1rem; width: 40px; height: 40px; }
+    }
+
     /* ─── INTRO PLEIN ÉCRAN (serrure.mp4) ──────────────────────────── */
     #intro {
       position: fixed; inset: 0; z-index: 5000;
@@ -2135,6 +2153,10 @@
   </div>
 </footer>
 
+<button id="to-top" type="button" aria-label="Remonter en haut de la page">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
@@ -2203,6 +2225,16 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+
+// BACK TO TOP — appears after 600 px scroll, smooth-scrolls to top on click
+(function () {
+  const btn = document.getElementById('to-top');
+  if (!btn) return;
+  const toggle = () => btn.classList.toggle('on', window.scrollY > 600);
+  window.addEventListener('scroll', toggle, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  toggle();
+})();
 
 // CONTACT FORM — AJAX submit so the page stays put, fields clear, banner shows
 (function () {
