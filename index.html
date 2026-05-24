@@ -1375,47 +1375,22 @@
 
     /* ─── BOUTIQUE ────────────────────────────────────────────────── */
     #boutique {
-      padding: 9rem 5rem;
+      padding: 5rem 5rem 4rem;
       background: var(--bg2);
       border-top: 1px solid var(--line);
     }
 
-    .boutique-inner { max-width: 1300px; margin: 0 auto; }
+    .bt-wrap { max-width: 1300px; margin: 0 auto; }
 
-    .boutique-header {
-      display: flex; align-items: flex-end;
-      justify-content: space-between; gap: 2rem;
-      margin-bottom: 4rem;
-    }
+    .bt-rule { height: 1px; background: var(--line); margin: 2.5rem 0; }
 
-    .boutique-header-left h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(2.2rem, 4vw, 3.5rem);
-      font-weight: 400; line-height: 1.1; color: var(--t100);
-      margin-top: 0.75rem;
-    }
-
-    .boutique-header-left h2 em { font-style: italic; color: var(--a200); }
-
-    .boutique-all-link {
-      flex-shrink: 0;
-      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--a200); text-decoration: none; font-weight: 500;
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      border-bottom: 1px solid var(--a100); padding-bottom: 0.25rem;
-      transition: color 0.3s, border-color 0.3s, gap 0.3s;
-      white-space: nowrap;
-    }
-
-    .boutique-all-link:hover { color: var(--t100); border-color: var(--t100); gap: 0.9rem; }
-
-    .boutique-grid {
+    .bt-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
 
-    .prod-card {
+    .bt-card {
       text-decoration: none;
       display: flex; flex-direction: column;
       background: var(--bg);
@@ -1424,71 +1399,79 @@
       transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
     }
 
-    .prod-card:hover {
+    .bt-card:hover {
       border-color: var(--a200);
       box-shadow: 0 10px 40px rgba(0,104,140,0.12);
       transform: translateY(-5px);
     }
 
-    .prod-img {
+    .bt-thumb {
       width: 100%; aspect-ratio: 1 / 1;
       overflow: hidden; position: relative;
       background: var(--bg2);
     }
 
-    .prod-img img {
+    .bt-thumb img {
       width: 100%; height: 100%; object-fit: cover;
       display: block;
       transition: transform 0.55s ease;
     }
 
-    .prod-card:hover .prod-img img { transform: scale(1.06); }
+    .bt-card:hover .bt-thumb img { transform: scale(1.06); }
 
-    .prod-img-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
+    .bt-badge {
+      position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2;
+      background: var(--a200); color: #fff;
+      font-size: 0.56rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 600; padding: 0.28rem 0.65rem;
     }
 
-    .prod-img-placeholder svg { opacity: 0.55; }
-    .pip-1 { background: linear-gradient(145deg, #1a0f2e 0%, #2d1b4e 50%, #4a2d7a 100%); }
-    .pip-2 { background: linear-gradient(145deg, #0d2535 0%, #0e3d50 50%, #1a6080 100%); }
-    .pip-3 { background: linear-gradient(145deg, #1a1200 0%, #3d2c00 50%, #6b4c00 100%); }
-    .pip-4 { background: linear-gradient(145deg, #0f1a0f 0%, #1a3320 50%, #2e5535 100%); }
-
-    .prod-info {
-      padding: 1.5rem 1.4rem 2rem;
-      display: flex; flex-direction: column; flex: 1; gap: 0.35rem;
+    .bt-info {
+      padding: 1.4rem 1.4rem 1.8rem;
+      display: flex; flex-direction: column; gap: 0.4rem; flex: 1;
     }
 
-    .prod-cat {
-      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--bg3); font-weight: 500;
-    }
-
-    .prod-name {
+    .bt-name {
       font-family: 'Instrument Serif', serif;
-      font-size: 1.05rem; font-style: italic;
+      font-size: 1rem; font-style: italic;
       color: var(--t100); line-height: 1.35;
-      margin-top: 0.15rem;
     }
 
-    .prod-price {
+    .bt-price {
       font-family: 'Instrument Serif', serif;
       font-size: 1.1rem; color: var(--a200);
-      margin-top: 0.4rem;
+      margin-top: 0.3rem;
+      display: flex; align-items: baseline; gap: 0.6rem;
     }
 
-    .prod-cta {
-      margin-top: auto; padding-top: 1.2rem;
-      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--a200); font-weight: 600;
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      border-bottom: 1px solid var(--a100);
-      padding-bottom: 0.2rem; width: fit-content;
-      transition: color 0.3s, border-color 0.3s, gap 0.3s;
+    .bt-price .old {
+      font-size: 0.85rem; color: var(--bg3);
+      text-decoration: line-through; font-style: normal;
     }
 
-    .prod-card:hover .prod-cta { color: var(--t100); border-color: var(--t100); gap: 0.75rem; }
+    .bt-bar {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem;
+      padding: 0.5rem 0 1rem;
+    }
+
+    .bt-ship {
+      font-size: 0.8rem; color: var(--t200); font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .bt-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--a200); color: #fff;
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-weight: 500; text-decoration: none;
+      padding: 0.9rem 2rem;
+      transition: background 0.3s;
+    }
+
+    .bt-btn:hover { background: var(--t200); }
+    .bt-btn span { font-size: 1rem; line-height: 1; }
 
     /* ─── RESPONSIVE 960px ───────────────────────────────────────── */
     @media (max-width: 960px) {
@@ -1513,9 +1496,9 @@
       .n2-links { display: none; }
       #temo, #process { padding: 5rem 2rem; }
       footer#f2 { padding: 4rem 2rem 2rem; }
-      #boutique { padding: 5rem 2rem; }
-      .boutique-grid { grid-template-columns: 1fr 1fr; }
-      .boutique-header { flex-direction: column; align-items: flex-start; }
+      #boutique { padding: 4rem 2rem; }
+      .bt-grid { grid-template-columns: 1fr 1fr; }
+      .bt-bar { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
       #consult-modes { padding: 5rem 2rem; }
       .cm-grid { grid-template-columns: 1fr; }
       #contact { padding: 5rem 2rem; }
@@ -1569,8 +1552,9 @@
       #consult-modes { padding: 4rem 1.5rem; }
       .cm-card { padding: 2rem 1.5rem; }
       /* Contact form */
-      #boutique { padding: 4rem 1.5rem; }
-      .boutique-grid { grid-template-columns: 1fr; }
+      #boutique { padding: 3.5rem 1.5rem; }
+      .bt-grid { grid-template-columns: 1fr; }
+      .bt-btn { width: 100%; justify-content: center; }
       #contact { padding: 4rem 1.5rem; }
       .cf-btn { width: 100%; justify-content: center; }
       /* Payment */
@@ -2258,116 +2242,51 @@
 
 <!-- BOUTIQUE -->
 <section id="boutique">
-  <div class="boutique-inner">
+  <div class="bt-wrap">
+    <div class="bt-rule" data-r="up"></div>
 
-    <div class="boutique-header">
-      <div class="boutique-header-left" data-r="left">
-        <div class="sh-tag">Maison Sidérale</div>
-        <h2>Notre <em>boutique</em><br>ésotérique</h2>
-      </div>
-      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="boutique-all-link" data-r="right">
-        Voir toute la boutique →
+    <div class="bt-grid">
+      <a href="https://maisonsiderale.com/products/transparent-romantic-aromatherapy-candle-lamp-gift-aromatherapy-candle-guest-gift-candle-wedding-candle-candle-jar" target="_blank" rel="noopener" class="bt-card" data-r="up">
+        <div class="bt-thumb"><img src="https://maisonsiderale.com/cdn/shop/files/S5fdfb9ab531c46a497fee8560ab5852fF.webp?v=1779381208&width=600" alt="Bougie d'aromathérapie en cire de soja" loading="lazy"></div>
+        <div class="bt-info">
+          <div class="bt-name">Bougie d'aromathérapie en cire de soja</div>
+          <div class="bt-price">CHF 29.90</div>
+        </div>
+      </a>
+
+      <a href="https://maisonsiderale.com/products/lobsidienne-bracelet-de-protection-taillee-dans-le-verre-des-volcans-pour-celles-et-ceux-qui-filtrent-ce-qui-les-entoure" target="_blank" rel="noopener" class="bt-card" data-r="up" style="transition-delay:.08s">
+        <div class="bt-thumb"><img src="https://maisonsiderale.com/cdn/shop/files/S764d351d4ee84e7e990cf2c530924a07S.webp?v=1779558460&width=600" alt="L'Obsidienne bracelet de protection" loading="lazy"></div>
+        <div class="bt-info">
+          <div class="bt-name">L'Obsidienne · bracelet de protection</div>
+          <div class="bt-price">CHF 34.00</div>
+        </div>
+      </a>
+
+      <a href="https://maisonsiderale.com/products/celtic-cross-altar-cloth-tarot-card-table-cloth-witch-moon-divination-table-cover-for-tarot-mat-witchy-gifts-decor-card-pad" target="_blank" rel="noopener" class="bt-card" data-r="up" style="transition-delay:.16s">
+        <div class="bt-thumb"><img src="https://maisonsiderale.com/cdn/shop/files/Sbfccd2f805de4d3c9dade7bdd673b303Q.webp?v=1779293625&width=600" alt="Nappe d'autel Croix celtique" loading="lazy"></div>
+        <div class="bt-info">
+          <div class="bt-name">Nappe d'autel · Croix celtique</div>
+          <div class="bt-price">CHF 22.90</div>
+        </div>
+      </a>
+
+      <a href="https://maisonsiderale.com/products/pochette-en-velours-pour-cartes-et-accessoires-de-divination" target="_blank" rel="noopener" class="bt-card" data-r="up" style="transition-delay:.24s">
+        <div class="bt-thumb">
+          <span class="bt-badge">Promotion</span>
+          <img src="https://maisonsiderale.com/cdn/shop/files/S7ca2fcf0f82d45f39a0540f89678baabT.webp?v=1779291815&width=600" alt="Pochette en velours pour cartes et accessoires" loading="lazy">
+        </div>
+        <div class="bt-info">
+          <div class="bt-name">Pochette en velours · cartes &amp; accessoires</div>
+          <div class="bt-price">CHF 12.90 <span class="old">CHF 19.90</span></div>
+        </div>
       </a>
     </div>
 
-    <div class="boutique-grid">
+    <div class="bt-rule"></div>
 
-      <!-- Améthyste brute -->
-      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="prod-card" data-r="up">
-        <div class="prod-img">
-          <div class="prod-img-placeholder pip-1">
-            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="45,8 68,22 72,52 55,75 35,75 18,52 22,22" fill="rgba(180,120,255,0.18)" stroke="rgba(200,150,255,0.7)" stroke-width="1.5"/>
-              <polygon points="45,18 60,28 63,50 50,65 40,65 27,50 30,28" fill="rgba(180,120,255,0.12)" stroke="rgba(200,150,255,0.5)" stroke-width="1"/>
-              <line x1="45" y1="8" x2="45" y2="75" stroke="rgba(220,180,255,0.3)" stroke-width="0.8"/>
-              <line x1="22" y1="22" x2="68" y2="52" stroke="rgba(220,180,255,0.25)" stroke-width="0.8"/>
-              <line x1="68" y1="22" x2="22" y2="52" stroke="rgba(220,180,255,0.25)" stroke-width="0.8"/>
-              <circle cx="45" cy="42" r="5" fill="rgba(200,150,255,0.4)" stroke="rgba(220,180,255,0.8)" stroke-width="1"/>
-              <circle cx="45" cy="42" r="2" fill="rgba(240,210,255,0.9)"/>
-            </svg>
-          </div>
-        </div>
-        <div class="prod-info">
-          <span class="prod-cat">Lithothérapie</span>
-          <div class="prod-name">Améthyste brute naturelle</div>
-          <span class="prod-price">CHF 18.-</span>
-          <span class="prod-cta">Voir le produit →</span>
-        </div>
-      </a>
-
-      <!-- Pendule radiesthésie -->
-      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="prod-card" data-r="up" style="transition-delay:.08s">
-        <div class="prod-img">
-          <div class="prod-img-placeholder pip-2">
-            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="45" y1="10" x2="45" y2="38" stroke="rgba(180,220,255,0.7)" stroke-width="1.5"/>
-              <polygon points="45,38 53,52 45,72 37,52" fill="rgba(100,180,240,0.25)" stroke="rgba(150,210,255,0.8)" stroke-width="1.5"/>
-              <line x1="37" y1="52" x2="53" y2="52" stroke="rgba(150,210,255,0.5)" stroke-width="1"/>
-              <line x1="45" y1="38" x2="45" y2="72" stroke="rgba(180,220,255,0.3)" stroke-width="0.8"/>
-              <circle cx="45" cy="10" r="4" fill="rgba(120,190,240,0.3)" stroke="rgba(180,220,255,0.9)" stroke-width="1.5"/>
-              <circle cx="45" cy="55" r="2.5" fill="rgba(200,235,255,0.7)"/>
-              <path d="M35 45 Q45 50 55 45" stroke="rgba(150,210,255,0.4)" stroke-width="1" fill="none"/>
-            </svg>
-          </div>
-        </div>
-        <div class="prod-info">
-          <span class="prod-cat">Radiesthésie</span>
-          <div class="prod-name">Pendule de radiesthésie en cristal</div>
-          <span class="prod-price">CHF 24.-</span>
-          <span class="prod-cta">Voir le produit →</span>
-        </div>
-      </a>
-
-      <!-- Tarot de Marseille -->
-      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="prod-card" data-r="up" style="transition-delay:.16s">
-        <div class="prod-img">
-          <div class="prod-img-placeholder pip-3">
-            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Fan of 3 cards -->
-              <rect x="20" y="28" width="28" height="42" rx="3" fill="rgba(255,200,80,0.1)" stroke="rgba(255,200,80,0.5)" stroke-width="1.2" transform="rotate(-18 34 49)"/>
-              <rect x="31" y="20" width="28" height="42" rx="3" fill="rgba(255,200,80,0.14)" stroke="rgba(255,200,80,0.7)" stroke-width="1.2"/>
-              <rect x="42" y="28" width="28" height="42" rx="3" fill="rgba(255,200,80,0.1)" stroke="rgba(255,200,80,0.5)" stroke-width="1.2" transform="rotate(18 56 49)"/>
-              <!-- Star on center card -->
-              <polygon points="45,30 47,36 53,36 48,40 50,46 45,42 40,46 42,40 37,36 43,36" fill="rgba(255,220,120,0.6)" stroke="rgba(255,210,100,0.9)" stroke-width="0.8"/>
-            </svg>
-          </div>
-        </div>
-        <div class="prod-info">
-          <span class="prod-cat">Tarot &amp; Oracles</span>
-          <div class="prod-name">Tarot de Marseille — édition dorée</div>
-          <span class="prod-price">CHF 34.-</span>
-          <span class="prod-cta">Voir le produit →</span>
-        </div>
-      </a>
-
-      <!-- Bougie rituelle -->
-      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="prod-card" data-r="up" style="transition-delay:.24s">
-        <div class="prod-img">
-          <div class="prod-img-placeholder pip-4">
-            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Flame -->
-              <path d="M45 18 C47 24 52 28 50 34 C48 40 45 38 45 38 C45 38 42 40 40 34 C38 28 43 24 45 18Z" fill="rgba(255,180,60,0.3)" stroke="rgba(255,210,100,0.8)" stroke-width="1.2"/>
-              <path d="M45 24 C46 27 48 30 47 33 C46 36 45 35 45 35 C45 35 44 36 43 33 C42 30 44 27 45 24Z" fill="rgba(255,230,150,0.5)"/>
-              <!-- Candle body -->
-              <rect x="38" y="38" width="14" height="34" rx="2" fill="rgba(150,220,160,0.2)" stroke="rgba(120,200,140,0.7)" stroke-width="1.5"/>
-              <!-- Wax drips -->
-              <path d="M38 46 Q35 50 36 54" stroke="rgba(150,220,160,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M52 50 Q55 54 54 58" stroke="rgba(150,220,160,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <!-- Base -->
-              <ellipse cx="45" cy="72" rx="10" ry="3" fill="rgba(120,200,140,0.25)" stroke="rgba(150,220,160,0.6)" stroke-width="1"/>
-              <!-- Wick -->
-              <line x1="45" y1="38" x2="45" y2="42" stroke="rgba(200,240,210,0.8)" stroke-width="1.2"/>
-            </svg>
-          </div>
-        </div>
-        <div class="prod-info">
-          <span class="prod-cat">Rituels &amp; Énergétique</span>
-          <div class="prod-name">Bougie rituelle aux herbes sacrées</div>
-          <span class="prod-price">CHF 16.-</span>
-          <span class="prod-cta">Voir le produit →</span>
-        </div>
-      </a>
-
+    <div class="bt-bar" data-r="up">
+      <p class="bt-ship">Livraison offerte dès 50.&ndash; · expédition soignée sous 48 h depuis la Suisse.</p>
+      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener" class="bt-btn">Découvrir la boutique <span>&#8599;</span></a>
     </div>
   </div>
 </section>
