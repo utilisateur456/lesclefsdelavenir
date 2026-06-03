@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Sidérale — Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --studio-bg:    #f5f5f7;
+      --studio-panel: #ffffff;
+      --studio-border:#d2d2d7;
+      --studio-text:  #1d1d1f;
+      --studio-muted: #6e6e73;
+      --studio-accent:#0071e3;
+      --studio-hover: #f5f5f7;
+      --panel-w: 320px;
+    }
+
+    html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--studio-bg); color: var(--studio-text); }
+
+    /* ── LAYOUT ─────────────────────────────────────── */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* ── SIDEBAR ────────────────────────────────────── */
+    .sidebar {
+      width: var(--panel-w);
+      background: var(--studio-panel);
+      border-right: 1px solid var(--studio-border);
+      display: flex; flex-direction: column;
+      overflow: hidden; flex-shrink: 0;
+    }
+
+    .sidebar-head {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--studio-border);
+    }
+
+    .sidebar-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-style: italic;
+      color: var(--studio-text); letter-spacing: 0.02em;
+    }
+
+    .sidebar-sub {
+      font-size: 11px; color: var(--studio-muted);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-top: 2px; font-weight: 500;
+    }
+
+    .sidebar-scroll { flex: 1; overflow-y: auto; padding: 16px 0; }
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: var(--studio-border); border-radius: 2px; }
+
+    /* ── SECTION GROUPE ─────────────────────────────── */
+    .sg { padding: 0 20px 20px; }
+
+    .sg-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--studio-muted);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--studio-border);
+    }
+
+    .sg-row { margin-bottom: 14px; }
+
+    .sg-label {
+      font-size: 12px; font-weight: 500; color: var(--studio-text);
+      margin-bottom: 6px; display: flex; align-items: center;
+      justify-content: space-between;
+    }
+
+    .sg-val {
+      font-size: 11px; color: var(--studio-accent); font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Controls */
+    input[type="color"] {
+      width: 100%; height: 36px; border: 1px solid var(--studio-border);
+      border-radius: 8px; cursor: pointer; padding: 2px 4px;
+      background: none; outline: none;
+    }
+
+    input[type="range"] {
+      width: 100%; accent-color: var(--studio-accent);
+      height: 4px; cursor: pointer;
+    }
+
+    select {
+      width: 100%; padding: 8px 10px;
+      border: 1px solid var(--studio-border);
+      border-radius: 8px; background: var(--studio-hover);
+      color: var(--studio-text); font-size: 12px;
+      font-family: inherit; outline: none; cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236e6e73' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+    }
+
+    /* Palette swatches */
+    .palette-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+
+    .swatch {
+      height: 32px; border-radius: 6px; cursor: pointer;
+      border: 2px solid transparent; transition: border-color 0.15s, transform 0.15s;
+      position: relative;
+    }
+
+    .swatch.active { border-color: var(--studio-accent); transform: scale(1.1); }
+    .swatch:hover { transform: scale(1.05); }
+
+    /* Preset palettes */
+    .preset-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .preset {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      border: 1.5px solid var(--studio-border);
+      cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+
+    .preset:hover { background: var(--studio-hover); border-color: #aeaeb2; }
+    .preset.active { border-color: var(--studio-accent); background: #e8f1fb; }
+
+    .preset-dots { display: flex; gap: 4px; }
+
+    .pd { width: 14px; height: 14px; border-radius: 50%; }
+
+    .preset-name { font-size: 12px; font-weight: 500; color: var(--studio-text); }
+
+    /* Toggle */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+
+    .toggle {
+      width: 36px; height: 20px; background: #e5e5ea; border-radius: 10px;
+      cursor: pointer; position: relative; transition: background 0.2s;
+    }
+
+    .toggle.on { background: var(--studio-accent); }
+
+    .toggle::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 16px; height: 16px; background: white; border-radius: 50%;
+      transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle.on::after { left: 18px; }
+
+    /* ── BOTTOM ACTIONS ─────────────────────────────── */
+    .sidebar-foot {
+      padding: 16px 20px;
+      border-top: 1px solid var(--studio-border);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .btn-export {
+      width: 100%; padding: 10px;
+      background: var(--studio-accent); color: white;
+      border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-export:hover { background: #0062cc; }
+
+    .btn-copy {
+      width: 100%; padding: 10px;
+      background: var(--studio-hover); color: var(--studio-text);
+      border: 1px solid var(--studio-border); border-radius: 8px;
+      font-size: 13px; font-weight: 500; font-family: inherit;
+      cursor: pointer; transition: background 0.2s;
+    }
+
+    .btn-copy:hover { background: #e5e5ea; }
+
+    /* ── TABS ──────────────────────────────────────── */
+    .tabs {
+      display: flex; gap: 2px; padding: 4px;
+      background: var(--studio-border); border-radius: 10px;
+      margin: 0 20px 16px;
+    }
+
+    .tab {
+      flex: 1; padding: 6px 8px; border-radius: 7px;
+      font-size: 11px; font-weight: 500; text-align: center;
+      cursor: pointer; color: var(--studio-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .tab.active { background: white; color: var(--studio-text); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── PREVIEW ────────────────────────────────────── */
+    .preview {
+      flex: 1; overflow-y: auto; padding: 32px;
+      background: var(--studio-bg);
+    }
+
+    .preview::-webkit-scrollbar { width: 6px; }
+    .preview::-webkit-scrollbar-thumb { background: var(--studio-border); border-radius: 3px; }
+
+    .preview-wrap {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    /* ── PREVIEW TOOLBAR ─────────────────────────────── */
+    .preview-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--studio-panel);
+      border: 1px solid var(--studio-border);
+      border-radius: 12px; padding: 10px 16px;
+    }
+
+    .pbar-title { font-size: 13px; font-weight: 600; color: var(--studio-text); }
+    .pbar-hint { font-size: 11px; color: var(--studio-muted); }
+
+    .device-btns { display: flex; gap: 6px; }
+
+    .dbtn {
+      padding: 5px 12px; border-radius: 6px;
+      border: 1px solid var(--studio-border);
+      font-size: 11px; font-weight: 500; cursor: pointer;
+      background: none; font-family: inherit;
+      color: var(--studio-muted); transition: all 0.15s;
+    }
+
+    .dbtn.active { background: var(--studio-text); color: white; border-color: var(--studio-text); }
+
+    /* ── STORE PREVIEW FRAME ─────────────────────────── */
+    #store-preview {
+      background: white;
+      border: 1px solid var(--studio-border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: max-width 0.3s;
+      margin: 0 auto; width: 100%;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+    }
+
+    /* ═══════════════════════════════════════════════
+       STORE COMPONENTS (styled by JS vars)
+    ═══════════════════════════════════════════════ */
+
+    /* Nav */
+    .st-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px;
+      border-bottom: 1px solid var(--s-line);
+      background: var(--s-bg);
+    }
+
+    .st-nav-logo {
+      font-family: var(--s-font-serif);
+      font-size: 18px; color: var(--s-text);
+      font-style: italic; letter-spacing: 0.04em;
+    }
+
+    .st-nav-links {
+      display: flex; gap: 28px; list-style: none;
+    }
+
+    .st-nav-links li {
+      font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--s-muted);
+      font-weight: 500; cursor: pointer;
+    }
+
+    .st-nav-icons { display: flex; gap: 16px; }
+
+    .st-nav-icons span { font-size: 18px; color: var(--s-text); cursor: pointer; }
+
+    /* Hero */
+    .st-hero {
+      background: var(--s-bg2);
+      min-height: 500px;
+      display: flex; align-items: center;
+      padding: 80px 60px;
+      position: relative; overflow: hidden;
+    }
+
+    .st-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--s-hero-overlay);
+      opacity: 0.5;
+    }
+
+    .st-hero-content { position: relative; z-index: 1; max-width: 560px; }
+
+    .st-hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--s-accent); font-weight: 600; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .st-hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--s-accent); }
+
+    .st-hero h1 {
+      font-family: var(--s-font-serif);
+      font-size: clamp(36px, 5vw, 58px);
+      color: var(--s-heading); line-height: 1.08;
+      font-weight: 400; letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .st-hero h1 em { font-style: italic; color: var(--s-accent); }
+
+    .st-hero p {
+      font-size: 15px; line-height: 1.8; color: var(--s-muted);
+      font-weight: 300; margin-bottom: 36px; max-width: 440px;
+    }
+
+    .st-btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--s-accent); color: white;
+      padding: 14px 32px; font-size: 13px;
+      font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; border: none; cursor: pointer;
+      border-radius: var(--s-radius-btn);
+      font-family: inherit; transition: opacity 0.2s;
+    }
+
+    .st-btn-primary:hover { opacity: 0.88; }
+
+    .st-btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--s-text);
+      padding: 14px 28px; font-size: 13px;
+      font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; border: 1.5px solid var(--s-line);
+      cursor: pointer; border-radius: var(--s-radius-btn);
+      font-family: inherit; transition: border-color 0.2s;
+      margin-left: 12px;
+    }
+
+    /* Products */
+    .st-products { padding: 64px 40px; background: var(--s-bg); }
+
+    .st-products-head {
+      text-align: center; margin-bottom: 48px;
+    }
+
+    .st-products-head h2 {
+      font-family: var(--s-font-serif);
+      font-size: 36px; font-weight: 400;
+      color: var(--s-heading); margin-bottom: 10px;
+    }
+
+    .st-products-head p {
+      font-size: 14px; color: var(--s-muted);
+      font-weight: 300; letter-spacing: 0.02em;
+    }
+
+    .st-pgrid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+
+    .st-card {
+      cursor: pointer;
+      background: var(--s-bg);
+    }
+
+    .st-card-img {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--s-bg2);
+      border-radius: var(--s-radius-card);
+      overflow: hidden; position: relative;
+      transition: transform 0.4s;
+    }
+
+    .st-card:hover .st-card-img { transform: scale(1.02); }
+
+    .st-card-img-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; opacity: 0.4;
+    }
+
+    .st-card-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--s-accent); color: white;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .st-card-body { padding: 16px 4px 0; }
+
+    .st-card-cat {
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--s-muted); font-weight: 600; margin-bottom: 4px;
+    }
+
+    .st-card-name {
+      font-family: var(--s-font-serif);
+      font-size: 17px; color: var(--s-heading);
+      font-weight: 400; margin-bottom: 6px; line-height: 1.3;
+    }
+
+    .st-card-price { font-size: 14px; color: var(--s-accent); font-weight: 600; }
+
+    /* Feature band */
+    .st-feature {
+      background: var(--s-bg2); padding: 80px 60px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+
+    .st-feature-img {
+      aspect-ratio: 4/5; background: var(--s-bg3);
+      border-radius: var(--s-radius-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px; opacity: 0.35;
+    }
+
+    .st-feature-text {}
+
+    .st-feature-text .st-hero-eyebrow { margin-bottom: 16px; }
+
+    .st-feature-text h2 {
+      font-family: var(--s-font-serif);
+      font-size: 38px; color: var(--s-heading);
+      font-weight: 400; line-height: 1.15; margin-bottom: 18px;
+    }
+
+    .st-feature-text h2 em { font-style: italic; color: var(--s-accent); }
+
+    .st-feature-text p {
+      font-size: 14px; line-height: 1.85; color: var(--s-muted);
+      font-weight: 300; margin-bottom: 28px;
+    }
+
+    /* Testimonials */
+    .st-temo { padding: 64px 40px; background: var(--s-bg); }
+
+    .st-temo-head { text-align: center; margin-bottom: 40px; }
+
+    .st-temo-head h2 {
+      font-family: var(--s-font-serif);
+      font-size: 30px; font-weight: 400; color: var(--s-heading);
+    }
+
+    .st-temo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .st-tcard {
+      background: var(--s-bg2); padding: 28px 24px;
+      border-radius: var(--s-radius-card);
+      border: 1px solid var(--s-line);
+    }
+
+    .st-stars { color: var(--s-accent); font-size: 13px; margin-bottom: 14px; letter-spacing: 2px; }
+
+    .st-tquote {
+      font-family: var(--s-font-serif);
+      font-size: 15px; font-style: italic;
+      color: var(--s-heading); line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .st-tname { font-size: 11px; font-weight: 600; color: var(--s-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* Newsletter */
+    .st-nl {
+      background: var(--s-accent);
+      padding: 60px 40px; text-align: center;
+    }
+
+    .st-nl h2 {
+      font-family: var(--s-font-serif);
+      font-size: 32px; color: white;
+      font-weight: 400; margin-bottom: 10px;
+    }
+
+    .st-nl p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 28px; font-weight: 300; }
+
+    .st-nl-form { display: flex; gap: 0; max-width: 440px; margin: 0 auto; }
+
+    .st-nl-input {
+      flex: 1; padding: 13px 18px; border: none;
+      font-size: 13px; font-family: inherit;
+      background: rgba(255,255,255,0.15); color: white;
+      outline: none;
+      border-radius: var(--s-radius-btn) 0 0 var(--s-radius-btn);
+    }
+
+    .st-nl-input::placeholder { color: rgba(255,255,255,0.5); }
+
+    .st-nl-btn {
+      padding: 13px 24px; background: white;
+      color: var(--s-accent); font-weight: 700;
+      font-size: 12px; font-family: inherit;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      border-radius: 0 var(--s-radius-btn) var(--s-radius-btn) 0;
+    }
+
+    /* Footer */
+    .st-footer {
+      background: var(--s-footer-bg);
+      padding: 48px 40px 24px;
+    }
+
+    .st-footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+
+    .st-f-brand {}
+
+    .st-f-logo {
+      font-family: var(--s-font-serif);
+      font-size: 20px; font-style: italic;
+      color: var(--s-footer-text); margin-bottom: 12px;
+    }
+
+    .st-f-desc { font-size: 13px; color: var(--s-footer-muted); line-height: 1.7; font-weight: 300; }
+
+    .st-f-col h4 {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--s-footer-muted); margin-bottom: 14px; font-weight: 600;
+    }
+
+    .st-f-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .st-f-col a { font-size: 13px; color: var(--s-footer-muted); text-decoration: none; font-weight: 300; }
+
+    .st-footer-bot {
+      border-top: 1px solid var(--s-footer-line);
+      padding-top: 20px;
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--s-footer-muted);
+    }
+
+    /* ── CSS EXPORT MODAL ───────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: white; border-radius: 16px;
+      width: min(700px, 90vw); max-height: 80vh;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+      transform: scale(0.95); transition: transform 0.2s;
+    }
+
+    .modal-overlay.open .modal { transform: scale(1); }
+
+    .modal-head {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--studio-border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .modal-title { font-size: 16px; font-weight: 600; }
+    .modal-sub { font-size: 12px; color: var(--studio-muted); margin-top: 2px; }
+
+    .modal-close {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--studio-hover); border: none;
+      font-size: 16px; cursor: pointer; color: var(--studio-muted);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .modal-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+    pre {
+      background: #1d1d1f; color: #f5f5f7;
+      padding: 20px; border-radius: 10px;
+      font-size: 12px; line-height: 1.7; overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .modal-foot {
+      padding: 16px 24px;
+      border-top: 1px solid var(--studio-border);
+      display: flex; gap: 8px; justify-content: flex-end;
+    }
+
+    /* ── TOAST ──────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1d1d1f; color: white;
+      padding: 10px 20px; border-radius: 20px;
+      font-size: 13px; font-weight: 500;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none; z-index: 2000;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ══════════════════════════════ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-head">
+      <div class="sidebar-logo">Maison Sidérale</div>
+      <div class="sidebar-sub">Design Studio</div>
+    </div>
+
+    <!-- TABS -->
+    <div style="padding: 14px 20px 0;">
+      <div class="tabs">
+        <div class="tab active" data-tab="palette">Palette</div>
+        <div class="tab" data-tab="typo">Typographie</div>
+        <div class="tab" data-tab="shape">Forme</div>
+      </div>
+    </div>
+
+    <div class="sidebar-scroll">
+
+      <!-- ── PALETTE TAB ───────────────────────── -->
+      <div class="tab-content active" id="tab-palette">
+
+        <div class="sg">
+          <div class="sg-title">Palettes prêtes</div>
+          <div class="preset-list">
+
+            <div class="preset active" data-preset="luxury">
+              <div class="preset-dots">
+                <div class="pd" style="background:#faf8f5"></div>
+                <div class="pd" style="background:#1a1108"></div>
+                <div class="pd" style="background:#c9a84c"></div>
+                <div class="pd" style="background:#8b7355"></div>
+              </div>
+              <span class="preset-name">Luxury Gold</span>
+            </div>
+
+            <div class="preset" data-preset="noir">
+              <div class="preset-dots">
+                <div class="pd" style="background:#f5f5f7"></div>
+                <div class="pd" style="background:#1d1d1f"></div>
+                <div class="pd" style="background:#6e6e73"></div>
+                <div class="pd" style="background:#0071e3"></div>
+              </div>
+              <span class="preset-name">Apple Noir</span>
+            </div>
+
+            <div class="preset" data-preset="celeste">
+              <div class="preset-dots">
+                <div class="pd" style="background:#f0f4f8"></div>
+                <div class="pd" style="background:#0d1b2a"></div>
+                <div class="pd" style="background:#7b9cc4"></div>
+                <div class="pd" style="background:#c4a882"></div>
+              </div>
+              <span class="preset-name">Céleste Nuit</span>
+            </div>
+
+            <div class="preset" data-preset="ivoire">
+              <div class="preset-dots">
+                <div class="pd" style="background:#fdfbf7"></div>
+                <div class="pd" style="background:#2c2416"></div>
+                <div class="pd" style="background:#b0a090"></div>
+                <div class="pd" style="background:#7c6c5c"></div>
+              </div>
+              <span class="preset-name">Ivoire Brut</span>
+            </div>
+
+            <div class="preset" data-preset="cosmos">
+              <div class="preset-dots">
+                <div class="pd" style="background:#0a0a14"></div>
+                <div class="pd" style="background:#e8e0f0"></div>
+                <div class="pd" style="background:#8a6fb0"></div>
+                <div class="pd" style="background:#d4a8d4"></div>
+              </div>
+              <span class="preset-name">Cosmos Violet</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Couleurs personnalisées</div>
+
+          <div class="sg-row">
+            <div class="sg-label">Fond principal</div>
+            <input type="color" id="c-bg" value="#faf8f5">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Fond secondaire</div>
+            <input type="color" id="c-bg2" value="#f0ebe3">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Texte principal</div>
+            <input type="color" id="c-text" value="#1a1108">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Texte secondaire</div>
+            <input type="color" id="c-muted" value="#8b7355">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Couleur d'accent</div>
+            <input type="color" id="c-accent" value="#c9a84c">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Séparateurs</div>
+            <input type="color" id="c-line" value="#e8e0d8">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">Footer fond</div>
+            <input type="color" id="c-footer" value="#1a1108">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Mode</div>
+          <div class="toggle-row">
+            <span class="sg-label" style="margin:0">Mode sombre</span>
+            <div class="toggle" id="dark-toggle"></div>
+          </div>
+        </div>
+
+      </div><!-- /tab-palette -->
+
+      <!-- ── TYPO TAB ──────────────────────────── -->
+      <div class="tab-content" id="tab-typo">
+
+        <div class="sg">
+          <div class="sg-title">Police des titres</div>
+          <div class="sg-row">
+            <select id="f-serif">
+              <option value="'Playfair Display', serif">Playfair Display</option>
+              <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+              <option value="'EB Garamond', serif">EB Garamond</option>
+              <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+              <option value="'DM Serif Display', serif">DM Serif Display</option>
+              <option value="'Italiana', serif">Italiana</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+            </select>
+          </div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Taille titre hero
+              <span class="sg-val" id="v-hero-size">58px</span>
+            </div>
+            <input type="range" id="hero-size" min="36" max="80" value="58">
+          </div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Taille titre section
+              <span class="sg-val" id="v-section-size">36px</span>
+            </div>
+            <input type="range" id="section-size" min="24" max="56" value="36">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Police du corps</div>
+          <div class="sg-row">
+            <select id="f-sans">
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'DM Sans', sans-serif">DM Sans</option>
+              <option value="'Nunito Sans', sans-serif">Nunito Sans</option>
+              <option value="'Jost', sans-serif">Jost</option>
+              <option value="'Raleway', sans-serif">Raleway</option>
+              <option value="-apple-system, sans-serif">System (Apple)</option>
+            </select>
+          </div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Taille corps
+              <span class="sg-val" id="v-body-size">15px</span>
+            </div>
+            <input type="range" id="body-size" min="12" max="20" value="15">
+          </div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Interligne
+              <span class="sg-val" id="v-leading">1.8</span>
+            </div>
+            <input type="range" id="leading" min="14" max="22" value="18">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Espacements lettres</div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Espacement caps
+              <span class="sg-val" id="v-tracking">0.12em</span>
+            </div>
+            <input type="range" id="tracking" min="0" max="30" value="12">
+          </div>
+        </div>
+
+      </div><!-- /tab-typo -->
+
+      <!-- ── SHAPE TAB ─────────────────────────── -->
+      <div class="tab-content" id="tab-shape">
+
+        <div class="sg">
+          <div class="sg-title">Arrondis</div>
+
+          <div class="sg-row">
+            <div class="sg-label">
+              Boutons
+              <span class="sg-val" id="v-btn-r">0px</span>
+            </div>
+            <input type="range" id="btn-radius" min="0" max="40" value="0">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">
+              Cartes produit
+              <span class="sg-val" id="v-card-r">0px</span>
+            </div>
+            <input type="range" id="card-radius" min="0" max="24" value="0">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Espacement</div>
+
+          <div class="sg-row">
+            <div class="sg-label">
+              Padding sections
+              <span class="sg-val" id="v-section-pad">64px</span>
+            </div>
+            <input type="range" id="section-pad" min="32" max="120" value="64">
+          </div>
+
+          <div class="sg-row">
+            <div class="sg-label">
+              Gap grille produits
+              <span class="sg-val" id="v-grid-gap">24px</span>
+            </div>
+            <input type="range" id="grid-gap" min="8" max="48" value="24">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Style nav</div>
+          <div class="sg-row">
+            <div class="sg-label">
+              Hauteur navbar
+              <span class="sg-val" id="v-nav-h">60px</span>
+            </div>
+            <input type="range" id="nav-h" min="44" max="100" value="60">
+          </div>
+          <div class="sg-row">
+            <div class="sg-label">Navbar fond blanc</div>
+            <div class="toggle-row" style="margin-top: 6px">
+              <div class="toggle on" id="nav-bg-toggle"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">Effets</div>
+          <div class="sg-row">
+            <div class="toggle-row">
+              <span class="sg-label" style="margin:0">Ombres cartes</span>
+              <div class="toggle on" id="shadow-toggle"></div>
+            </div>
+          </div>
+          <div class="sg-row">
+            <div class="toggle-row">
+              <span class="sg-label" style="margin:0">Hover zoom produits</span>
+              <div class="toggle on" id="zoom-toggle"></div>
+            </div>
+          </div>
+          <div class="sg-row">
+            <div class="toggle-row">
+              <span class="sg-label" style="margin:0">Bordures séparatrices</span>
+              <div class="toggle on" id="border-toggle"></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-shape -->
+
+    </div><!-- /sidebar-scroll -->
+
+    <div class="sidebar-foot">
+      <button class="btn-export" onclick="openModal()">Exporter le CSS Shopify</button>
+      <button class="btn-copy" onclick="copyCSS()">Copier le CSS</button>
+    </div>
+
+  </aside>
+
+  <!-- ═══ PREVIEW ══════════════════════════════ -->
+  <main class="preview">
+    <div class="preview-wrap">
+
+      <div class="preview-bar">
+        <div>
+          <div class="pbar-title">Aperçu boutique</div>
+          <div class="pbar-hint">Modifiez les réglages pour voir le résultat en temps réel</div>
+        </div>
+        <div class="device-btns">
+          <button class="dbtn active" onclick="setDevice('desktop', this)">Desktop</button>
+          <button class="dbtn" onclick="setDevice('tablet', this)">Tablette</button>
+          <button class="dbtn" onclick="setDevice('mobile', this)">Mobile</button>
+        </div>
+      </div>
+
+      <div id="store-preview">
+
+        <!-- NAV -->
+        <nav class="st-nav">
+          <div class="st-nav-logo">Maison Sidérale</div>
+          <ul class="st-nav-links">
+            <li>Collection</li>
+            <li>Notre histoire</li>
+            <li>Rituel</li>
+            <li>Contact</li>
+          </ul>
+          <div class="st-nav-icons">
+            <span>♡</span>
+            <span>⊙</span>
+            <span>⊕</span>
+          </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="st-hero">
+          <div class="st-hero-content">
+            <div class="st-hero-eyebrow">Nouvelle collection</div>
+            <h1>L'univers<br>à votre <em>portée</em></h1>
+            <p>Des pièces conçues pour celles et ceux qui portent les étoiles en eux. Chaque création est un rituel de lumière.</p>
+            <button class="st-btn-primary">Découvrir la collection</button>
+            <button class="st-btn-secondary">Notre histoire →</button>
+          </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section class="st-products">
+          <div class="st-products-head">
+            <h2>Pièces emblématiques</h2>
+            <p>Sélection de la saison — éditions limitées</p>
+          </div>
+          <div class="st-pgrid">
+            <div class="st-card">
+              <div class="st-card-img">
+                <div class="st-card-img-inner">✦</div>
+                <div class="st-card-badge">Nouveau</div>
+              </div>
+              <div class="st-card-body">
+                <div class="st-card-cat">Bijoux</div>
+                <div class="st-card-name">Collier Céleste</div>
+                <div class="st-card-price">189 CHF</div>
+              </div>
+            </div>
+            <div class="st-card">
+              <div class="st-card-img">
+                <div class="st-card-img-inner">◎</div>
+              </div>
+              <div class="st-card-body">
+                <div class="st-card-cat">Rituel</div>
+                <div class="st-card-name">Bougie Sidérale N°3</div>
+                <div class="st-card-price">58 CHF</div>
+              </div>
+            </div>
+            <div class="st-card">
+              <div class="st-card-img">
+                <div class="st-card-img-inner">☽</div>
+                <div class="st-card-badge">Bestseller</div>
+              </div>
+              <div class="st-card-body">
+                <div class="st-card-cat">Accessoire</div>
+                <div class="st-card-name">Carnet de Lune</div>
+                <div class="st-card-price">42 CHF</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FEATURE -->
+        <section class="st-feature">
+          <div class="st-feature-img">✦</div>
+          <div class="st-feature-text">
+            <div class="st-hero-eyebrow">Notre philosophie</div>
+            <h2>Nés des <em>étoiles</em>,<br>faits pour durer</h2>
+            <p>Chaque pièce de la Maison Sidérale est conçue avec intention. Matières nobles, savoir-faire artisanal et énergie intentionnelle. Parce que ce que vous portez vous appartient.</p>
+            <button class="st-btn-primary">Lire notre histoire</button>
+          </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="st-temo">
+          <div class="st-temo-head">
+            <h2>Ce qu'elles en disent</h2>
+          </div>
+          <div class="st-temo-grid">
+            <div class="st-tcard">
+              <div class="st-stars">★★★★★</div>
+              <div class="st-tquote">« Une pièce qui me suit partout. Je la porte chaque jour depuis 6 mois. »</div>
+              <div class="st-tname">Sophie M. — Genève</div>
+            </div>
+            <div class="st-tcard">
+              <div class="st-stars">★★★★★</div>
+              <div class="st-tquote">« Un packaging somptueux, une qualité irréprochable. Un vrai bijou de collection. »</div>
+              <div class="st-tname">Clara D. — Paris</div>
+            </div>
+            <div class="st-tcard">
+              <div class="st-stars">★★★★★</div>
+              <div class="st-tquote">« J'ai offert la bougie à ma mère. Elle n'en revient toujours pas de la beauté. »</div>
+              <div class="st-tname">Inès B. — Lyon</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section class="st-nl">
+          <h2>Rejoignez le cercle</h2>
+          <p>Accès en avant-première aux nouvelles collections, rituels et offres exclusives.</p>
+          <div class="st-nl-form">
+            <input class="st-nl-input" type="email" placeholder="votre@email.com">
+            <button class="st-nl-btn">Rejoindre</button>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="st-footer">
+          <div class="st-footer-top">
+            <div class="st-f-brand">
+              <div class="st-f-logo">Maison Sidérale</div>
+              <p class="st-f-desc">Des créations pour celles et ceux qui portent les étoiles en eux. Livraison Suisse & France.</p>
+            </div>
+            <div class="st-f-col">
+              <h4>Boutique</h4>
+              <ul>
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">Nouveautés</a></li>
+                <li><a href="#">Bestsellers</a></li>
+              </ul>
+            </div>
+            <div class="st-f-col">
+              <h4>Informations</h4>
+              <ul>
+                <li><a href="#">Notre histoire</a></li>
+                <li><a href="#">Livraison</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="st-footer-bot">
+            <span>© 2025 Maison Sidérale. Tous droits réservés.</span>
+            <span>Fait avec ✦ en Suisse</span>
+          </div>
+        </footer>
+
+      </div><!-- /store-preview -->
+    </div>
+  </main>
+</div>
+
+<!-- ═══ CSS EXPORT MODAL ══════════════════════ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">CSS Shopify — Prêt à coller</div>
+        <div class="modal-sub">Copiez ce code dans Thème → Modifier le code → assets/custom.css</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <pre id="css-output"></pre>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-copy" style="width:auto; padding: 8px 20px" onclick="closeModal()">Fermer</button>
+      <button class="btn-export" style="width:auto; padding: 8px 20px" onclick="copyFromModal()">Copier</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ CSS copié dans le presse-papier</div>
+
+<script>
+  /* ═══ STATE ════════════════════════════════════ */
+  const state = {
+    bg:       '#faf8f5',
+    bg2:      '#f0ebe3',
+    bg3:      '#e8e0d8',
+    text:     '#1a1108',
+    muted:    '#8b7355',
+    accent:   '#c9a84c',
+    line:     '#e8e0d8',
+    footer:   '#1a1108',
+    fontSerif:"'Playfair Display', serif",
+    fontSans: "'Inter', sans-serif",
+    heroSize: 58,
+    sectionSize: 36,
+    bodySize: 15,
+    leading:  1.8,
+    tracking: 0.12,
+    btnRadius:0,
+    cardRadius:0,
+    sectionPad:64,
+    gridGap:  24,
+    navH:     60,
+    navBg:    true,
+    shadows:  true,
+    zoom:     true,
+    borders:  true,
+    darkMode: false,
+  };
+
+  /* ═══ PRESETS ══════════════════════════════════ */
+  const PRESETS = {
+    luxury:  { bg:'#faf8f5', bg2:'#f0ebe3', bg3:'#e8e0d8', text:'#1a1108', muted:'#8b7355', accent:'#c9a84c', line:'#e8e0d8', footer:'#1a1108' },
+    noir:    { bg:'#f5f5f7', bg2:'#e8e8ed', bg3:'#d2d2d7', text:'#1d1d1f', muted:'#6e6e73', accent:'#0071e3', line:'#d2d2d7', footer:'#1d1d1f' },
+    celeste: { bg:'#f0f4f8', bg2:'#e2eaf2', bg3:'#c5d4e4', text:'#0d1b2a', muted:'#7b9cc4', accent:'#7b9cc4', line:'#d0dbe8', footer:'#0d1b2a' },
+    ivoire:  { bg:'#fdfbf7', bg2:'#f5f0e8', bg3:'#e8e0d4', text:'#2c2416', muted:'#b0a090', accent:'#7c6c5c', line:'#e8e0d4', footer:'#2c2416' },
+    cosmos:  { bg:'#0a0a14', bg2:'#12101e', bg3:'#1e1a2e', text:'#e8e0f0', muted:'#a090c0', accent:'#8a6fb0', line:'#2a2240', footer:'#060610' },
+  };
+
+  /* ═══ APPLY STYLES ═════════════════════════════ */
+  function applyStyles() {
+    const p = document.getElementById('store-preview');
+    const hero = p.querySelector('.st-hero');
+    const footerEl = p.querySelector('.st-footer');
+    const navEl = p.querySelector('.st-nav');
+    const pgrid = p.querySelector('.st-pgrid');
+    const btnsPrimary = p.querySelectorAll('.st-btn-primary, .st-nl-btn');
+    const btnsSec = p.querySelectorAll('.st-btn-secondary');
+    const tcards = p.querySelectorAll('.st-tcard');
+    const imgs = p.querySelectorAll('.st-card-img');
+    const nlSection = p.querySelector('.st-nl');
+    const badge = p.querySelectorAll('.st-card-badge');
+
+    const s = state;
+    const ftr = s.darkMode ? '#050508' : s.footer;
+    const ftrText = s.darkMode ? '#d4d0e8' : (isLight(s.footer) ? s.text : '#d4c8a0');
+    const ftrMuted = s.darkMode ? '#7060a0' : (isLight(s.footer) ? s.muted : rgba(ftrText, 0.4));
+    const ftrLine = s.darkMode ? '#1a1530' : rgba(ftrText, 0.12);
+    const heroOverlay = `linear-gradient(135deg, ${s.bg2}cc 0%, ${s.bg}88 100%)`;
+
+    // CSS vars on preview element
+    p.style.setProperty('--s-bg',        s.bg);
+    p.style.setProperty('--s-bg2',       s.bg2);
+    p.style.setProperty('--s-bg3',       s.bg3);
+    p.style.setProperty('--s-text',      s.text);
+    p.style.setProperty('--s-heading',   s.text);
+    p.style.setProperty('--s-muted',     s.muted);
+    p.style.setProperty('--s-accent',    s.accent);
+    p.style.setProperty('--s-line',      s.line);
+    p.style.setProperty('--s-font-serif',s.fontSerif);
+    p.style.setProperty('--s-font-sans', s.fontSans);
+    p.style.setProperty('--s-radius-btn',`${s.btnRadius}px`);
+    p.style.setProperty('--s-radius-card',`${s.cardRadius}px`);
+    p.style.setProperty('--s-hero-overlay', heroOverlay);
+    p.style.setProperty('--s-footer-bg', ftr);
+    p.style.setProperty('--s-footer-text', ftrText);
+    p.style.setProperty('--s-footer-muted', ftrMuted);
+    p.style.setProperty('--s-footer-line', ftrLine);
+
+    // Hero font size
+    const heroH1 = hero.querySelector('h1');
+    if (heroH1) heroH1.style.fontSize = s.heroSize + 'px';
+
+    // Section font sizes
+    p.querySelectorAll('.st-products-head h2, .st-feature-text h2, .st-temo-head h2, .st-nl h2')
+      .forEach(el => el.style.fontSize = s.sectionSize + 'px');
+
+    // Body text
+    p.querySelectorAll('.st-hero p, .st-feature-text p, .st-tquote, .st-f-desc')
+      .forEach(el => {
+        el.style.fontSize = s.bodySize + 'px';
+        el.style.lineHeight = s.leading;
+      });
+
+    // Tracking
+    p.querySelectorAll('.st-hero-eyebrow, .st-nav-links li, .st-card-cat, .st-btn-primary, .st-btn-secondary, .st-f-col h4')
+      .forEach(el => el.style.letterSpacing = s.tracking + 'em');
+
+    // Section padding
+    p.querySelectorAll('.st-products, .st-temo').forEach(el => {
+      el.style.paddingTop = s.sectionPad + 'px';
+      el.style.paddingBottom = s.sectionPad + 'px';
+    });
+
+    // Grid gap
+    if (pgrid) pgrid.style.gap = s.gridGap + 'px';
+
+    // Nav height
+    if (navEl) {
+      navEl.style.height = s.navH + 'px';
+      navEl.style.background = s.navBg ? s.bg : 'transparent';
+    }
+
+    // Shadows
+    if (s.shadows) {
+      imgs.forEach(el => el.style.boxShadow = '0 8px 32px rgba(0,0,0,0.12)');
+    } else {
+      imgs.forEach(el => el.style.boxShadow = 'none');
+    }
+
+    // Borders
+    tcards.forEach(el => {
+      el.style.borderColor = s.borders ? s.line : 'transparent';
+    });
+
+    // Font family
+    p.style.fontFamily = s.fontSans;
+
+    // Badges
+    badge.forEach(el => { el.style.background = s.accent; });
+
+    // Stars
+    p.querySelectorAll('.st-stars').forEach(el => el.style.color = s.accent);
+
+    // Newsletter bg
+    if (nlSection) nlSection.style.background = s.accent;
+
+    // nl button color
+    p.querySelectorAll('.st-nl-btn').forEach(el => { el.style.color = s.accent; });
+  }
+
+  function isLight(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return (r*299 + g*587 + b*114) / 1000 > 128;
+  }
+
+  function rgba(hex, a) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  /* ═══ WIRE CONTROLS ════════════════════════════ */
+  function wireColor(id, key) {
+    const el = document.getElementById(id);
+    el.addEventListener('input', e => { state[key] = e.target.value; deselectPresets(); applyStyles(); });
+  }
+
+  function wireRange(id, key, valId, unit, decimals=0) {
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(valId);
+    el.addEventListener('input', e => {
+      const v = decimals ? parseFloat(e.target.value)/10 : parseInt(e.target.value);
+      state[key] = v;
+      valEl.textContent = decimals ? v.toFixed(1) + unit : v + unit;
+      applyStyles();
+    });
+  }
+
+  function wireSelect(id, key) {
+    const el = document.getElementById(id);
+    el.addEventListener('change', e => { state[key] = e.target.value; applyStyles(); });
+  }
+
+  function wireToggle(id, key) {
+    const el = document.getElementById(id);
+    el.addEventListener('click', () => {
+      state[key] = !state[key];
+      el.classList.toggle('on', state[key]);
+      applyStyles();
+    });
+  }
+
+  wireColor('c-bg',     'bg');
+  wireColor('c-bg2',    'bg2');
+  wireColor('c-text',   'text');
+  wireColor('c-muted',  'muted');
+  wireColor('c-accent', 'accent');
+  wireColor('c-line',   'line');
+  wireColor('c-footer', 'footer');
+
+  wireRange('hero-size',    'heroSize',    'v-hero-size',    'px');
+  wireRange('section-size', 'sectionSize', 'v-section-size', 'px');
+  wireRange('body-size',    'bodySize',    'v-body-size',    'px');
+  wireRange('leading',      'leading',     'v-leading',      '', 1);
+  wireRange('tracking',     'tracking',    'v-tracking',     'em', 2);
+  wireRange('btn-radius',   'btnRadius',   'v-btn-r',        'px');
+  wireRange('card-radius',  'cardRadius',  'v-card-r',       'px');
+  wireRange('section-pad',  'sectionPad',  'v-section-pad',  'px');
+  wireRange('grid-gap',     'gridGap',     'v-grid-gap',     'px');
+  wireRange('nav-h',        'navH',        'v-nav-h',        'px');
+
+  wireSelect('f-serif', 'fontSerif');
+  wireSelect('f-sans',  'fontSans');
+
+  wireToggle('dark-toggle',   'darkMode');
+  wireToggle('shadow-toggle', 'shadows');
+  wireToggle('zoom-toggle',   'zoom');
+  wireToggle('border-toggle', 'borders');
+  wireToggle('nav-bg-toggle', 'navBg');
+
+  /* ═══ PRESETS ══════════════════════════════════ */
+  function deselectPresets() {
+    document.querySelectorAll('.preset').forEach(p => p.classList.remove('active'));
+  }
+
+  document.querySelectorAll('.preset').forEach(el => {
+    el.addEventListener('click', () => {
+      const key = el.dataset.preset;
+      const p = PRESETS[key];
+      Object.assign(state, p);
+      // sync color inputs
+      Object.entries({ 'c-bg': 'bg', 'c-bg2': 'bg2', 'c-text': 'text',
+                        'c-muted': 'muted', 'c-accent': 'accent',
+                        'c-line': 'line', 'c-footer': 'footer' })
+        .forEach(([id, k]) => { const inp = document.getElementById(id); if(inp) inp.value = state[k]; });
+      deselectPresets();
+      el.classList.add('active');
+      applyStyles();
+    });
+  });
+
+  /* ═══ TABS ═════════════════════════════════════ */
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ═══ DEVICE PREVIEW ═══════════════════════════ */
+  function setDevice(d, btn) {
+    document.querySelectorAll('.dbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const p = document.getElementById('store-preview');
+    if (d === 'desktop') p.style.maxWidth = '100%';
+    if (d === 'tablet')  p.style.maxWidth = '768px';
+    if (d === 'mobile')  p.style.maxWidth = '375px';
+  }
+
+  /* ═══ CSS GENERATION ═══════════════════════════ */
+  function generateCSS() {
+    const s = state;
+    return `/* ─────────────────────────────────────────
+   Maison Sidérale — Design Studio Export
+   Coller dans : Thème → Modifier le code
+                 → assets/custom.css
+   ───────────────────────────────────────── */
+
+:root {
+  --ms-bg:          ${s.bg};
+  --ms-bg2:         ${s.bg2};
+  --ms-text:        ${s.text};
+  --ms-muted:       ${s.muted};
+  --ms-accent:      ${s.accent};
+  --ms-line:        ${s.line};
+  --ms-font-serif:  ${s.fontSerif};
+  --ms-font-sans:   ${s.fontSans};
+  --ms-radius-btn:  ${s.btnRadius}px;
+  --ms-radius-card: ${s.cardRadius}px;
+}
+
+body {
+  font-family: var(--ms-font-sans);
+  background: var(--ms-bg);
+  color: var(--ms-text);
+}
+
+/* Titres */
+h1, h2, h3, .section-title {
+  font-family: var(--ms-font-serif);
+}
+
+h1 { font-size: ${s.heroSize}px; }
+h2 { font-size: ${s.sectionSize}px; }
+
+p, .body-text {
+  font-size: ${s.bodySize}px;
+  line-height: ${s.leading};
+  color: var(--ms-muted);
+}
+
+/* Boutons principaux */
+.shopify-payment-button__button,
+.btn, .button, [class*="btn-primary"] {
+  background: var(--ms-accent) !important;
+  border-radius: var(--ms-radius-btn) !important;
+  font-family: var(--ms-font-sans) !important;
+  letter-spacing: ${s.tracking}em !important;
+  text-transform: uppercase !important;
+}
+
+/* Cartes produit */
+.product-card,
+.card--product,
+.grid__item {
+  border-radius: var(--ms-radius-card);
+}
+
+/* Header / Nav */
+.header,
+.site-header,
+.shopify-section-header-sticky {
+  background: ${s.navBg ? s.bg : 'transparent'} !important;
+  height: ${s.navH}px;
+  border-bottom: 1px solid var(--ms-line);
+}
+
+/* Footer */
+.footer, .site-footer {
+  background: ${s.footer};
+}
+
+/* Accents couleur */
+a, .price, .accent-color {
+  color: var(--ms-accent);
+}
+
+/* Séparateurs */
+hr, .divider, [class*="border"] {
+  border-color: var(--ms-line);
+}`;
+  }
+
+  /* ═══ MODAL ════════════════════════════════════ */
+  function openModal() {
+    document.getElementById('css-output').textContent = generateCSS();
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  /* ═══ COPY ═════════════════════════════════════ */
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function copyCSS() {
+    navigator.clipboard.writeText(generateCSS()).then(showToast);
+  }
+
+  function copyFromModal() {
+    navigator.clipboard.writeText(document.getElementById('css-output').textContent).then(() => {
+      closeModal(); showToast();
+    });
+  }
+
+  /* ═══ INIT ═════════════════════════════════════ */
+  applyStyles();
+</script>
+
+</body>
+</html>
