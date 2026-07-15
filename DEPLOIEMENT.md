@@ -4,14 +4,14 @@ Site statique monofichier (`index.html`) prêt à être mis en ligne. Aucun serv
 
 ## Contenu du dépôt
 
-- `index.html` — site complet (HTML + CSS + JS + SVG inline)
-- `DEPLOIEMENT.md` — ce fichier
+- `index.html` : site complet (HTML + CSS + JS + SVG inline)
+- `DEPLOIEMENT.md` : ce fichier
 
 Tout est embarqué : pas de build step, pas de dépendances locales (GSAP est chargé depuis le CDN cdnjs).
 
 ---
 
-## Option A — OVH Hébergement Web (la plus simple si vous avez déjà un hébergement)
+## Option A : OVH Hébergement Web (la plus simple si vous avez déjà un hébergement)
 
 Si votre nom de domaine `lesclefsdelavenir.ch` est chez OVH (ou Infomaniak, Hostpoint, etc.) avec un hébergement mutualisé :
 
@@ -24,7 +24,7 @@ Si votre nom de domaine `lesclefsdelavenir.ch` est chez OVH (ou Infomaniak, Host
 
 ---
 
-## Option B — Cloudflare Pages (gratuit, recommandé)
+## Option B : Cloudflare Pages (gratuit, recommandé)
 
 Hébergement gratuit, rapide, certificat SSL automatique.
 
@@ -44,13 +44,13 @@ Le site est déployé sur `https://lesclefsdelavenir.pages.dev`.
    - `CNAME @ → <votre-projet>.pages.dev`
    - `CNAME www → <votre-projet>.pages.dev`
 9. Connectez-vous chez votre registrar du domaine `.ch`, modifiez les DNS, ajoutez ces deux entrées
-10. Patientez 1 à 24h pour la propagation DNS — le SSL s'active automatiquement
+10. Patientez 1 à 24h pour la propagation DNS, le SSL s'active automatiquement
 
 **Coût** : gratuit. Trafic illimité.
 
 ---
 
-## Option C — Netlify (alternative à Cloudflare, aussi gratuit)
+## Option C : Netlify (alternative à Cloudflare, aussi gratuit)
 
 1. Compte sur https://netlify.com → **Add new site** → **Import from Git** → GitHub
 2. Sélectionnez le repo, branche `claude/fortune-telling-site-design-D6YjY`
@@ -61,7 +61,7 @@ Le site est déployé sur `https://lesclefsdelavenir.pages.dev`.
 
 ---
 
-## Option D — GitHub Pages (déjà actif sur ce repo)
+## Option D : GitHub Pages (déjà actif sur ce repo)
 
 La branche `gh-pages` de ce dépôt est déjà servie sur :
 `https://utilisateur456.github.io/lesclefsdelavenir/`
@@ -88,7 +88,7 @@ Pour utiliser le domaine `lesclefsdelavenir.ch` :
 - [ ] Vérifier les 3 liens de paiement (Twint, PayPal, cartes)
 - [ ] Tester le numéro `tel:0901212212` sur mobile
 - [ ] Tester le lien WhatsApp `wa.me/41782535452`
-- [ ] Configurer un service de réception de formulaire (le `<form>` actuel fait `onsubmit="return false"` — il faut le brancher à Formspree, FormKeep, ou un endpoint personnalisé pour recevoir les demandes)
+- [ ] Configurer un service de réception de formulaire (le `<form>` actuel fait `onsubmit="return false"`, il faut le brancher à Formspree, FormKeep, ou un endpoint personnalisé pour recevoir les demandes)
 
 ## Brancher le formulaire de contact
 

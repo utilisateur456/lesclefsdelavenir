@@ -1,4 +1,4 @@
-# Les Clefs de l'Avenir — Notes projet
+# Les Clefs de l'Avenir : notes projet
 
 ## Site
 - URL : https://lesclefsdelavenir.ch/
@@ -7,7 +7,7 @@
 - **Toujours pousser sur `gh-pages` pour que les changements soient visibles en ligne.**
 
 ## Propriétaire
-- Marco Médium — voyance, médiumnité, tarot, Suisse
+- Marco Médium : voyance, médiumnité, tarot, Suisse
 - Téléphone surtaxé : 0901 212 212 (CHF 2.-/min.)
 - WhatsApp : https://wa.me/41782535452
 - Email : info@lesclefsdelavenir.ch
@@ -24,10 +24,10 @@
 - PayPal / Visa / Mastercard : https://www.paypal.com/ncp/payment/VEWS58585DEVC
 
 ## Vidéos (ne jamais supprimer)
-- `serrure.mp4` — intro plein écran avec zoom sur serrure
-- `cle01.mp4` — fond vidéo section hero
-- `zodiac.mp4` — fond vidéo section about
-- `penduleavenir.mp4` — fond vidéo section process
+- `serrure.mp4` : intro plein écran avec zoom sur serrure
+- `cle01.mp4` : fond vidéo section hero
+- `zodiac.mp4` : fond vidéo section about
+- `penduleavenir.mp4` : fond vidéo section process
 
 ## Règles importantes
 - Ne jamais écraser `gh-pages` avec le contenu d'une autre branche sans vérifier les vidéos
